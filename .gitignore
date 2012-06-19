@@ -1,1 +1,6 @@
 Vacuum-Watch.*sdf
+Debug/*
+Release/*
+Vacuum-Watch/Debug/*
+Vacuum-Watch/Release/*
+ipch/*

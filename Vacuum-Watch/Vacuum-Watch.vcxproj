@@ -10,6 +10,12 @@
       <Platform>Win32</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="constants.h" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{005FE372-8E04-4EEA-9878-CA8032865F00}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
