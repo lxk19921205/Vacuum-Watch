@@ -2,8 +2,11 @@
 #include <gl/glut.h>
 
 #include "constants.h"
+#include "module_interfaces.h"
+#include "factory.h"
 
-using namespace std;
+using std::cout;
+using std::endl;
 
 
 void RenderScene()
@@ -29,6 +32,9 @@ int main(int argc, char** argv)
 
 	SetupRC();
 	glutMainLoop();
+
+	ILog* log = CFactory::getLog();
+	log->GetFileName();
 
 	return 0;
 }
