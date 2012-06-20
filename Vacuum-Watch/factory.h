@@ -6,7 +6,11 @@
 class CFactory
 {
 public:
+	//获得Log模块唯一的实例
 	static ILog* getLog();
+
+	//获得Options模块唯一的实例
+	static IOptions* getOptions();
 };
 
 #endif
