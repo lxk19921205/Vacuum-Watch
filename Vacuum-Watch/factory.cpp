@@ -18,3 +18,10 @@ IOptions* CFactory::getOptions()
 	//TODO
 	return NULL;
 }
+
+
+IAudio* CFactory::getAudio()
+{
+	//TODO
+	return NULL;
+}

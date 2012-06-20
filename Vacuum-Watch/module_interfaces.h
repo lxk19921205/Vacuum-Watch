@@ -7,7 +7,7 @@ using std::string;
 
 //////////////////////////////////////////////////////////////////////////
 
-//Log模块的接口，定义了log模块所需的操作
+//Log（日志）模块的接口，定义了log模块所需的操作
 class ILog
 {
 public:
@@ -47,17 +47,50 @@ public:
 	//背景音乐是否播放
 	virtual bool IsBackgroundOn() = 0;
 	//设置是否播放背景音乐
-	virtual void SetBackground(bool on) = 0;
+	virtual void SetBackgroundOn(bool on) = 0;
 
 	//音效是否打开
 	virtual bool IsSoundEffectOn() = 0;
 	//设置是否播放音效
-	virtual void SetSoundEffect(bool on) = 0;
+	virtual void SetSoundEffectOn(bool on) = 0;
+
+	//获取音乐的音量大小
+	virtual int GetSoundVolume() = 0;
+	//设置音乐的音量大小，为一个百分比，代表最大音量的百分之几
+	/*
+	 * TODO 特别注意，需要判断0和100范围之外的输入，这句话看完了做到了就删掉吧
+	 */
+	virtual int SetSoundVolume(int percent) = 0;
 
 	//获得飞机发射炮弹的按键
 	virtual int GetFireKey() = 0;
 	//设置飞机发射炮弹的按键
 	virtual void SetFireKey(int key) = 0;
+};
+
+//////////////////////////////////////////////////////////////////////////
+
+//Audio（音效）模块的接口，定义了audio模块所需的操作
+class IAudio
+{
+public:
+	//写这个函数时为了提醒：在析构函数里退出时一定要释放所有相关的资源
+	virtual void Release() = 0;
+
+	//设置播放音乐的音量，是一个百分比，见IOptions里的SetSoundVolume函数
+	virtual void SetVolume(int percent) = 0;
+
+	//开始播放背景音乐，BGM一般比较长，同时间只能有一个背景音乐在播放，url即为BGM地址
+	virtual void StartBGM(const string& url) = 0;
+	//停止播放背景音乐，如果有正在播的话
+	virtual void StopBGM() = 0;
+
+	//播放一个音效，音效一般时间比较短，无法暂停，可以有多个effect同时在播放
+	virtual void PlayEffect(const string& url) = 0;
+	//停止一个音效，根据effect地址url决定是停哪个音效
+	virtual void StopEffect(const string& url) = 0;
+	//停止全部正在播放的音效
+	virtual void StopAllEffect() = 0;
 };
 
 //////////////////////////////////////////////////////////////////////////
