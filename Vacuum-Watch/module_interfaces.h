@@ -4,18 +4,30 @@
 #include <string>
 using std::string;
 
-//Log模块的接口，要实现这么个东西，并且要求是单例！
+//Log模块的接口，定义了log模块需要的操作
 class ILog
 {
 public:
-	static const ILog* Get();
+	//获得存放info级log的文件名
+	virtual const string& GetInfoFileName() = 0;
+	//获得存放debug级log的文件名
+	virtual const string& GetDebugFileName() = 0;
+	//获得存放error级log的文件名
+	virtual const string& GetErrorFileName() = 0;
 
-	virtual const string& GetFileName() = 0;
+	//清空info级的log
+	virtual void ClearInfo() = 0;
+	//清空debug级的log
+	virtual void ClearDebug() = 0;
+	//清空error级的log
+	virtual void ClearError() = 0;
 
-	virtual void Info(const char* msg) = 0;
-	virtual void Debug(const char* msg) = 0;
-	virtual void Error(const char* msg) = 0;
+	//写入一条info级的log
+	virtual void Info(const string& msg) = 0;
+	//写入一条debug级的log
+	virtual void Debug(const string& msg) = 0;
+	//写入一条error级的log
+	virtual void Error(const string& msg) = 0;
 };
-
 
 #endif
