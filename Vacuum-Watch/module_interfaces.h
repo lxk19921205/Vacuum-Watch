@@ -4,7 +4,10 @@
 #include <string>
 using std::string;
 
-//Log模块的接口，定义了log模块需要的操作
+
+//////////////////////////////////////////////////////////////////////////
+
+//Log模块的接口，定义了log模块所需的操作
 class ILog
 {
 public:
@@ -30,4 +33,32 @@ public:
 	virtual void Error(const string& msg) = 0;
 };
 
+//////////////////////////////////////////////////////////////////////////
+
+//Options模块（游戏设置模块）的接口，定义了options模块所需的操作
+class IOptions
+{
+public:
+	//将当前的设置存入文件
+	virtual void SaveIntoFile() = 0;
+	//从之前存好的文件里读出之前的设置，如果没有之前存好的文件，就不用修改
+	virtual void RestoreFromFile() = 0;
+
+	//背景音乐是否播放
+	virtual bool IsBackgroundOn() = 0;
+	//设置是否播放背景音乐
+	virtual void SetBackground(bool on) = 0;
+
+	//音效是否打开
+	virtual bool IsSoundEffectOn() = 0;
+	//设置是否播放音效
+	virtual void SetSoundEffect(bool on) = 0;
+
+	//获得飞机发射炮弹的按键
+	virtual int GetFireKey() = 0;
+	//设置飞机发射炮弹的按键
+	virtual void SetFireKey(int key) = 0;
+};
+
+//////////////////////////////////////////////////////////////////////////
 #endif
