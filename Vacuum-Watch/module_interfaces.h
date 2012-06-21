@@ -12,9 +12,10 @@ public:
 
 	virtual const string& GetFileName() = 0;
 
-	virtual void Info(const char* msg) = 0;
-	virtual void Debug(const char* msg) = 0;
-	virtual void Error(const char* msg) = 0;
+	virtual void Info(string msg) = 0;
+	virtual void Debug(string msg) = 0;
+	virtual void Error(string msg) = 0;
+	
 };
 
 

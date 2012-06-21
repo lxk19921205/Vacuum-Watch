@@ -11,13 +11,13 @@ class CLog : public ILog
 {
 public:
 	CLog();
-	virtual ~CLog();
-
+	 ~CLog();
+	
 	virtual const string& GetFileName();
 
-	virtual void Info(const char* msg);
-	virtual void Debug(const char* msg);
-	virtual void Error(const char* msg);
+	virtual void Info(string msg);
+	virtual void Debug(string msg);
+	virtual void Error(string msg);
 
 private:
 	string file_name;
