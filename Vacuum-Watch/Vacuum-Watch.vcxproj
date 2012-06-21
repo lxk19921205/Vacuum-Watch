@@ -11,12 +11,14 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="COption.cpp" />
     <ClCompile Include="factory.cpp" />
     <ClCompile Include="log.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="constants.h" />
+    <ClInclude Include="COption.h" />
     <ClInclude Include="factory.h" />
     <ClInclude Include="log.h" />
     <ClInclude Include="module_interfaces.h" />
