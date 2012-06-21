@@ -2,10 +2,26 @@
 #include "log.h"
 
 
-CLog g_log;
+//CLog g_log;
 
 
 ILog* CFactory::getLog()
 {
-	return &g_log;
+	//TODO
+	return NULL;
+//	return &g_log;
+}
+
+
+IOptions* CFactory::getOptions()
+{
+	//TODO
+	return NULL;
+}
+
+
+IAudio* CFactory::getAudio()
+{
+	//TODO
+	return NULL;
 }

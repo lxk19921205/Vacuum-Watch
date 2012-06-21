@@ -13,11 +13,23 @@ public:
 	CLog();
 	 ~CLog();
 	
-	virtual const string& GetFileName();
+	virtual void Info(const string& msg);
+	virtual void Debug(const string& msg);
+	virtual void Error(const string& msg);
 
-	virtual void Info(string msg);
-	virtual void Debug(string msg);
-	virtual void Error(string msg);
+	//获得存放info级log的文件名
+	virtual const string& GetInfoFileName();
+	//获得存放debug级log的文件名
+	virtual const string& GetDebugFileName();
+	//获得存放error级log的文件名
+	virtual const string& GetErrorFileName();
+
+	//清空info级的log
+	virtual void ClearInfo();
+	//清空debug级的log
+	virtual void ClearDebug();
+	//清空error级的log
+	virtual void ClearError();
 
 private:
 	string file_name;

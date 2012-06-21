@@ -33,8 +33,5 @@ int main(int argc, char** argv)
 	SetupRC();
 	glutMainLoop();
 
-	ILog* log = CFactory::getLog();
-	log->GetFileName();
-
 	return 0;
 }

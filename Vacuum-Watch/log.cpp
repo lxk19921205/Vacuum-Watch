@@ -14,40 +14,77 @@ CLog::~CLog()
 
 }
 
-const string& CLog::GetFileName()
+const string& CLog::GetInfoFileName()
 {
-	return this->file_name;
+	return "InfoLog.txt";
 }
 
-void CLog::Info(string msg)
+const string& CLog::GetDebugFileName()
 {
-	// TODO
-	ofstream outfile("Info.txt", ios_base::app);
-	if (!outfile){
-		cerr<<"Sorry! Info written false!";
-	}
-	else
-		outfile<<msg<<endl;
+	return "DebugLog.txt";
 }
 
-void CLog::Debug(string msg)
+const string& CLog::GetErrorFileName()
 {
-	// TODO
-	ofstream outfile("Debug.txt", ios_base::app);
-	if (!outfile){
-		cerr<<"Sorry! Debug written false!";
-	}
-	else
-		outfile<<msg<<endl;
+	return "ErrorLog.txt";
 }
 
-void CLog::Error(string msg)
+void CLog::Info(const string& msg)
 {
 	// TODO
-	ofstream outfile("Error.txt", ios_base::app);
+	ofstream outfile("InfoLog.txt", ios_base::app);
 	if (!outfile){
-		cerr<<"Sorry! Error written false!";
+		cerr<<"Sorry! InfoLog written false!";
 	}
 	else
+	{
 		outfile<<msg<<endl;
+		outfile.close();
+	}
+}
+
+void CLog::Debug(const string& msg)
+{
+	// TODO
+	ofstream outfile("DebugLog.txt", ios_base::app);
+	if (!outfile){
+		cerr<<"Sorry! DebugLog written false!";
+	}
+	else
+	{
+		outfile<<msg<<endl;
+		outfile.close();
+	}
+}
+
+void CLog::Error(const string& msg)
+{
+	// TODO
+	ofstream outfile("ErrorLog.txt", ios_base::app);
+	if (!outfile){
+		cerr<<"Sorry! ErrorLog written false!";
+	}
+	else
+	{
+		outfile<<msg<<endl;
+		outfile.close();
+	}
+}
+
+void CLog::ClearInfo()
+{
+	ofstream f("InfoLog.txt", ios::trunc);
+	f.close();
+}
+
+void CLog::ClearDebug()
+{
+	ofstream f("DebugLog.txt", ios::trunc);
+	f.close();
+}
+
+void CLog::ClearError()
+{
+	ofstream f("ErrorLog.txt", ios::trunc);
+	f.close();
 }
