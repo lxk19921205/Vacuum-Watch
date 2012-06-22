@@ -44,6 +44,9 @@ public:
 class IOptions
 {
 public:
+	//重置所有的设置
+	virtual void ResetAll() = 0;
+
 	//背景音乐是否播放
 	virtual bool IsBackgroundOn() = 0;
 	//设置是否播放背景音乐

@@ -13,6 +13,8 @@ public:
 	//数据存在这个文件里
 	const static string FILE_NAME;
 
+	virtual void ResetAll();
+
 	virtual bool IsBackgroundOn();
 	virtual void SetBackgroundOn(bool on);
 

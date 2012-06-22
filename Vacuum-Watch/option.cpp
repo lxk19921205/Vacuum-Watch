@@ -64,11 +64,7 @@ bool COption::RestoreFromFile()
 	ifstream infile(FILE_NAME);
 	if(!infile)
 	{
-		this->m_bBackground = VW_OPTION_DEF_BGM;
-		this->m_bEffect = VW_OPTION_DEF_EFFECT;
-		this->m_iVolume = VW_OPTION_DEF_VOLUME;
-		this->m_iFireKey = VW_OPTION_DEF_FIRE_KEY;
-
+		this->ResetAll();
 		log->Error("open option file for read error! RestoreFromFile()");
 		return false;
 	}
@@ -134,4 +130,12 @@ void COption::SetFireKey(int _key)
 {
 	this->m_iFireKey=_key;
 	this->SaveIntoFile();
+}
+
+void COption::ResetAll()
+{
+	this->m_bBackground = VW_OPTION_DEF_BGM;
+	this->m_bEffect = VW_OPTION_DEF_EFFECT;
+	this->m_iVolume = VW_OPTION_DEF_VOLUME;
+	this->m_iFireKey = VW_OPTION_DEF_FIRE_KEY;
 }
