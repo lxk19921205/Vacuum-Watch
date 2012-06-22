@@ -1,5 +1,6 @@
 #include <fstream>
 #include <iostream>
+#include <time.h>
 
 #include "log.h"
 
@@ -46,7 +47,11 @@ void CLog::Info(const string& msg)
 	}
 	else
 	{
-		outfile<<msg<<endl;
+		time_t t = time(0); 
+		char tmp[32]; 
+		strftime( tmp, sizeof(tmp), "%Y/%m/%d %X %A",localtime(&t) ); 
+		
+		outfile<<tmp<<':'<<endl<<msg<<endl;
 		outfile.close();
 	}
 }
@@ -59,7 +64,11 @@ void CLog::Debug(const string& msg)
 	}
 	else
 	{
-		outfile<<msg<<endl;
+		time_t t = time(0); 
+		char tmp[32]; 
+		strftime( tmp, sizeof(tmp), "%Y/%m/%d %X %A",localtime(&t) ); 
+		
+		outfile<<tmp<<':'<<endl<<msg<<endl;
 		outfile.close();
 	}
 }
@@ -72,7 +81,11 @@ void CLog::Error(const string& msg)
 	}
 	else
 	{
-		outfile<<msg<<endl;
+		time_t t = time(0); 
+		char tmp[32]; 
+		strftime( tmp, sizeof(tmp), "%Y/%m/%d %X %A",localtime(&t) ); 
+		
+		outfile<<tmp<<':'<<endl<<msg<<endl;
 		outfile.close();
 	}
 }

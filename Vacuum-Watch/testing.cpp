@@ -50,16 +50,16 @@ void CTesting::TestOptions()
 void CTesting::TestLog()
 {
 	CLog log;
-// 	log.ClearDebug();
-// 	log.ClearError();
-// 	log.ClearInfo();
+ 	log.ClearDebug();
+ 	log.ClearError();
+ 	log.ClearInfo();
 
 	log.Info("hello in info");
 	log.Debug("world in debug");
 	log.Error("graphics in error");
 
 	log.Info("hello again in info");
-	log.ClearInfo();
-	log.Info("hello 3rd in info");
-	log.Info("hello 4th in info");
+//	log.ClearInfo();
+//	log.Info("hello 3rd in info");
+//	log.Info("hello 4th in info");
 }
