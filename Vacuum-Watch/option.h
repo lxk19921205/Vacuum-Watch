@@ -38,12 +38,6 @@ protected:
 	bool m_bEffect;
 	int m_iVolume;
 	int m_iFireKey;
-
-//	bool bret;			//文件与内存中的数据一致性标识
-//注：使用接口而不是具体的类，而且不用存成员变量，每次要的时候直接取就好了，by Andriy
-// #if(VW_LOG_CLOSED)
-// 	Clog *log;	//to ILog*
-// #endif
 };
 
 

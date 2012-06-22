@@ -11,19 +11,27 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="controller.cpp" />
+    <ClCompile Include="game_data.cpp" />
+    <ClCompile Include="input.cpp" />
     <ClCompile Include="option.cpp" />
     <ClCompile Include="factory.cpp" />
     <ClCompile Include="log.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="testing.cpp" />
+    <ClCompile Include="view_engine.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="constants.h" />
+    <ClInclude Include="controller.h" />
+    <ClInclude Include="game_data.h" />
+    <ClInclude Include="input.h" />
     <ClInclude Include="option.h" />
     <ClInclude Include="factory.h" />
     <ClInclude Include="log.h" />
     <ClInclude Include="module_interfaces.h" />
     <ClInclude Include="testing.h" />
+    <ClInclude Include="view_engine.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{005FE372-8E04-4EEA-9878-CA8032865F00}</ProjectGuid>
