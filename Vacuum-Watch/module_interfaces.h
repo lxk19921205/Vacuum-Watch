@@ -1,6 +1,7 @@
 #ifndef _VW_MODULE_INTERFACES_H_
 #define _VW_MODULE_INTERFACES_H_
 
+#include <Windows.h>
 #include <string>
 using std::string;
 
@@ -80,14 +81,14 @@ public:
 	virtual void SetVolume(int percent) = 0;
 
 	//开始播放背景音乐，BGM一般比较长，同时间只能有一个背景音乐在播放，url即为BGM地址
-	virtual void StartBGM(const string& url) = 0;
+	virtual void StartBGM(const LPCWSTR& url) = 0;
 	//停止播放背景音乐，如果有正在播的话
 	virtual void StopBGM() = 0;
 
 	//播放一个音效，音效一般时间比较短，无法暂停，可以有多个effect同时在播放
-	virtual void PlayEffect(const string& url) = 0;
+	virtual void PlayEffect(const LPCWSTR& url) = 0;
 	//停止一个音效，根据effect地址url决定是停哪个音效
-	virtual void StopEffect(const string& url) = 0;
+	virtual void StopEffect(const LPCWSTR& url) = 0;
 	//停止全部正在播放的音效
 	virtual void StopAllEffect() = 0;
 };
