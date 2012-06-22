@@ -29,8 +29,8 @@ void DoTest()
 {
 	CTesting test;
 
-//	test.TestOptions();
-	test.TestLog();
+	test.TestOptions();
+//	test.TestLog();
 }
 
 int main(int argc, char** argv)

@@ -52,14 +52,7 @@ bool COption::SaveIntoFile()
 			<<m_iFireKey;
 		outfile.close();
 
-		string msg = m_bBackground + " ";
-		msg += m_bEffect + " ";
-		msg += m_iVolume+" ";
-		msg += m_iFireKey+" ";
-		msg += "has been saved in file"+FILE_NAME;
-		msg += " in SaveIntoFile() ";
-		log->Info(msg);
-
+		log->Info("Option Settings have been saved into file.");
 		return true;
 	}
 }
@@ -87,14 +80,7 @@ bool COption::RestoreFromFile()
 			>>m_iFireKey;
 		infile.close();
 
-		string msg = m_bBackground+" ";
-		msg += m_bEffect+ " ";
-		msg += m_iVolume+ " ";
-		msg += m_iFireKey+" ";
-		msg += "has been read from "+FILE_NAME;
-		msg += " in RestoreFromFile()";
-		log->Info(msg);
-
+		log->Info("Option Settings have been restored from file.");
 		return true;
 	}
 }
