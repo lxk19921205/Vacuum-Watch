@@ -139,9 +139,6 @@ class IInput
 public:
 	//初始化监听
 	virtual void InitListener() = 0;
-
-	//对应开火的那个按键clicked了
-	virtual void OnFireKeyClicked() = 0;
 };
 
 #endif

@@ -13,7 +13,6 @@ public:
 	virtual ~CInput();
 
 	virtual void InitListener();
-	virtual void OnFireKeyClicked();
 };
 
 #endif

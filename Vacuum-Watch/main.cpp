@@ -33,25 +33,6 @@ void DoTest()
 //	test.TestGameData();
 }
 
-void ListenKeyboard(unsigned char key, int x, int y)
-{
-	CInput keyboard;
-
-	switch (key)
-	{
-	case VW_OPTION_DEF_FIRE_KEY:
-		keyboard.OnFireKeyClicked();
-//		cout<<"Press space"<<endl;
-		break;
-	default:
-		break;
-	}
-}
-
-void ListenMouseMove(int x, int y)
-{
-//	cout<<x<<' '<<y<<endl;
-}
 
 int main(int argc, char** argv)
 {
@@ -65,9 +46,8 @@ int main(int argc, char** argv)
 
 	SetupRC();
 
-//	glutKeyboardFunc(ListenKeyboard);//监听键盘
-//	glutMotionFunc(ListenMouseMove);//监听鼠标按下时的移动
-//	glutPassiveMotionFunc(ListenMouseMove);//监听鼠标未按下时的移动
+// 	CInput input;
+// 	input.InitListener();
 
 	glutMainLoop();
 
