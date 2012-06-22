@@ -86,4 +86,25 @@ public:
 };
 
 //////////////////////////////////////////////////////////////////////////
+
+//GameData（游戏数据）模块的接口，定义了所有游戏数据相关的操作
+class IGameData
+{
+public:
+	//当前是第几关
+	virtual int GetCurrentStage() = 0;
+	//设置为进入下一关
+	virtual void NextStage() = 0;
+	//将关卡重置为初始状态
+	virtual void ResetStage() = 0;
+
+	//当前积分是多少
+	virtual long GetCurrentScore() = 0;
+	//在当前基础上增加/减少一部分分数
+	virtual void AddScore(long score) = 0;
+	//将当前积分清零
+	virtual void ClearScore() = 0;
+};
+
+//////////////////////////////////////////////////////////////////////////
 #endif
