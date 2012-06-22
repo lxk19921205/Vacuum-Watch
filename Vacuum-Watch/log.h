@@ -25,7 +25,10 @@ public:
 	virtual void Debug(const string& msg);
 	virtual void Error(const string& msg);
 
-private:
+protected:
+	static const string INFO_LOG_NAME;
+	static const string DEBUG_LOG_NAME;
+	static const string ERROR_LOG_NAME;
 };
 
 
