@@ -15,7 +15,7 @@
 #define VW_OPTION_DEF_BGM (true)		//背景音乐开启？
 #define VW_OPTION_DEF_EFFECT (true)		//音效开启？
 #define VW_OPTION_DEF_VOLUME (50)		//默认音量百分比，50%
-#define VW_OPTION_DEF_FIRE_KEY (100)	//默认fire的键位，刚开始默认采用100，一个随便写的值，以后再改
+#define VW_OPTION_DEF_FIRE_KEY (32)	//默认fire的键位，默认采用空格，一个随便写的值，以后再改
 
 
 //////////////////////////////////////////////////////////////////////////
