@@ -35,15 +35,10 @@ public:
 
 //////////////////////////////////////////////////////////////////////////
 
-//Options模块（游戏设置模块）的接口，定义了options模块所需的操作
+//Options模块（游戏设置模块）的接口，定义了options模块所需的操作，要求能够自动持久化存储
 class IOptions
 {
 public:
-	//将当前的设置存入文件
-	virtual void SaveIntoFile() = 0;
-	//从之前存好的文件里读出之前的设置，如果没有之前存好的文件，就不用修改
-	virtual void RestoreFromFile() = 0;
-
 	//背景音乐是否播放
 	virtual bool IsBackgroundOn() = 0;
 	//设置是否播放背景音乐
@@ -56,11 +51,8 @@ public:
 
 	//获取音乐的音量大小
 	virtual int GetSoundVolume() = 0;
-	//设置音乐的音量大小，为一个百分比，代表最大音量的百分之几
-	/*
-	 * TODO 特别注意，需要判断0和100范围之外的输入，这句话看完了做到了就删掉吧
-	 */
-	virtual int SetSoundVolume(int percent) = 0;
+	//设置音乐的音量大小，为一个百分比，代表最大音量的百分之几，直接忽略错误的percent（not [0, 100]）
+	virtual void SetSoundVolume(int percent) = 0;
 
 	//获得飞机发射炮弹的按键
 	virtual int GetFireKey() = 0;

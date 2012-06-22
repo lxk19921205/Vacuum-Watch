@@ -2,8 +2,8 @@
 
 
 CLog::CLog()
-	:file_name("vw_log_file.log")
 {
+
 }
 
 CLog::~CLog()
@@ -11,22 +11,51 @@ CLog::~CLog()
 
 }
 
-const string& CLog::GetFileName()
+
+void CLog::Info( const string& msg )
 {
-	return this->file_name;
+
 }
 
-void CLog::Info(const char* msg)
+void CLog::Debug( const string& msg )
 {
-	// TODO
+
 }
 
-void CLog::Debug(const char* msg)
+void CLog::Error( const string& msg )
 {
-	// TODO
+
 }
 
-void CLog::Error(const char* msg)
+const string& CLog::GetInfoFileName()
 {
-	// TODO
+	string s;
+	return s;
+}
+
+const string& CLog::GetDebugFileName()
+{
+	string s;
+	return s;
+}
+
+const string& CLog::GetErrorFileName()
+{
+	string s;
+	return s;
+}
+
+void CLog::ClearInfo()
+{
+
+}
+
+void CLog::ClearDebug()
+{
+
+}
+
+void CLog::ClearError()
+{
+
 }
