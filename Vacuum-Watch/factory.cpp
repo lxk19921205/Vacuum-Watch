@@ -2,14 +2,13 @@
 #include "log.h"
 
 
-//CLog g_log;
+CLog g_log;
 
 
 ILog* CFactory::getLog()
 {
 	//TODO
-	return NULL;
-//	return &g_log;
+	return &g_log;
 }
 
 

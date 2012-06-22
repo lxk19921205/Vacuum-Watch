@@ -1,52 +1,42 @@
 #include <iostream>
-//#include <gl/glut.h>
-#include "COption.h"
+#include <gl/glut.h>
+
 #include "constants.h"
 #include "module_interfaces.h"
 #include "factory.h"
+#include "testing.h"
 
 using std::cout;
 using std::endl;
 
-//
-//void RenderScene()
-//{
-//	//用当前清除颜色清除窗口
-//	glClear(GL_COLOR_BUFFER_BIT);
-//	//刷新绘图命令
-//	glFlush();
-//}
-//
-//void SetupRC()
-//{
-//	glClearColor(0.0f, 0.0f, 1.0f, 1.0f);
-//}
-//
-void SaveOption()
+
+void RenderScene()
 {
-	COption *op=new COption();
-	op->SaveIntoFile();
+	//用当前清除颜色清除窗口
+	glClear(GL_COLOR_BUFFER_BIT);
+	//刷新绘图命令
+	glFlush();
 }
-void RestoreOption()
+
+void SetupRC()
 {
-	COption *op=new COption();
-	op->RestoreFromFile();
+	glClearColor(0.0f, 0.0f, 1.0f, 1.0f);
 }
-void SetKey()
+
+
+
+void DoTest()
 {
-	COption * op=new COption();
-	op->SetFireKey(65);
-	op->SaveIntoFile();
-}
-void GetKey()
-{
-	COption* op=new COption();
-	op->RestoreFromFile();
-	cout<<op->GetFireKey();
+	CTesting test;
+
+	test.TestOptions();
 }
 
 int main(int argc, char** argv)
-{/*
+{
+	DoTest();
+	return 0;
+
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_SINGLE | GLUT_RGBA);
 	glutCreateWindow(VW_WINDOW_TITLE);
@@ -55,9 +45,5 @@ int main(int argc, char** argv)
 	SetupRC();
 	glutMainLoop();
 
-	return 0;*/
-//	SaveOption();
-	//RestoreOption();
-//SetKey();
-//	GetKey();
+	return 0;
 }
