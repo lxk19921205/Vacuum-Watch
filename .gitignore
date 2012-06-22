@@ -5,3 +5,4 @@ Release/*
 Vacuum-Watch/Debug/*
 Vacuum-Watch/Release/*
 ipch/*
+Vacuum-Watch/Options.opt
