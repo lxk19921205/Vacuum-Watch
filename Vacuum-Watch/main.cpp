@@ -4,6 +4,7 @@
 #include "constants.h"
 #include "module_interfaces.h"
 #include "factory.h"
+#include "testing.h"
 
 using std::cout;
 using std::endl;
@@ -23,8 +24,20 @@ void SetupRC()
 }
 
 
+
+void DoTest()
+{
+	CTesting test;
+
+//	test.TestOptions();
+	test.TestLog();
+}
+
 int main(int argc, char** argv)
 {
+	DoTest();
+	return 0;
+
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_SINGLE | GLUT_RGBA);
 	glutCreateWindow(VW_WINDOW_TITLE);

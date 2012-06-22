@@ -24,6 +24,12 @@
     <ClCompile Include="factory.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="option.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="testing.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="constants.h">
@@ -36,6 +42,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="module_interfaces.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="option.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="testing.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

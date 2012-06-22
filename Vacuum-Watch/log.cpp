@@ -1,37 +1,45 @@
-#include "log.h"
 #include <fstream>
 #include <iostream>
 
-using namespace std;
+#include "log.h"
+
+using std::ofstream;
+using std::ios_base;
+using std::cerr;
+using std::endl;
+
+
+const string CLog::INFO_LOG_NAME = "InfoLog.txt";
+const string CLog::DEBUG_LOG_NAME = "DebugLog.txt";
+const string CLog::ERROR_LOG_NAME = "ErrorLog.txt";
+
 
 CLog::CLog()
-	:file_name("vw_log_file.log")
 {
+
 }
 
 CLog::~CLog()
 {
-
 }
 
 const string& CLog::GetInfoFileName()
 {
-	return "InfoLog.txt";
+	return INFO_LOG_NAME;
 }
 
 const string& CLog::GetDebugFileName()
 {
-	return "DebugLog.txt";
+	return DEBUG_LOG_NAME;
 }
 
 const string& CLog::GetErrorFileName()
 {
-	return "ErrorLog.txt";
+	return ERROR_LOG_NAME;
 }
 
 void CLog::Info(const string& msg)
 {
-	// TODO
 	ofstream outfile("InfoLog.txt", ios_base::app);
 	if (!outfile){
 		cerr<<"Sorry! InfoLog written false!";
@@ -45,7 +53,6 @@ void CLog::Info(const string& msg)
 
 void CLog::Debug(const string& msg)
 {
-	// TODO
 	ofstream outfile("DebugLog.txt", ios_base::app);
 	if (!outfile){
 		cerr<<"Sorry! DebugLog written false!";
@@ -59,7 +66,6 @@ void CLog::Debug(const string& msg)
 
 void CLog::Error(const string& msg)
 {
-	// TODO
 	ofstream outfile("ErrorLog.txt", ios_base::app);
 	if (!outfile){
 		cerr<<"Sorry! ErrorLog written false!";
@@ -73,18 +79,18 @@ void CLog::Error(const string& msg)
 
 void CLog::ClearInfo()
 {
-	ofstream f("InfoLog.txt", ios::trunc);
+	ofstream f("InfoLog.txt", ios_base::trunc);
 	f.close();
 }
 
 void CLog::ClearDebug()
 {
-	ofstream f("DebugLog.txt", ios::trunc);
+	ofstream f("DebugLog.txt", ios_base::trunc);
 	f.close();
 }
 
 void CLog::ClearError()
 {
-	ofstream f("ErrorLog.txt", ios::trunc);
+	ofstream f("ErrorLog.txt", ios_base::trunc);
 	f.close();
 }

@@ -1,6 +1,9 @@
 Vacuum-Watch.*sdf
+Vacuum-Watch.suo
 Debug/*
 Release/*
 Vacuum-Watch/Debug/*
 Vacuum-Watch/Release/*
 ipch/*
+Vacuum-Watch/Options.opt
+Vacuum-Watch/*Log.txt

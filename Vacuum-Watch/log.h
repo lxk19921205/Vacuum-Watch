@@ -11,28 +11,24 @@ class CLog : public ILog
 {
 public:
 	CLog();
-	 ~CLog();
-	
+	virtual ~CLog();
+
+	virtual const string& GetInfoFileName();
+	virtual const string& GetDebugFileName();
+	virtual const string& GetErrorFileName();
+
+	virtual void ClearInfo();
+	virtual void ClearDebug();
+	virtual void ClearError();
+
 	virtual void Info(const string& msg);
 	virtual void Debug(const string& msg);
 	virtual void Error(const string& msg);
 
-	//获得存放info级log的文件名
-	virtual const string& GetInfoFileName();
-	//获得存放debug级log的文件名
-	virtual const string& GetDebugFileName();
-	//获得存放error级log的文件名
-	virtual const string& GetErrorFileName();
-
-	//清空info级的log
-	virtual void ClearInfo();
-	//清空debug级的log
-	virtual void ClearDebug();
-	//清空error级的log
-	virtual void ClearError();
-
-private:
-	string file_name;
+protected:
+	static const string INFO_LOG_NAME;
+	static const string DEBUG_LOG_NAME;
+	static const string ERROR_LOG_NAME;
 };
 
 
