@@ -11,17 +11,19 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="COption.cpp" />
+    <ClCompile Include="option.cpp" />
     <ClCompile Include="factory.cpp" />
     <ClCompile Include="log.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="testing.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="constants.h" />
-    <ClInclude Include="COption.h" />
+    <ClInclude Include="option.h" />
     <ClInclude Include="factory.h" />
     <ClInclude Include="log.h" />
     <ClInclude Include="module_interfaces.h" />
+    <ClInclude Include="testing.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{005FE372-8E04-4EEA-9878-CA8032865F00}</ProjectGuid>
