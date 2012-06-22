@@ -9,6 +9,9 @@ public:
 
 	//²âÊÔOptionÄ£¿é
 	void TestOptions();
+
+	//²âÊÔLogÄ£¿é
+	void TestLog();
 };
 
 #endif

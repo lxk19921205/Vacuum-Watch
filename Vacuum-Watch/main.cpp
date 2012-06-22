@@ -29,13 +29,15 @@ void DoTest()
 {
 	CTesting test;
 
-	test.TestOptions();
+//	test.TestOptions();
+	test.TestLog();
 }
 
 int main(int argc, char** argv)
 {
 	DoTest();
 	return 0;
+
 
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_SINGLE | GLUT_RGBA);
