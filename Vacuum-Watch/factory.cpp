@@ -1,21 +1,17 @@
 #include "factory.h"
 #include "log.h"
-
-
-CLog g_log;
+#include "option.h"
 
 
 ILog* CFactory::getLog()
 {
-	//TODO
-	return &g_log;
+	return &CLog::Instance();
 }
 
 
 IOptions* CFactory::getOptions()
 {
-	//TODO
-	return NULL;
+	return &COption::Instance();
 }
 
 

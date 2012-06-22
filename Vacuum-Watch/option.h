@@ -10,9 +10,6 @@ using std::string;
 class COption : public IOptions
 {
 public:
-	COption();
-	virtual ~COption();
-
 	//数据存在这个文件里
 	const static string FILE_NAME;
 
@@ -28,7 +25,21 @@ public:
 	virtual int GetFireKey();
 	virtual void SetFireKey(int key);
 
+	//for Singleton
+	static inline COption& Instance()
+	{
+		static COption _option;
+		return _option;
+	}
+
 protected:
+	//for Singleton
+	COption();
+	virtual ~COption();
+	COption(const COption& rhs);			//不实现
+	COption& operator=(const COption& rhs);	//不实现
+
+
 	//持久化存入文件中，返回成功与否
 	bool SaveIntoFile();
 	//从文件中恢复，如果没有这个文件，就恢复成默认值，返回有此文件否
