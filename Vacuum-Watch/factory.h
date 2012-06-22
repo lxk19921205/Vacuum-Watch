@@ -14,6 +14,9 @@ public:
 
 	//获得Audio模块的唯一实例
 	static IAudio* getAudio();
+
+	//获得Controller模块的唯一实例
+	static IController* getController();
 };
 
 #endif

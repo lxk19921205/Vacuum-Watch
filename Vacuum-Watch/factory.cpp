@@ -1,6 +1,7 @@
 #include "factory.h"
 #include "log.h"
 #include "option.h"
+#include "controller.h"
 
 
 ILog* CFactory::getLog()
@@ -19,4 +20,9 @@ IAudio* CFactory::getAudio()
 {
 	//TODO
 	return NULL;
+}
+
+IController* CFactory::getController()
+{
+	return &CController::Instance();
 }

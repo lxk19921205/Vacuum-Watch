@@ -17,8 +17,12 @@ static void ListenKeyboard(unsigned char key, int x, int y)
 	switch (key)
 	{
 	case VW_OPTION_DEF_FIRE_KEY:
-		//TODO 收到了fire的信号，告诉controller！
-		break;
+		{
+			//收到了fire的信号，告诉controller
+			IController* controller = CFactory::getController();
+			controller->OnFireKeyClicked();
+			break;
+		}
 
 	default:
 		break;
@@ -31,8 +35,9 @@ static void ListenMouseMove(int x, int y)
 	static int prev_x = 0;
 	static int prev_y = 0;
 
-	//TODO 根据之前的点和现在的点，算出该做什么变化
-//	cout << "from (" << prev_x << ", " << prev_y << ") to (" << x << ", " << y << ")" << endl;
+	//根据之前的点和现在的点，告诉controller，让它去算该做什么变化
+	IController* controller = CFactory::getController();
+	controller->OnMouseMoved(prev_x, prev_y, x, y);
 
 	prev_x = x;
 	prev_y = y;

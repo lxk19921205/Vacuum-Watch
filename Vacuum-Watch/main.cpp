@@ -46,8 +46,8 @@ int main(int argc, char** argv)
 
 	SetupRC();
 
-// 	CInput input;
-// 	input.InitListener();
+	CInput input;
+	input.InitListener();
 
 	glutMainLoop();
 

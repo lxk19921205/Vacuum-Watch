@@ -142,4 +142,21 @@ public:
 	virtual void InitListener() = 0;
 };
 
+
+
+//////////////////////////////////////////////////////////////////////////
+/************************************************************************/
+/* 游戏逻辑总控模块的接口，定义了所有状态变化的操作                     */
+/************************************************************************/
+class IController
+{
+public:
+	//FIRE的按键被按下了
+	virtual void OnFireKeyClicked() = 0;
+
+	//鼠标从(from_x, from_y)移动到（to_x, to_y）
+	virtual void OnMouseMoved(int from_x, int from_y, int to_x, int to_y) = 0;
+};
+
+
 #endif
