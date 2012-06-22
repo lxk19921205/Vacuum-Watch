@@ -29,8 +29,9 @@ void DoTest()
 {
 	CTesting test;
 
-	test.TestOptions();
+//	test.TestOptions();
 //	test.TestLog();
+//	test.TestGameData();
 }
 
 int main(int argc, char** argv)

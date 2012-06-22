@@ -12,6 +12,9 @@ public:
 
 	//测试Log模块
 	void TestLog();
+
+	//测试游戏数据模块
+	void TestGameData();
 };
 
 #endif

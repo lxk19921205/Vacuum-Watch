@@ -4,7 +4,7 @@
 #include "module_interfaces.h"
 
 /************************************************************************/
-/* 管理各种游戏数据                                                     */
+/* 管理各种游戏数据 by Andriy                                           */
 /************************************************************************/
 class CGameData : public IGameData
 {
@@ -18,9 +18,11 @@ public:
 
 	virtual long GetCurrentScore();
 	virtual void AddScore(long score);
-	virtual void ClearScore();
+	virtual void ResetScore();
 
 private:
+	int m_iCurrentStage;
+	long m_lCurrentScore;
 };
 
 #endif

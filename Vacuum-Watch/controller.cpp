@@ -4,6 +4,8 @@
 
 #include <stdio.h>	//only for the definition of NULL
 #include "controller.h"
+#include "game_data.h"
+#include "view_engine.h"
 
 
 CController::CController()
