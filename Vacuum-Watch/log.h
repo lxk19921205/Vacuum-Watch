@@ -13,14 +13,19 @@ public:
 	CLog();
 	virtual ~CLog();
 
-	virtual const string& GetFileName();
+	virtual const string& GetInfoFileName();
+	virtual const string& GetDebugFileName();
+	virtual const string& GetErrorFileName();
 
-	virtual void Info(const char* msg);
-	virtual void Debug(const char* msg);
-	virtual void Error(const char* msg);
+	virtual void ClearInfo();
+	virtual void ClearDebug();
+	virtual void ClearError();
+
+	virtual void Info(const string& msg);
+	virtual void Debug(const string& msg);
+	virtual void Error(const string& msg);
 
 private:
-	string file_name;
 };
 
 
