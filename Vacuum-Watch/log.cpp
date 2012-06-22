@@ -16,6 +16,7 @@ const string CLog::ERROR_LOG_NAME = "ErrorLog.txt";
 
 CLog::CLog()
 {
+
 }
 
 CLog::~CLog()
