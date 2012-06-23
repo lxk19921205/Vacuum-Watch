@@ -1,6 +1,7 @@
 #ifndef _VW_VIEW_ENGINE_H_
 #define _VW_VIEW_ENGINE_H_
 
+#include <gl/GL.h>
 #include "module_interfaces.h"
 
 /************************************************************************/
