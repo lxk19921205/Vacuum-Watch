@@ -36,10 +36,34 @@ static void RenderScene()
 {
 	//用当前清除颜色清除窗口
 	glClear(GL_COLOR_BUFFER_BIT);
-
 	glColor3f(1.0f, 0.0f, 0.0f);
 
-	glRectf(g_x1, g_y1, g_x1+g_rsize, g_y1+g_rsize);
+	glTranslatef(0.0f, 0.0f, -3.0f);  
+
+	glPushMatrix(); 
+	glRotatef(g_x1,0.0f,0.0f,1.0f); // 绕z轴旋转
+	GLUquadric *pObj; 
+	pObj = gluNewQuadric(); 
+	gluCylinder(pObj,10.0f,90.0f,10.0f,100,100);//创建空心圆柱
+	gluDeleteQuadric(pObj); 
+	glPopMatrix();  
+
+	//	glRectf(g_x1, g_y1, g_x1+g_rsize, g_y1+g_rsize);
+
+	//用三角形检验旋转
+/*	//glLoadIdentity(); // 重置模型观察矩阵
+	//glTranslatef(-1.5f,0.0f,-6.0f); // 左移 1.5 单位，并移入屏幕 6.0
+	glPushMatrix();
+	glRotatef( g_x1, 0.0f, 0.0f,1.0f);
+	glBegin(GL_TRIANGLES); // 绘制三角形
+	glColor3f(1.0f,0.0f,0.0f); //设置当前色为红色
+	glVertex3f( 0.0f, 10.0f, 0.0f); // 上顶点
+	glColor3f(0.0f,1.0f,0.0f);//设置当前色为绿色
+	glVertex3f(-10.0f,-10.0f, 0.0f); // 左下
+	glColor3f(0.0f,0.0f,1.0f);//设置当前色为蓝色
+	glVertex3f( 10.0f,-10.0f, 0.0f); // 右下
+	glEnd(); // 三角形绘制结束
+	glPopMatrix();*/
 
 	//刷新绘图命令并进行交换
 	glutSwapBuffers();
@@ -85,11 +109,11 @@ void TimerFunction(int value)
 {
 	if (g_x1 > g_window_width-g_rsize || g_x1 < -g_window_width)
 	{
-		g_xstep = -g_xstep;
+	g_xstep = -g_xstep;
 	}
 	if (g_y1 > g_window_height || g_y1 < -g_window_height+g_rsize)
 	{
-		g_ystep = -g_ystep;
+	g_ystep = -g_ystep;
 	}
 
 	g_x1 += g_xstep;
@@ -97,20 +121,20 @@ void TimerFunction(int value)
 
 	if (g_x1 > (g_window_width - g_rsize + g_xstep))
 	{
-		g_x1 = g_window_width - g_rsize - 1;
+	g_x1 = g_window_width - g_rsize - 1;
 	}
 	else if (g_x1 < -(g_window_width + g_xstep))
 	{
-		g_x1 = -g_window_width - 1;
+	g_x1 = -g_window_width - 1;
 	}
 
 	if (g_y1 > (g_window_height + g_ystep))
 	{
-		g_y1 = g_window_height - 1;
+	g_y1 = g_window_height - 1;
 	}
 	else if (g_y1 < -(g_window_height - g_rsize + g_ystep))
 	{
-		g_y1 = -g_window_height + g_rsize - 1;
+	g_y1 = -g_window_height + g_rsize - 1;
 	}
 
 	glutPostRedisplay();
@@ -122,8 +146,8 @@ void CViewEngine::Init()
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA);
 	glutInitWindowSize(800, 600);
 	glutCreateWindow(VW_WINDOW_TITLE);
-	glutDisplayFunc(RenderScene);
 	glutReshapeFunc(ChangeSize);
+	glutDisplayFunc(RenderScene);
 	glutTimerFunc(33, TimerFunction, 1);
 
 	this->SetupRC();
