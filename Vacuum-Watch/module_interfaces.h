@@ -129,7 +129,11 @@ public:
 class IViewEngine
 {
 public:
+	//做界面展示之前的初始化
+	virtual void Init() = 0;
 
+	//开始展示游戏界面
+	virtual void StartDisplaying() = 0;
 };
 
 
@@ -154,11 +158,21 @@ public:
 class IController
 {
 public:
+// 	//获取其ViewEngine，避免每个函数都既在ViewEngine里有一遍，在Controller里再来一遍
+// 	virtual IViewEngine* GetViewEngine() = 0;
+
+	//游戏开始！
+	virtual void StartGame() = 0;
+
+	//初始化鼠标和键盘的监听
+	virtual void InitKeyboardMouseListening() = 0;
 	//FIRE的按键被按下了
 	virtual void OnFireKeyClicked() = 0;
-
 	//鼠标从(from_x, from_y)移动到（to_x, to_y）
 	virtual void OnMouseMoved(int from_x, int from_y, int to_x, int to_y) = 0;
+
+	//对ViewEngine的初始化
+	virtual void InitViewEngine() = 0;
 };
 
 

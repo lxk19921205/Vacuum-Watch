@@ -46,6 +46,7 @@ static void ListenMouseMove(int x, int y)
 
 void CInput::InitListener()
 {
+	//在ViewEngine的Init之后再调用这里，应该是如果没有先CreateWindow，会崩
 	glutKeyboardFunc(ListenKeyboard);		//监听键盘
 	glutMotionFunc(ListenMouseMove);		//监听鼠标按下时的移动
 	glutPassiveMotionFunc(ListenMouseMove);	//监听鼠标未按下时的移动

@@ -9,9 +9,13 @@
 class CController : public IController
 {
 public:
+	virtual void StartGame();
+
+	virtual void InitKeyboardMouseListening();
 	virtual void OnFireKeyClicked();
 	virtual void OnMouseMoved(int from_x, int from_y, int to_x, int to_y);
 
+	virtual void InitViewEngine();
 
 	//for Singleton
 	static inline CController& Instance()

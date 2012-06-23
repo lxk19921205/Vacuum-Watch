@@ -8,6 +8,7 @@
 #include "game_data.h"
 #include "view_engine.h"
 #include "factory.h"
+#include "input.h"
 
 
 CController::CController()
@@ -44,4 +45,22 @@ void CController::OnMouseMoved( int from_x, int from_y, int to_x, int to_y )
 
 	ILog* log = CFactory::getLog();
 	log->Info(buffer);
+}
+
+void CController::StartGame()
+{
+	m_pViewEngine->StartDisplaying();
+	//TODO
+}
+
+void CController::InitKeyboardMouseListening()
+{
+	//Input模块会自动把信息发送到Controller的单例来，因此这样就好了
+	CInput input;
+	input.InitListener();
+}
+
+void CController::InitViewEngine()
+{
+	m_pViewEngine->Init();
 }

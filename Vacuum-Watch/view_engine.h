@@ -11,6 +11,12 @@ class CViewEngine : public IViewEngine
 public:
 	CViewEngine();
 	virtual ~CViewEngine();
+
+	virtual void Init();
+	//在Init中调用，为OpenGL超级宝典中写的框架
+	void SetupRC();
+
+	virtual void StartDisplaying();
 };
 
 #endif
