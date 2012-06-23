@@ -11,11 +11,11 @@ class CController : public IController
 public:
 	virtual void StartGame();
 
-	virtual void InitKeyboardMouseListening();
+	virtual void Init();
+
 	virtual void OnFireKeyClicked();
 	virtual void OnMouseMoved(int from_x, int from_y, int to_x, int to_y);
 
-	virtual void InitViewEngine();
 
 	//for Singleton
 	static inline CController& Instance()
@@ -30,6 +30,10 @@ protected:
 	virtual ~CController();
 	CController(const CController& rhs);			//不实现
 	CController& operator=(const CController& rhs);	//不实现
+
+
+	//初始化鼠标和键盘的监听
+	void InitKeyboardMouseListening();
 
 
 	IGameData* m_pGameData;

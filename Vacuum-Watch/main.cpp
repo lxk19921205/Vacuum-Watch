@@ -24,8 +24,7 @@ int main(int argc, char** argv)
 	glutInit(&argc, argv);
 
 	IController* controller = CFactory::getController();
-	controller->InitViewEngine();				//注意先后顺序，先ViewEngine！
-	controller->InitKeyboardMouseListening();
+	controller->Init();
 	controller->StartGame();
 
 	return 0;

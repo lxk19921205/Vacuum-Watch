@@ -44,7 +44,7 @@ void CController::OnMouseMoved( int from_x, int from_y, int to_x, int to_y )
 	sprintf_s(buffer, "Mouse moved from (%d, %d) to (%d, %d), handled by CController", from_x, from_y, to_x, to_y);
 
 	ILog* log = CFactory::getLog();
-	log->Info(buffer);
+//	log->Info(buffer);
 }
 
 void CController::StartGame()
@@ -60,7 +60,9 @@ void CController::InitKeyboardMouseListening()
 	input.InitListener();
 }
 
-void CController::InitViewEngine()
+void CController::Init()
 {
+	//注意先后顺序，先ViewEngine！
 	m_pViewEngine->Init();
+	this->InitKeyboardMouseListening();
 }

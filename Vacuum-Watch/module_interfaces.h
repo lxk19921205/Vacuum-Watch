@@ -164,15 +164,13 @@ public:
 	//游戏开始！
 	virtual void StartGame() = 0;
 
-	//初始化鼠标和键盘的监听
-	virtual void InitKeyboardMouseListening() = 0;
+	//所有的初始化工作
+	virtual void Init() = 0;
+
 	//FIRE的按键被按下了
 	virtual void OnFireKeyClicked() = 0;
 	//鼠标从(from_x, from_y)移动到（to_x, to_y）
 	virtual void OnMouseMoved(int from_x, int from_y, int to_x, int to_y) = 0;
-
-	//对ViewEngine的初始化
-	virtual void InitViewEngine() = 0;
 };
 
 
