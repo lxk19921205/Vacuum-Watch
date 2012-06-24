@@ -38,7 +38,7 @@ static void RenderScene()
 	glClear(GL_COLOR_BUFFER_BIT);
 	glColor3f(1.0f, 0.0f, 0.0f);
 
-	glTranslatef(0.0f, 0.0f, -3.0f);  
+	glTranslatef(0.0f, 0.0f, 10.0f);  
 
 	glPushMatrix(); 
 	glRotatef(g_x1,0.0f,0.0f,1.0f); // ÈÆzÖáÐý×ª
