@@ -5,7 +5,6 @@
 #include "testing.h"
 #include "input.h"
 
-
 void DoTest()
 {
 	CTesting test;

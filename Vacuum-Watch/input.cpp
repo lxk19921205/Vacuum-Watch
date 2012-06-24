@@ -2,7 +2,9 @@
 #include "constants.h"
 #include "input.h"
 #include "factory.h"
+#include "button.h"
 
+Button pBtn;
 
 CInput::CInput()
 {
@@ -11,6 +13,26 @@ CInput::CInput()
 CInput::~CInput()
 {
 }
+
+static void ListenMouseClick(int button, int state, int x, int y)
+{
+
+	if(button==GLUT_LEFT_BUTTON)
+		switch(state)
+	{
+		case GLUT_DOWN:
+			//左键按下：
+//			printf("Left Button ");
+			if( pBtn.OnMouseDown(x, y) );
+				break;
+
+		case GLUT_UP:
+			pBtn.OnMouseUp();
+			break;
+	}
+	glutPostRedisplay();
+}
+
 
 static void ListenKeyboard(unsigned char key, int x, int y)
 {
@@ -48,6 +70,7 @@ void CInput::InitListener()
 {
 	//在ViewEngine的Init之后再调用这里，应该是如果没有先CreateWindow，会崩
 	glutKeyboardFunc(ListenKeyboard);		//监听键盘
+	glutMouseFunc(ListenMouseClick);		//监听鼠标点击
 	glutMotionFunc(ListenMouseMove);		//监听鼠标按下时的移动
 	glutPassiveMotionFunc(ListenMouseMove);	//监听鼠标未按下时的移动
 }

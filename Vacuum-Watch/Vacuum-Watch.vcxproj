@@ -24,6 +24,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="audio.h" />
+    <ClInclude Include="button.h" />
     <ClInclude Include="constants.h" />
     <ClInclude Include="controller.h" />
     <ClInclude Include="game_data.h" />
