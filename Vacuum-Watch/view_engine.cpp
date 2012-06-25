@@ -21,8 +21,6 @@ void CViewEngine::StartDisplaying()
 	//TODO
 }
 
-
-
 GLfloat g_x1 = 0.0f;
 GLfloat g_y1 = 0.0f;
 GLfloat g_rsize = 25;
@@ -78,6 +76,9 @@ static void ChangeSize(GLsizei width, GLsizei height)
 		height = 1;
 	}
 
+	g_window_width = width;
+	g_window_height = height;
+
 	//将视口设置为窗口的大小
 	glViewport(0, 0, width, height);
 
@@ -87,7 +88,7 @@ static void ChangeSize(GLsizei width, GLsizei height)
 
 	//建立裁剪区域（left, right, bottom, top, front, back）
 	GLfloat aspect_ratio = (GLfloat) width / (GLfloat) height;
-	if (width < height)
+	if (width <= height)
 	{
 		glOrtho(-100.0, 100.0, -100.0/aspect_ratio, 100.0/aspect_ratio, 1.0, -1.0);
 	}
@@ -98,6 +99,7 @@ static void ChangeSize(GLsizei width, GLsizei height)
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
+
 }
 
 void TimerFunction(int value)
