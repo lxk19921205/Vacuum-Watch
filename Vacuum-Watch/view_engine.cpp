@@ -94,13 +94,87 @@ static void RenderSceneAbout()
 
 static void RenderSceneOngoing()
 {
-	//用当前清除颜色清除窗口
-	glClearColor(0.0f, 1.0f, 0.0f, 1.0f);
+	//用黑色清除窗口
+	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT);
 
+	IGameData* data = CFactory::getController()->GetGameData();
+	int current_length = data->GetCurrentLength();
+	int total_length = data->GetTotalLength();
 
-	glColor3f(1.0f, 1.0f, 1.0f);
-	glRectf(0.0f, 0.0f, 100.0f, 100.0f);
+
+
+
+	GLfloat inner_angle = 1;
+	GLfloat outer_angle = 60;
+	GLfloat radius = 200;
+
+	GLfloat center_x = 300;
+	GLfloat center_y = 300;
+
+	static GLfloat the_angle = 0;
+	the_angle += 1;
+	if (the_angle > 360)
+	{
+		the_angle = 0;
+	}
+	GLfloat angle = the_angle;
+	glBegin(GL_TRIANGLES);
+		for (int i=0;i<=360;i+=outer_angle)
+		{
+			glVertex3f(center_x, center_y, 0.0f);
+			glVertex3f(center_x + radius * sin(angle * VW_PI / 180), center_y + radius * cos(angle * VW_PI / 180), 0.0f);
+			GLfloat a_little_more = angle + inner_angle;
+			glVertex3f(center_x + radius * sin(a_little_more * VW_PI / 180), center_y + radius * cos(a_little_more * VW_PI / 180), 0.0f);
+			angle += outer_angle;
+		}
+	glEnd();
+
+	glutSwapBuffers();
+	return;
+
+
+
+
+
+	glPushMatrix();
+	glRotatef(30, 1.0f, 0.0f, 0.0f);
+	glRotatef(30, 0.0f, 1.0f, 0.0f);
+
+	static GLfloat offset_x = 0;
+	static GLfloat offset_y = 0;
+
+	offset_x++;
+	offset_y++;
+
+	glBegin(GL_LINE_STRIP);
+	GLfloat z = -50.0f;
+	for (GLfloat angle = 0.0f; angle < 2.0f*VW_PI*3.0f; angle += 0.1)
+	{
+		GLfloat x = 50.0f * sin(angle);
+		GLfloat y = 50.0f * cos(angle);
+
+		glVertex3f(x + offset_x, y + offset_y, z);
+		z += 0.5f;
+	}
+	glEnd();
+	glPopMatrix();
+
+// 	cout << current_length << endl;
+// 	int width = (int) g_window_width;
+// 	float pos = current_length % width;
+// 	glBegin(GL_LINE);
+// 	glVertex2f(pos, 100);
+// 	glVertex2f(100, pos);
+// 	glEnd();
+// 
+// 	glRectf(pos, 0.0f, 100.0f, 100.0f);
+
+
+// 
+// 
+// 	glColor3f(1.0f, 1.0f, 1.0f);
+// 	glRectf(0.0f, 0.0f, 100.0f, 100.0f);
 
 
 
@@ -114,8 +188,6 @@ static void RenderSceneOngoing()
 	gluDeleteQuadric(pObj); 
 	glPopMatrix();  
 */
-
-
 
 
 	glutSwapBuffers();
@@ -194,9 +266,11 @@ static void ChangeSize(GLsizei width, GLsizei height)
 void TimerFunction(int value)
 {
 	IController* controller = CFactory::getController();
-	controller->OnTimerClick();
-
-	glutPostRedisplay();
+	bool need_redraw = controller->OnTimerClick();
+	if (need_redraw)
+	{
+		glutPostRedisplay();
+	}
 	glutTimerFunc(VW_REFRESH_INTERVAL, TimerFunction, value+1);
 }
 

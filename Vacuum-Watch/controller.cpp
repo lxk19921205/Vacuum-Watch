@@ -77,10 +77,22 @@ void CController::OnLeftClicked( int pos_x, int pos_y )
 	m_pViewEngine->OnLeftClicked(pos_x, pos_y);
 }
 
-void CController::OnTimerClick()
+//返回true表示需要重绘
+bool CController::OnTimerClick()
 {
 	//TODO 该更新数据了，只更新就够了，不用调用重绘，其他地方会调的
-
+	if (m_pGameData->Step())
+	{
+		//还可以继续走
+		
+		//判断有没有撞到
+		return true;
+	}
+	else
+	{
+		//到头了，不能再走了
+		return false;
+	}
 }
 
 IGameData* CController::GetGameData()
