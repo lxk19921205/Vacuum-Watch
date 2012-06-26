@@ -79,10 +79,8 @@ void CController::OnLeftClicked( int pos_x, int pos_y )
 
 void CController::OnTimerClick()
 {
-	//TODO 该更新数据了
+	//TODO 该更新数据了，只更新就够了，不用调用重绘，其他地方会调的
 
-	//更新之后，调用viewengine里让刷新重绘
-	m_pViewEngine->Redraw();
 }
 
 IGameData* CController::GetGameData()
@@ -97,24 +95,29 @@ int CController::GetState()
 
 void CController::OnStartButton()
 {
+	this->m_state = VW_STATE_ONGOING;
+
 	//TODO start
 	cout << "start" << endl;
 }
 
 void CController::OnSettingButton()
 {
+	this->m_state = VW_STATE_SETTING;
+
 	//TODO setting
 	cout << "setting" << endl;
 }
 
 void CController::OnAboutButton()
 {
+	this->m_state = VW_STATE_ABOUT;
+
 	//TODO about
 	cout << "about" << endl;
 }
 
 void CController::OnQuitButton()
 {
-	//TODO quit
-	cout << "quit" << endl;
+	exit(0);
 }

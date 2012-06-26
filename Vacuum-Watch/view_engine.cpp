@@ -36,14 +36,6 @@ void CViewEngine::StartDisplaying()
 }
 
 
-GLfloat g_x1 = 0.0f;
-GLfloat g_y1 = 0.0f;
-GLfloat g_rsize = 25;
-
-GLfloat g_xstep = 1.0f;
-GLfloat g_ystep = 1.0f;
-
-
 //在显示菜单时，使用这里的RenderScene
 static void RenderSceneMenu()
 {
@@ -76,7 +68,6 @@ static void RenderSceneMenu()
 
 	//刷新绘图命令并进行交换
 	glutSwapBuffers();
-
 }
 
 static void RenderSceneSetting()
@@ -165,40 +156,14 @@ static void ChangeSize(GLsizei width, GLsizei height)
 
 }
 
+//每VW_REFRESH_INTERVAL毫秒的时间执行一次，用来刷新，Controller只要改状态标识就好了，刷新界面的调令从这里走
 void TimerFunction(int value)
 {
-	if (g_x1 > g_window_width-g_rsize || g_x1 < -g_window_width)
-	{
-	g_xstep = -g_xstep;
-	}
-	if (g_y1 > g_window_height || g_y1 < -g_window_height+g_rsize)
-	{
-	g_ystep = -g_ystep;
-	}
-
-	g_x1 += g_xstep;
-	g_y1 += g_ystep;
-
-	if (g_x1 > (g_window_width - g_rsize + g_xstep))
-	{
-	g_x1 = g_window_width - g_rsize - 1;
-	}
-	else if (g_x1 < -(g_window_width + g_xstep))
-	{
-	g_x1 = -g_window_width - 1;
-	}
-
-	if (g_y1 > (g_window_height + g_ystep))
-	{
-	g_y1 = g_window_height - 1;
-	}
-	else if (g_y1 < -(g_window_height - g_rsize + g_ystep))
-	{
-	g_y1 = -g_window_height + g_rsize - 1;
-	}
+	IController* controller = CFactory::getController();
+	controller->OnTimerClick();
 
 	glutPostRedisplay();
-	glutTimerFunc(VW_REFRESH_INTERVAL, TimerFunction, 1);
+	glutTimerFunc(VW_REFRESH_INTERVAL, TimerFunction, value+1);
 }
 
 
@@ -209,7 +174,7 @@ void CViewEngine::Init()
 	glutCreateWindow(VW_WINDOW_TITLE);
 	glutDisplayFunc(RenderScene);
 	glutReshapeFunc(ChangeSize);
-	glutTimerFunc(VW_REFRESH_INTERVAL, TimerFunction, 1);
+	glutTimerFunc(VW_REFRESH_INTERVAL, TimerFunction, 0);
 
 	this->SetupRC();
 	this->InitMenuButtons();
@@ -253,10 +218,11 @@ void CViewEngine::OnLeftClicked( int pos_x, int pos_y )
 	}
 }
 
-void CViewEngine::Redraw()
-{
-	glutPostRedisplay();
-}
+//为什么注释呢：见module_interfaces.h
+// void CViewEngine::Redraw()
+// {
+// 	glutPostRedisplay();
+// }
 
 void CViewEngine::InitMenuButtons()
 {

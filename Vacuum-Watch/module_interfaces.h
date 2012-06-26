@@ -139,8 +139,9 @@ public:
 	//鼠标的左键在(pos_x, pos_y)处click了一下
 	virtual void OnLeftClicked(int pos_x, int pos_y) = 0;
 
-	//准备重绘
-	virtual void Redraw() = 0;
+//为什么注释呢：现在有一个TimerFunc()，周期性调用controller的OnTimerClick()，刷新状态，然后重绘，外头不应该显式的要求重绘
+// 	//准备重绘
+// 	virtual void Redraw() = 0;
 };
 
 
