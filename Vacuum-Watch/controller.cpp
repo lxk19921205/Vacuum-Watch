@@ -66,3 +66,8 @@ void CController::Init()
 	m_pViewEngine->Init();
 	this->InitKeyboardMouseListening();
 }
+
+void CController::OnLeftClicked( int pos_x, int pos_y )
+{
+	m_pViewEngine->OnLeftClicked(pos_x, pos_y);
+}

@@ -15,6 +15,7 @@ public:
 
 	virtual void OnFireKeyClicked();
 	virtual void OnMouseMoved(int from_x, int from_y, int to_x, int to_y);
+	virtual void OnLeftClicked(int pos_x, int pos_y);
 
 
 	//for Singleton

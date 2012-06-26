@@ -4,7 +4,11 @@
 #include "factory.h"
 #include "button.h"
 
-Button pBtn;
+#include <iostream>
+
+using std::cout;
+using std::endl;
+
 
 CInput::CInput()
 {
@@ -14,23 +18,42 @@ CInput::~CInput()
 {
 }
 
+
 static void ListenMouseClick(int button, int state, int x, int y)
 {
+	static int down_x = -1;
+	static int down_y = -1;
 
-	if(button==GLUT_LEFT_BUTTON)
-		switch(state)
+	if(button == GLUT_LEFT_BUTTON)
 	{
+		switch(state)
+		{
 		case GLUT_DOWN:
-			//左键按下：
-//			printf("Left Button ");
-			if( pBtn.OnMouseDown(x, y) );
+			{
+				//左键按下，记录坐标
+				down_x = x;
+				down_y = y;
 				break;
+			}
 
 		case GLUT_UP:
-			pBtn.OnMouseUp();
+			{
+				//左键弹起，对照坐标，若相等，则表示clicked，最后清楚按下的坐标
+				if (down_x == x && down_y == y)
+				{
+					IController* controller = CFactory::getController();
+					controller->OnLeftClicked(x, y);
+					cout << "clicked" << x << ", " << y << endl;
+				}
+				down_x = -1;
+				down_y = -1;
+				break;
+			}
+
+		default:
 			break;
+		}
 	}
-	glutPostRedisplay();
 }
 
 

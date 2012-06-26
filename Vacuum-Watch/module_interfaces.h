@@ -134,6 +134,9 @@ public:
 
 	//开始展示游戏界面
 	virtual void StartDisplaying() = 0;
+
+	//鼠标的左键在(pos_x, pos_y)处click了一下
+	virtual void OnLeftClicked(int pos_x, int pos_y) = 0;
 };
 
 
@@ -171,6 +174,8 @@ public:
 	virtual void OnFireKeyClicked() = 0;
 	//鼠标从(from_x, from_y)移动到（to_x, to_y）
 	virtual void OnMouseMoved(int from_x, int from_y, int to_x, int to_y) = 0;
+	//鼠标的左键在(pos_x, pos_y)处click了一下
+	virtual void OnLeftClicked(int pos_x, int pos_y) = 0;
 };
 
 

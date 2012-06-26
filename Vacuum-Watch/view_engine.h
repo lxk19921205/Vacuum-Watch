@@ -3,6 +3,7 @@
 
 #include <gl/GL.h>
 #include "module_interfaces.h"
+#include "button.h"
 
 /************************************************************************/
 /* 专门用于使用OpenGL，展示游戏界面                                     */
@@ -14,10 +15,14 @@ public:
 	virtual ~CViewEngine();
 
 	virtual void Init();
+	virtual void StartDisplaying();
+	
+	virtual void OnLeftClicked(int pos_x, int pos_y);
+
+private:
 	//在Init中调用，为OpenGL超级宝典中写的框架
 	void SetupRC();
 
-	virtual void StartDisplaying();
 };
 
 #endif

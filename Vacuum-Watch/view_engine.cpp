@@ -1,10 +1,23 @@
 #include <gl/glut.h>
+#include <iostream>
 
 #include "view_engine.h"
 #include "constants.h"
 #include "button.h"
 
-extern Button pBtn;
+using std::cout;
+using std::endl;
+
+GLfloat g_window_width = VW_WINDOW_WIDTH;
+GLfloat g_window_height = VW_WINDOW_HEIGHT;
+
+
+//函数外的static变量表示只在这个.c里用
+static CButton start_button;
+static CButton setting_button;
+static CButton about_button;
+static CButton quit_button;
+
 
 
 CViewEngine::CViewEngine()
@@ -21,6 +34,7 @@ void CViewEngine::StartDisplaying()
 	//TODO
 }
 
+
 GLfloat g_x1 = 0.0f;
 GLfloat g_y1 = 0.0f;
 GLfloat g_rsize = 25;
@@ -28,8 +42,6 @@ GLfloat g_rsize = 25;
 GLfloat g_xstep = 1.0f;
 GLfloat g_ystep = 1.0f;
 
-GLfloat g_window_width = 800;
-GLfloat g_window_height = 600;
 
 static void RenderScene()
 {
@@ -43,7 +55,9 @@ static void RenderScene()
 	glOrtho(0, g_window_width, 0, g_window_height, 0, 100);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
-	pBtn.Render();
+
+	start_button.Render();
+	
 
 /*	glTranslatef(0.0f, 0.0f, 10.0f);  
 
@@ -138,15 +152,55 @@ void TimerFunction(int value)
 	glutTimerFunc(33, TimerFunction, 1);
 }
 
+
 void CViewEngine::Init()
 {
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA);
 	glutInitWindowSize(800, 600);
 	glutCreateWindow(VW_WINDOW_TITLE);
-	pBtn.init();
 	glutDisplayFunc(RenderScene);
 	glutReshapeFunc(ChangeSize);
 	glutTimerFunc(33, TimerFunction, 1);
 
 	this->SetupRC();
+}
+
+void CViewEngine::OnLeftClicked( int pos_x, int pos_y )
+{
+	//TODO 先检查当前状态，是不是在显示开始界面的地方！
+	if (true)
+	{
+	}
+
+	if (start_button.OnMouseDown(pos_x, pos_y))
+	{
+		start_button.OnMouseUp();
+		//TODO start
+		cout << "start" << endl;
+		return;
+	}
+
+	if (setting_button.OnMouseDown(pos_x, pos_y))
+	{
+		setting_button.OnMouseUp();
+		//TODO setting
+		cout << "setting" << endl;
+		return;
+	}
+
+	if (about_button.OnMouseDown(pos_x, pos_y))
+	{
+		about_button.OnMouseUp();
+		//TODO about
+		cout << "about" << endl;
+		return;
+	}
+
+	if (quit_button.OnMouseDown(pos_x, pos_y))
+	{
+		quit_button.OnMouseUp();
+		//TODO quit
+		cout << "quit" << endl;
+		return;
+	}
 }
