@@ -82,7 +82,31 @@ static void RenderSceneAbout()
 
 static void RenderSceneOngoing()
 {
+	//用当前清除颜色清除窗口
+	glClearColor(0.0f, 1.0f, 0.0f, 1.0f);
+	glClear(GL_COLOR_BUFFER_BIT);
 
+
+	glColor3f(1.0f, 1.0f, 1.0f);
+	glRectf(0.0f, 0.0f, 100.0f, 100.0f);
+
+
+
+/*	glTranslatef(0.0f, 0.0f, 10.0f);  
+
+	glPushMatrix(); 
+	glRotatef(g_x1,0.0f,0.0f,1.0f); // 绕z轴旋转
+	GLUquadric *pObj; 
+	pObj = gluNewQuadric(); 
+	gluCylinder(pObj,10.0f,90.0f,10.0f,100,100);//创建空心圆柱
+	gluDeleteQuadric(pObj); 
+	glPopMatrix();  
+*/
+
+
+
+
+	glutSwapBuffers();
 }
 
 static void RenderScenePaused()
