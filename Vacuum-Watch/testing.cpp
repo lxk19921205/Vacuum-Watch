@@ -10,6 +10,7 @@
 #include "log.h"
 #include "game_data.h"
 #include "factory.h"
+#include "audio.h"
 
 using std::cout;
 using std::endl;
@@ -102,4 +103,11 @@ void CTesting::TestGameData()
 
 	data.ResetScore();
 	cout << "after reset score, score: " << data.GetCurrentScore() << endl;
+}
+
+void CTesting::TestAudio()
+{
+	CAudio audio;
+	audio.StartBGM(L"..\\Resource\\audio\\dreamcatcher.mp3");
+	//TODO @liuquan
 }

@@ -1,28 +1,25 @@
-#include "module_interfaces.h"
-#include "factory.h"
 #include "audio.h"
+
 #include <Windows.h>
 #include <MMSystem.h>
+
 #pragma comment(lib, "WINMM.LIB") 
+
 using std::string;
 
 
 CAudio::CAudio()
 {
-
 }
 
 CAudio::~CAudio()
 {
-
 }
+
 void CAudio::Release()
 {
-
+	//NOTHING
 }
-
-
-
 
 
 //调节系统音量
@@ -50,9 +47,7 @@ void CAudio::SetVolume(int percent){
 
 void CAudio::StartBGM(const LPCWSTR& url)
 {
-
-	PlaySound(url,NULL,SND_FILENAME|SND_SYNC|SND_LOOP);
-
+	PlaySound(url,NULL,SND_FILENAME|SND_ASYNC|SND_LOOP);
 }
 
 void CAudio::StopBGM()
@@ -63,15 +58,15 @@ void CAudio::StopBGM()
 
 void CAudio::PlayEffect(const LPCWSTR& url)
 {
-	PlaySound(url,NULL,SND_FILENAME|SND_SYNC);
+	PlaySound(url,NULL,SND_FILENAME|SND_ASYNC);
 }
 
 void CAudio::StopEffect(const LPCWSTR& url)
 {
-	PlaySound(NULL,NULL,SND_FILENAME|SND_SYNC);
+	PlaySound(NULL,NULL,SND_FILENAME|SND_ASYNC);
 }
 
 void CAudio::StopAllEffect()
 {
-	PlaySound(NULL,NULL,SND_FILENAME|SND_SYNC);
+	PlaySound(NULL,NULL,SND_FILENAME|SND_ASYNC);
 }

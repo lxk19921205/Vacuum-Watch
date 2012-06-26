@@ -37,6 +37,9 @@
     <ClInclude Include="testing.h" />
     <ClInclude Include="view_engine.h" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Resource\audio\dreamcatcher.mp3" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{005FE372-8E04-4EEA-9878-CA8032865F00}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>

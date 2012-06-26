@@ -16,6 +16,8 @@ public:
 	//测试游戏数据模块
 	void TestGameData();
 
+	//测试音效模块
+	void TestAudio();
 };
 
 #endif

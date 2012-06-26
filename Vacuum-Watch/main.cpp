@@ -12,13 +12,14 @@ void DoTest()
 //	test.TestOptions();
 //	test.TestLog();
 //	test.TestGameData();
+	test.TestAudio();
 }
 
 
 int main(int argc, char** argv)
 {
-// 	DoTest();
-// 	return 0;
+	DoTest();
+//	return 0;
 
 	glutInit(&argc, argv);
 

@@ -1,5 +1,5 @@
-#ifndef _VW_OPTION_H_
-#define _VW_OPTION_H_
+#ifndef _VW_AUDIO_H_
+#define _VW_AUDIO_H_
 
 #include <string>
 #include "module_interfaces.h"
@@ -28,9 +28,6 @@ public:
 
 	virtual void StopAllEffect();
 
-
-	
-	
 };
 
 
