@@ -4,6 +4,7 @@
 #include "view_engine.h"
 #include "constants.h"
 #include "button.h"
+#include "factory.h"
 
 using std::cout;
 using std::endl;
@@ -43,9 +44,10 @@ GLfloat g_xstep = 1.0f;
 GLfloat g_ystep = 1.0f;
 
 
-static void RenderScene()
+//在显示菜单时，使用这里的RenderScene
+static void RenderSceneMenu()
 {
-	//用当前清除颜色清除窗口
+		//用当前清除颜色清除窗口
 	glClear(GL_COLOR_BUFFER_BIT);
 	glColor3f(1.0f, 0.0f, 0.0f);
 
@@ -74,6 +76,53 @@ static void RenderScene()
 
 	//刷新绘图命令并进行交换
 	glutSwapBuffers();
+
+}
+
+static void RenderSceneSetting()
+{
+
+}
+
+static void RenderSceneAbout()
+{
+
+}
+
+static void RenderSceneOngoing()
+{
+
+}
+
+static void RenderScenePaused()
+{
+
+}
+
+static void RenderScene()
+{
+	IController* controller = CFactory::getController();
+	switch (controller->GetState())
+	{
+	case VW_STATE_MENU:
+		RenderSceneMenu();
+		return;
+	case VW_STATE_SETTING:
+		RenderSceneSetting();
+		return;
+	case VW_STATE_ABOUT:
+		RenderSceneAbout();
+		return;
+	case VW_STATE_ONGOING:
+		RenderSceneOngoing();
+		return;
+	case VW_STATE_PAUSED:
+		RenderScenePaused();
+		return;
+
+	default:
+		return;
+	}
 }
 
 void CViewEngine::SetupRC()
@@ -149,18 +198,18 @@ void TimerFunction(int value)
 	}
 
 	glutPostRedisplay();
-	glutTimerFunc(33, TimerFunction, 1);
+	glutTimerFunc(VW_REFRESH_INTERVAL, TimerFunction, 1);
 }
 
 
 void CViewEngine::Init()
 {
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA);
-	glutInitWindowSize(800, 600);
+	glutInitWindowSize(g_window_width, g_window_height);
 	glutCreateWindow(VW_WINDOW_TITLE);
 	glutDisplayFunc(RenderScene);
 	glutReshapeFunc(ChangeSize);
-	glutTimerFunc(33, TimerFunction, 1);
+	glutTimerFunc(VW_REFRESH_INTERVAL, TimerFunction, 1);
 
 	this->SetupRC();
 }
@@ -203,4 +252,9 @@ void CViewEngine::OnLeftClicked( int pos_x, int pos_y )
 		cout << "quit" << endl;
 		return;
 	}
+}
+
+void CViewEngine::Redraw()
+{
+	glutPostRedisplay();
 }

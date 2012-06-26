@@ -18,6 +18,10 @@ public:
 
 	//测试音效模块
 	void TestAudio();
+
+private:
+	//等待一个输入，直到输入就是target_c的时候才退出
+	void WaitUntil(char target_c);
 };
 
 #endif

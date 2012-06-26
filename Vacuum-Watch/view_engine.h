@@ -19,6 +19,8 @@ public:
 	
 	virtual void OnLeftClicked(int pos_x, int pos_y);
 
+	virtual void Redraw();
+
 private:
 	//在Init中调用，为OpenGL超级宝典中写的框架
 	void SetupRC();

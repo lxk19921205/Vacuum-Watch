@@ -5,6 +5,7 @@
 #include <stdio.h>	//only for the definition of NULL
 #include <string.h>
 #include "controller.h"
+#include "constants.h"
 #include "game_data.h"
 #include "view_engine.h"
 #include "factory.h"
@@ -12,6 +13,7 @@
 
 
 CController::CController()
+	:m_state(VW_STATE_MENU)
 {
 	m_pGameData = new CGameData();
 	m_pViewEngine = new CViewEngine();
@@ -70,4 +72,22 @@ void CController::Init()
 void CController::OnLeftClicked( int pos_x, int pos_y )
 {
 	m_pViewEngine->OnLeftClicked(pos_x, pos_y);
+}
+
+void CController::OnTimerClick()
+{
+	//TODO 该更新数据了
+
+	//更新之后，调用viewengine里让刷新重绘
+	m_pViewEngine->Redraw();
+}
+
+IGameData* CController::GetGameData()
+{
+	return this->m_pGameData;
+}
+
+int CController::GetState()
+{
+	return this->m_state;
 }
