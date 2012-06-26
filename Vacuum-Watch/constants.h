@@ -9,6 +9,7 @@
 #define VW_WINDOW_WIDTH (800)
 #define VW_WINDOW_HEIGHT (600)
 #define VW_REFRESH_INTERVAL (40)	//ms
+#define VW_PI (3.1415926535898f)
 
 
 //////////////////////////////////////////////////////////////////////////
@@ -29,6 +30,9 @@
 #define VW_DATA_DEF_STAGE (1)	//默认初始关卡
 #define VW_DATA_MAX_STAGE (5)	//默认最大关卡，]而不是)
 #define VW_DATA_DEF_SCORE (0)	//默认初始分数
+#define VW_DATA_DEF_TUNNEL_RADIUS (25)	//默认隧道半径
+#define VW_DATA_DEF_TUNNEL_LENGTH (1000)	//默认隧道长度
+#define VW_DATA_DEF_TUNNEL_STEP (1)	//默认在隧道中每次走多少
 
 
 //////////////////////////////////////////////////////////////////////////

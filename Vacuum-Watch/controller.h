@@ -19,7 +19,7 @@ public:
 	virtual void OnMouseMoved(int from_x, int from_y, int to_x, int to_y);
 	virtual void OnLeftClicked(int pos_x, int pos_y);
 
-	virtual void OnTimerClick();
+	virtual bool OnTimerClick();
 
 	virtual int GetState();
 

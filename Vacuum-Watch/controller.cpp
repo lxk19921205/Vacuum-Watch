@@ -77,10 +77,22 @@ void CController::OnLeftClicked( int pos_x, int pos_y )
 	m_pViewEngine->OnLeftClicked(pos_x, pos_y);
 }
 
-void CController::OnTimerClick()
+//返回true表示需要重绘
+bool CController::OnTimerClick()
 {
 	//TODO 该更新数据了，只更新就够了，不用调用重绘，其他地方会调的
-
+	if (m_pGameData->Step())
+	{
+		//还可以继续走
+		
+		//判断有没有撞到
+		return true;
+	}
+	else
+	{
+		//到头了，不能再走了
+		return false;
+	}
 }
 
 IGameData* CController::GetGameData()
@@ -95,29 +107,30 @@ int CController::GetState()
 
 void CController::OnStartButton()
 {
-	this->m_state = VW_STATE_ONGOING;
-
 	//TODO start
 	cout << "start" << endl;
+
+	this->m_state = VW_STATE_ONGOING;
 }
 
 void CController::OnSettingButton()
 {
-	this->m_state = VW_STATE_SETTING;
-
 	//TODO setting
 	cout << "setting" << endl;
+
+	this->m_state = VW_STATE_SETTING;
 }
 
 void CController::OnAboutButton()
 {
-	this->m_state = VW_STATE_ABOUT;
-
 	//TODO about
 	cout << "about" << endl;
+
+	this->m_state = VW_STATE_ABOUT;
 }
 
 void CController::OnQuitButton()
 {
+	cout << "QUIT clicked" << endl;
 	exit(0);
 }

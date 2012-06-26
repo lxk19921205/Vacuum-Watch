@@ -119,6 +119,22 @@ public:
 	virtual void AddScore(long score) = 0;
 	//将当前积分重置为初始状态
 	virtual void ResetScore() = 0;
+
+	//飞机向前走一步，走完了返回false（不能再向前了），否则返回true
+	virtual bool Step() = 0;
+
+	//获取隧道的半径
+	virtual int GetTunnelRadius() = 0;
+
+	//获取当前跑了多远
+	virtual int GetCurrentLength() = 0;
+	//重置当前跑了多远
+	virtual void ResetCurrentLength() = 0;
+
+	//获取一共有多远
+	virtual int GetTotalLength() = 0;
+	//设置一共有多远
+	virtual void SetTotalLength(int length) = 0;
 };
 
 
@@ -185,8 +201,8 @@ public:
 	//鼠标的左键在(pos_x, pos_y)处click了一下
 	virtual void OnLeftClicked(int pos_x, int pos_y) = 0;
 
-	//计时器到时候了，刷新一下
-	virtual void OnTimerClick() = 0;
+	//计时器到时候了，刷新一下，返回true代表需要重绘
+	virtual bool OnTimerClick() = 0;
 
 	//得到游戏的逻辑状态：VW_STATE_*
 	virtual int GetState() = 0;
