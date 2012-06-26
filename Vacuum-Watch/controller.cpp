@@ -81,18 +81,45 @@ void CController::OnLeftClicked( int pos_x, int pos_y )
 bool CController::OnTimerClick()
 {
 	//TODO 该更新数据了，只更新就够了，不用调用重绘，其他地方会调的
-	if (m_pGameData->Step())
+	switch (m_state)
 	{
-		//还可以继续走
-		
-		//判断有没有撞到
+	case VW_STATE_MENU:
+		{
+			break;
+		}
+	case VW_STATE_SETTING:
+		{
+			break;
+		}
+	case VW_STATE_ABOUT:
+		{
+			break;
+		}
+	case VW_STATE_ONGOING:
+		{
+			if (m_pGameData->Step())
+			{
+				//还可以继续走
+
+				//判断有没有撞到
+				return true;
+			}
+			else
+			{
+				//到头了，不能再走了
+				return false;
+			}
+		}
+	case VW_STATE_PAUSED:
+		{
+			break;
+		}
+
+	default:
 		return true;
 	}
-	else
-	{
-		//到头了，不能再走了
-		return false;
-	}
+
+	return true;
 }
 
 IGameData* CController::GetGameData()

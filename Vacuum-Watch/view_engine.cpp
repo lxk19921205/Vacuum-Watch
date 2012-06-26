@@ -151,7 +151,10 @@ static void RenderSceneOngoing()
 
 
 
+//	gluLookAt(1, 1, 1, 0, 0, 0, 0, 1, 0);
 
+
+	glColor3f(1.0f, 1.0f, 1.0f);
 	GLfloat inner_angle = 1;
 	GLfloat outer_angle = 60;
 	GLfloat radius = 200;
