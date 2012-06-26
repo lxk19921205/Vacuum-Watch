@@ -13,7 +13,7 @@ private:
 	bool m_bPressed;
 
 //	GLuint	base;			// 绘制字体的显示列表的开始位置
-
+	
 	void Init();
 
 public:

@@ -20,8 +20,8 @@ void CButton::Init()
 	m_bPressed = false;
 	m_fPosX = 40;
 	m_fPosY = 40;
-	m_fWidth = 60;
-	m_fHeight = 20;
+	m_fWidth = 100;
+	m_fHeight = 60;
 //	base = glGenLists(96);
 	cout<<"button pos: " << m_fPosX << ", " << m_fPosY <<endl;
 }
