@@ -30,6 +30,7 @@
     <ClInclude Include="controller.h" />
     <ClInclude Include="game_data.h" />
     <ClInclude Include="input.h" />
+    <ClInclude Include="loadpic.h" />
     <ClInclude Include="option.h" />
     <ClInclude Include="factory.h" />
     <ClInclude Include="log.h" />

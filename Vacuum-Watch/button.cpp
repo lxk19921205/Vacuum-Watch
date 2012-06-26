@@ -15,14 +15,22 @@ CButton::CButton()
 	this->Init();
 }
 
-void CButton::Init(void)
+void CButton::Init()
 {
 	m_bPressed = false;
 	m_fPosX = 40;
 	m_fPosY = 40;
 	m_fWidth = 60;
 	m_fHeight = 20;
-	//		base = glGenLists(96);
+//	base = glGenLists(96);
+	cout<<"button pos: " << m_fPosX << ", " << m_fPosY <<endl;
+}
+
+void CButton::InitPos(float x, float y)
+{
+	m_fPosX = x;
+	m_fPosY = y;
+//	base = glGenLists(96);
 	cout<<"button pos: " << m_fPosX << ", " << m_fPosY <<endl;
 }
 
@@ -34,17 +42,20 @@ void CButton::Render()
 		//将中心位于原点的cube移动到使cube左下角坐标为m_fPosX,m_fPosY的位置
 		//必须考虑cube的自身长宽
 		glTranslatef(m_fPosX+m_fWidth/2, m_fPosY+m_fHeight/2, -2.0);		//-2.0只是为了按钮可见
-		if( m_bPressed )
+/*		if( m_bPressed )
 		{
 			//double scaleAmt = 10.0 * sin( (double)rand() );
 			//double scaleAmt = sin( (double)rand() );
 			glScalef(0.9, 0.9, 1.0);
 		}
+*/
 		//cube中心位于原点
 		glScalef (m_fWidth, m_fHeight, 5.0);      
 		glutSolidCube(1.0);
 		//			DrawGLScene();
 	}
+	glPopMatrix();
+	
 }
 
 
@@ -93,7 +104,7 @@ int CButton::DrawGLScene(GLvoid) // 从这里开始进行所有的绘制
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // 清除屏幕和深度缓存
 	glLoadIdentity(); // 重置当前的模型观察矩阵
-	glTranslatef(0.0f,0.0f,0.0f); // 移入屏幕一个单位
+//	glTranslatef(0.0f,0.0f,0.0f); // 移入屏幕一个单位
 	// 根据字体位置设置颜色
 	glColor3f(1.0f,1.0f,1.0f);
 	// 设置光栅化位置，即字体的位置

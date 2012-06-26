@@ -14,7 +14,7 @@ private:
 
 //	GLuint	base;			// 绘制字体的显示列表的开始位置
 
-	void Init(void);
+	void Init();
 
 public:
 	CButton();
@@ -22,6 +22,7 @@ public:
 	void Render();
 	bool OnMouseDown(int mousex, int mousey);
 	void OnMouseUp();
+	void InitPos(float x, float y);
 
 /*
 	GLvoid glPrint(const char *fmt) // 自定义GL输出字体函数

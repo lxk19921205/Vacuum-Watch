@@ -89,6 +89,9 @@
     <ClInclude Include="button.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="loadpic.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Resource\audio\effect1.wav">
