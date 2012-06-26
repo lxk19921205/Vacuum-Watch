@@ -12,6 +12,7 @@
 #include "factory.h"
 #include "audio.h"
 
+using std::cin;
 using std::cout;
 using std::endl;
 using std::ifstream;
@@ -105,9 +106,59 @@ void CTesting::TestGameData()
 	cout << "after reset score, score: " << data.GetCurrentScore() << endl;
 }
 
+void CTesting::WaitUntil(char target_c)
+{
+	char c = '\0';
+	while ((c = getchar()) != target_c)
+	{
+	}
+}
+
 void CTesting::TestAudio()
 {
 	IAudio* audio = CFactory::getAudio();
-	audio->StartBGM(L"..\\Resource\\audio\\dreamcatcher.mp3");
-	//TODO @liuquan
+
+	cout << "to START_BGM" << endl;
+	this->WaitUntil('n');
+	audio->StartBGM(L"..\\Resource\\audio\\dreamcatcher.wav");
+
+	cout << "to SET_VOLUMN 100" << endl;
+	this->WaitUntil('n');
+	audio->SetVolume(100);
+
+	cout << "to SET_VOLUMN 0" << endl;
+	this->WaitUntil('n');
+	audio->SetVolume(0);
+
+	cout << "to SET_VOLUMN 150" << endl;
+	this->WaitUntil('n');
+	audio->SetVolume(150);
+
+	cout << "to SET_VOLUMN -50" << endl;
+	this->WaitUntil('n');
+	audio->SetVolume(-50);
+
+	cout << "to SET_VOLUMN 50" << endl;
+	this->WaitUntil('n');
+	audio->SetVolume(50);
+
+	cout << "to STOP_BGM" << endl;
+	this->WaitUntil('n');
+	audio->StopBGM();
+
+	cout << "to PLAY_EFFECT together" << endl;
+	this->WaitUntil('n');
+	audio->PlayEffect(L"..\\Resource\\audio\\effect1.wav");
+	audio->PlayEffect(L"..\\Resource\\audio\\effect2.wav");
+
+	cout << "to STOP_ONE_EFFECT" << endl;
+	this->WaitUntil('n');
+	audio->StopEffect(L"..\\Resource\\audio\\effect1.wav");
+
+	cout << "to STOP_ALL_EFFECT" << endl;
+	this->WaitUntil('n');
+	audio->PlayEffect(L"..\\Resource\\audio\\effect1.wav");
+	audio->StopAllEffect();
+
+	cout << "TEST DONE" << endl;
 }

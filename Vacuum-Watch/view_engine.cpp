@@ -4,6 +4,7 @@
 #include "view_engine.h"
 #include "constants.h"
 #include "button.h"
+#include "factory.h"
 
 using std::cout;
 using std::endl;
@@ -43,9 +44,10 @@ GLfloat g_xstep = 1.0f;
 GLfloat g_ystep = 1.0f;
 
 
-static void RenderScene()
+//在显示菜单时，使用这里的RenderScene
+static void RenderSceneMenu()
 {
-	//用当前清除颜色清除窗口
+		//用当前清除颜色清除窗口
 	glClear(GL_COLOR_BUFFER_BIT);
 	glColor3f(1.0f, 0.0f, 0.0f);
 
@@ -74,6 +76,53 @@ static void RenderScene()
 
 	//刷新绘图命令并进行交换
 	glutSwapBuffers();
+
+}
+
+static void RenderSceneSetting()
+{
+
+}
+
+static void RenderSceneAbout()
+{
+
+}
+
+static void RenderSceneOngoing()
+{
+
+}
+
+static void RenderScenePaused()
+{
+
+}
+
+static void RenderScene()
+{
+	IController* controller = CFactory::getController();
+	switch (controller->GetState())
+	{
+	case VW_STATE_MENU:
+		RenderSceneMenu();
+		return;
+	case VW_STATE_SETTING:
+		RenderSceneSetting();
+		return;
+	case VW_STATE_ABOUT:
+		RenderSceneAbout();
+		return;
+	case VW_STATE_ONGOING:
+		RenderSceneOngoing();
+		return;
+	case VW_STATE_PAUSED:
+		RenderScenePaused();
+		return;
+
+	default:
+		return;
+	}
 }
 
 void CViewEngine::SetupRC()
@@ -149,58 +198,67 @@ void TimerFunction(int value)
 	}
 
 	glutPostRedisplay();
-	glutTimerFunc(33, TimerFunction, 1);
+	glutTimerFunc(VW_REFRESH_INTERVAL, TimerFunction, 1);
 }
 
 
 void CViewEngine::Init()
 {
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA);
-	glutInitWindowSize(800, 600);
+	glutInitWindowSize(g_window_width, g_window_height);
 	glutCreateWindow(VW_WINDOW_TITLE);
 	glutDisplayFunc(RenderScene);
 	glutReshapeFunc(ChangeSize);
-	glutTimerFunc(33, TimerFunction, 1);
+	glutTimerFunc(VW_REFRESH_INTERVAL, TimerFunction, 1);
 
 	this->SetupRC();
+	this->InitMenuButtons();
 }
 
 void CViewEngine::OnLeftClicked( int pos_x, int pos_y )
 {
-	//TODO 先检查当前状态，是不是在显示开始界面的地方！
-	if (true)
+	IController* controller = CFactory::getController();
+	//先检查当前状态，是不是在显示开始界面的地方！
+	if (controller->GetState() != VW_STATE_MENU)
 	{
+		return;
 	}
 
 	if (start_button.OnMouseDown(pos_x, pos_y))
 	{
 		start_button.OnMouseUp();
-		//TODO start
-		cout << "start" << endl;
+		controller->OnStartButton();
 		return;
 	}
 
 	if (setting_button.OnMouseDown(pos_x, pos_y))
 	{
 		setting_button.OnMouseUp();
-		//TODO setting
-		cout << "setting" << endl;
+		controller->OnSettingButton();
 		return;
 	}
 
 	if (about_button.OnMouseDown(pos_x, pos_y))
 	{
 		about_button.OnMouseUp();
-		//TODO about
-		cout << "about" << endl;
+		controller->OnAboutButton();
 		return;
 	}
 
 	if (quit_button.OnMouseDown(pos_x, pos_y))
 	{
 		quit_button.OnMouseUp();
-		//TODO quit
-		cout << "quit" << endl;
+		controller->OnQuitButton();
 		return;
 	}
+}
+
+void CViewEngine::Redraw()
+{
+	glutPostRedisplay();
+}
+
+void CViewEngine::InitMenuButtons()
+{
+	//TODO @马 此函数已经在Init()里调用了
 }

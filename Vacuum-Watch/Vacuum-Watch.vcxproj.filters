@@ -94,7 +94,13 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\Resource\audio\dreamcatcher.mp3">
+    <None Include="..\Resource\audio\dreamcatcher.wav">
+      <Filter>Resource Files\audio</Filter>
+    </None>
+    <None Include="..\Resource\audio\effect1.wav">
+      <Filter>Resource Files\audio</Filter>
+    </None>
+    <None Include="..\Resource\audio\effect2.wav">
       <Filter>Resource Files\audio</Filter>
     </None>
   </ItemGroup>

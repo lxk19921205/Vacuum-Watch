@@ -76,10 +76,11 @@ public:
 /************************************************************************/
 class IAudio
 {
-public:
+protected:
 	//写这个函数时为了提醒：在析构函数里退出时一定要释放所有相关的资源
 	virtual void Release() = 0;
 
+public:
 	//设置播放音乐的音量，是一个百分比，见IOptions里的SetSoundVolume函数
 	virtual void SetVolume(int percent) = 0;
 
@@ -137,6 +138,9 @@ public:
 
 	//鼠标的左键在(pos_x, pos_y)处click了一下
 	virtual void OnLeftClicked(int pos_x, int pos_y) = 0;
+
+	//准备重绘
+	virtual void Redraw() = 0;
 };
 
 
@@ -170,12 +174,30 @@ public:
 	//所有的初始化工作
 	virtual void Init() = 0;
 
+	//获取所有的游戏数据
+	virtual IGameData* GetGameData() = 0;
+
 	//FIRE的按键被按下了
 	virtual void OnFireKeyClicked() = 0;
 	//鼠标从(from_x, from_y)移动到（to_x, to_y）
 	virtual void OnMouseMoved(int from_x, int from_y, int to_x, int to_y) = 0;
 	//鼠标的左键在(pos_x, pos_y)处click了一下
 	virtual void OnLeftClicked(int pos_x, int pos_y) = 0;
+
+	//计时器到时候了，刷新一下
+	virtual void OnTimerClick() = 0;
+
+	//得到游戏的逻辑状态：VW_STATE_*
+	virtual int GetState() = 0;
+
+	//开始游戏的按钮被按下
+	virtual void OnStartButton() = 0;
+	//设置的按钮被按下
+	virtual void OnSettingButton() = 0;
+	//关于的按钮被按下
+	virtual void OnAboutButton() = 0;
+	//退出的按钮被按下
+	virtual void OnQuitButton() = 0;
 };
 
 
