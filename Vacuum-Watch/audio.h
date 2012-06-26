@@ -10,12 +10,6 @@ using std::string;
 class CAudio : public IAudio
 {
 public:
-	CAudio();
-	virtual ~CAudio();
-
-	//数据存在这个文件里
-	const static string FILE_NAME;
-
 	virtual void Release();
 
 	virtual void SetVolume(int percent) ;
@@ -25,8 +19,21 @@ public:
 
 	virtual void PlayEffect(const LPCWSTR& url) ;
 	virtual void StopEffect(const LPCWSTR& url);
-
 	virtual void StopAllEffect();
+
+	//for Singleton
+	static inline CAudio& Instance()
+	{
+		static CAudio _audio;
+		return _audio;
+	}
+
+private:
+	//for Singleton
+	CAudio();
+	virtual ~CAudio();
+	CAudio(const CAudio& rhs);				//不实现
+	CAudio& operator=(const CAudio& rhs);	//不实现
 
 };
 

@@ -107,7 +107,7 @@ void CTesting::TestGameData()
 
 void CTesting::TestAudio()
 {
-	CAudio audio;
-	audio.StartBGM(L"..\\Resource\\audio\\dreamcatcher.mp3");
+	IAudio* audio = CFactory::getAudio();
+	audio->StartBGM(L"..\\Resource\\audio\\dreamcatcher.mp3");
 	//TODO @liuquan
 }
