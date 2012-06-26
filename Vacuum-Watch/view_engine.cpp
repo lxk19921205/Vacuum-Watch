@@ -5,6 +5,7 @@
 #include "constants.h"
 #include "button.h"
 #include "factory.h"
+//#include "loadpic.h"
 
 using std::cout;
 using std::endl;
@@ -61,6 +62,9 @@ static void RenderSceneMenu()
 	setting_button.Render();
 	about_button.Render();
 	quit_button.Render();
+
+	glRasterPos2i(30, 30);
+//	LoadTexture("start.bmp");
 
 /*	glTranslatef(0.0f, 0.0f, 10.0f);  
 
