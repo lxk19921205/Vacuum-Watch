@@ -3,7 +3,6 @@
 #include "module_interfaces.h"
 #include "factory.h"
 #include "testing.h"
-#include "input.h"
 
 void DoTest()
 {
