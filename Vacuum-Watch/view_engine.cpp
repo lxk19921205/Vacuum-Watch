@@ -50,6 +50,7 @@ static void RenderSceneMenu()
 	glOrtho(0, g_window_width, 0, g_window_height, 0, 100);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
+
 	start_button.Render();
 	setting_button.Render();
 	about_button.Render();
@@ -77,12 +78,18 @@ static void RenderSceneMenu()
 
 static void RenderSceneSetting()
 {
+	glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+	glClear(GL_COLOR_BUFFER_BIT);
 
+	glutSwapBuffers();
 }
 
 static void RenderSceneAbout()
 {
+	glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+	glClear(GL_COLOR_BUFFER_BIT);
 
+	glutSwapBuffers();
 }
 
 static void RenderSceneOngoing()
@@ -116,7 +123,10 @@ static void RenderSceneOngoing()
 
 static void RenderScenePaused()
 {
+	glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+	glClear(GL_COLOR_BUFFER_BIT);
 
+	glutSwapBuffers();
 }
 
 static void RenderScene()
@@ -143,11 +153,6 @@ static void RenderScene()
 	default:
 		return;
 	}
-}
-
-void CViewEngine::SetupRC()
-{
-	glClearColor(0.0f, 0.0f, 1.0f, 1.0f);
 }
 
 //当窗口改变大小时由GLUT函数库调用
@@ -205,7 +210,6 @@ void CViewEngine::Init()
 	glutReshapeFunc(ChangeSize);
 	glutTimerFunc(VW_REFRESH_INTERVAL, TimerFunction, 0);
 
-	this->SetupRC();
 	this->InitMenuButtons();
 }
 

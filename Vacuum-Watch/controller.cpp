@@ -95,29 +95,30 @@ int CController::GetState()
 
 void CController::OnStartButton()
 {
-	this->m_state = VW_STATE_ONGOING;
-
 	//TODO start
 	cout << "start" << endl;
+
+	this->m_state = VW_STATE_ONGOING;
 }
 
 void CController::OnSettingButton()
 {
-	this->m_state = VW_STATE_SETTING;
-
 	//TODO setting
 	cout << "setting" << endl;
+
+	this->m_state = VW_STATE_SETTING;
 }
 
 void CController::OnAboutButton()
 {
-	this->m_state = VW_STATE_ABOUT;
-
 	//TODO about
 	cout << "about" << endl;
+
+	this->m_state = VW_STATE_ABOUT;
 }
 
 void CController::OnQuitButton()
 {
+	cout << "QUIT clicked" << endl;
 	exit(0);
 }
