@@ -189,6 +189,15 @@ public:
 
 	//得到游戏的逻辑状态：VW_STATE_*
 	virtual int GetState() = 0;
+
+	//开始游戏的按钮被按下
+	virtual void OnStartButton() = 0;
+	//设置的按钮被按下
+	virtual void OnSettingButton() = 0;
+	//关于的按钮被按下
+	virtual void OnAboutButton() = 0;
+	//退出的按钮被按下
+	virtual void OnQuitButton() = 0;
 };
 
 

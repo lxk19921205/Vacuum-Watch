@@ -25,6 +25,8 @@ private:
 	//在Init中调用，为OpenGL超级宝典中写的框架
 	void SetupRC();
 
+	//在Menu界面有几个button，初始化他们的位置等信息
+	void InitMenuButtons();
 };
 
 #endif

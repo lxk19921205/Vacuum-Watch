@@ -11,6 +11,9 @@
 #include "factory.h"
 #include "input.h"
 
+#include <iostream>
+using std::cout;
+using std::endl;
 
 CController::CController()
 	:m_state(VW_STATE_MENU)
@@ -90,4 +93,28 @@ IGameData* CController::GetGameData()
 int CController::GetState()
 {
 	return this->m_state;
+}
+
+void CController::OnStartButton()
+{
+	//TODO start
+	cout << "start" << endl;
+}
+
+void CController::OnSettingButton()
+{
+	//TODO setting
+	cout << "setting" << endl;
+}
+
+void CController::OnAboutButton()
+{
+	//TODO about
+	cout << "about" << endl;
+}
+
+void CController::OnQuitButton()
+{
+	//TODO quit
+	cout << "quit" << endl;
 }

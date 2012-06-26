@@ -212,44 +212,43 @@ void CViewEngine::Init()
 	glutTimerFunc(VW_REFRESH_INTERVAL, TimerFunction, 1);
 
 	this->SetupRC();
+	this->InitMenuButtons();
 }
 
 void CViewEngine::OnLeftClicked( int pos_x, int pos_y )
 {
-	//TODO 先检查当前状态，是不是在显示开始界面的地方！
-	if (true)
+	IController* controller = CFactory::getController();
+	//先检查当前状态，是不是在显示开始界面的地方！
+	if (controller->GetState() != VW_STATE_MENU)
 	{
+		return;
 	}
 
 	if (start_button.OnMouseDown(pos_x, pos_y))
 	{
 		start_button.OnMouseUp();
-		//TODO start
-		cout << "start" << endl;
+		controller->OnStartButton();
 		return;
 	}
 
 	if (setting_button.OnMouseDown(pos_x, pos_y))
 	{
 		setting_button.OnMouseUp();
-		//TODO setting
-		cout << "setting" << endl;
+		controller->OnSettingButton();
 		return;
 	}
 
 	if (about_button.OnMouseDown(pos_x, pos_y))
 	{
 		about_button.OnMouseUp();
-		//TODO about
-		cout << "about" << endl;
+		controller->OnAboutButton();
 		return;
 	}
 
 	if (quit_button.OnMouseDown(pos_x, pos_y))
 	{
 		quit_button.OnMouseUp();
-		//TODO quit
-		cout << "quit" << endl;
+		controller->OnQuitButton();
 		return;
 	}
 }
@@ -257,4 +256,9 @@ void CViewEngine::OnLeftClicked( int pos_x, int pos_y )
 void CViewEngine::Redraw()
 {
 	glutPostRedisplay();
+}
+
+void CViewEngine::InitMenuButtons()
+{
+	//TODO @马 此函数已经在Init()里调用了
 }
