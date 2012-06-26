@@ -91,19 +91,18 @@ static void RenderSceneMenu()
 	about_button.Render();
 	quit_button.Render();
 
-/*	glLoadIdentity();
-	glPushMatrix();  
-	glTranslatef(-1.5,0.0,-6.0);  
-	glRotatef(rotate,0.0f,0.0f,1.0f);  
-	glRasterPos2i(0, 0);
+/*	glPushMatrix();
+	glRotatef(rotate, 0.0f, 0.0f,1.0f);
+	glPushMatrix();
+
+//	glRasterPos2i(0, 0);
 	LoadPic("space.bmp");
 	glDrawPixels( wide, height, GL_BGR_EXT, GL_UNSIGNED_BYTE, pixelDate );
-	glPopMatrix();  
 */
 
 	//导入图片，并调整图片、位置大小
 	LoadPic("start.bmp");
-	glRasterPos2i(40, 280);
+	glRasterPos2i(40, 40);
 	glPixelZoom(1.38f, 1.35f);//试数试出来的，不会算，用100/wide得到的大小不对
 	glDrawPixels( wide, height, GL_BGR_EXT, GL_UNSIGNED_BYTE, pixelDate );
 
