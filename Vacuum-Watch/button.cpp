@@ -15,13 +15,21 @@ CButton::CButton()
 	this->Init();
 }
 
-void CButton::Init(void)
+void CButton::Init()
 {
 	m_bPressed = false;
 	m_fPosX = 40;
 	m_fPosY = 40;
 	m_fWidth = 60;
 	m_fHeight = 20;
+//	base = glGenLists(96);
+	cout<<"button pos: " << m_fPosX << ", " << m_fPosY <<endl;
+}
+
+void CButton::InitPos(float x, float y)
+{
+	m_fPosX = x;
+	m_fPosY = y;
 //	base = glGenLists(96);
 	cout<<"button pos: " << m_fPosX << ", " << m_fPosY <<endl;
 }

@@ -47,19 +47,20 @@ GLfloat g_ystep = 1.0f;
 //在显示菜单时，使用这里的RenderScene
 static void RenderSceneMenu()
 {
-		//用当前清除颜色清除窗口
+	//用当前清除颜色清除窗口
 	glClear(GL_COLOR_BUFFER_BIT);
-	glColor3f(1.0f, 0.0f, 0.0f);
 
-	//建立按钮
+	//显示按钮
+	glColor3f(1.0f, 0.0f, 0.0f);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	glOrtho(0, g_window_width, 0, g_window_height, 0, 100);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
-
 	start_button.Render();
-	
+	setting_button.Render();
+	about_button.Render();
+	quit_button.Render();
 
 /*	glTranslatef(0.0f, 0.0f, 10.0f);  
 
@@ -260,5 +261,11 @@ void CViewEngine::Redraw()
 
 void CViewEngine::InitMenuButtons()
 {
-	//TODO @马 此函数已经在Init()里调用了
+	//TODO 此函数已经在Init()里调用了
+
+	start_button.InitPos(40.0f, 20.0f);
+	setting_button.InitPos(40.0f, 60.0f);
+	about_button.InitPos(40.0f, 100.0f);
+	quit_button.InitPos(40.0f, 140.0f);
+
 }

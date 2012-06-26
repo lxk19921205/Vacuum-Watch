@@ -23,10 +23,10 @@ public:
 
 	virtual int GetState();
 
-	virtual void OnStartButton() = 0;
-	virtual void OnSettingButton() = 0;
-	virtual void OnAboutButton() = 0;
-	virtual void OnQuitButton() = 0;
+	virtual void OnStartButton();
+	virtual void OnSettingButton();
+	virtual void OnAboutButton();
+	virtual void OnQuitButton();
 
 	//for Singleton
 	static inline CController& Instance()
