@@ -84,3 +84,38 @@ void CLoadPic::Render()
 	glRasterPos2i(m_posx, m_posy);
 	glDrawPixels( m_wide, m_height, GL_BGR_EXT, GL_UNSIGNED_BYTE, m_pixelDate );
 }
+
+void CLoadPic::InitRotate() {
+    glClearColor(0.0, 0.0, 0.0, 0.0);
+    glEnable(GL_TEXTURE_2D);
+
+    //glPixelStorei(GL_UNPACK_ALIGNMENT, 4);
+    glGenTextures(1, &m_texName);
+    glBindTexture(GL_TEXTURE_2D, m_texName);
+    //glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    //glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, m_wide, m_height, 0,GL_RGB, GL_UNSIGNED_BYTE, m_pixelDate);
+}
+
+void CLoadPic::Rotate(float rotate)
+{
+	glPushMatrix();
+	glBindTexture(GL_TEXTURE_2D,m_texName);
+	glTranslatef(m_posx+m_wide/2, m_posy+m_height/2, 0.0f);
+	glRotatef( rotate, 0.0f, 0.0f,1.0f);
+    glBegin(GL_POLYGON);
+    glTexCoord2f(0.0, 0.0);
+    glVertex2f(-m_wide/2, -m_height/2);
+    glTexCoord2f(0.0, 1.0);
+    glVertex2f(-m_wide/2, m_height/2);
+    glTexCoord2f(1.0, 1.0);
+    glVertex2f(m_wide/2, m_height/2);
+    glTexCoord2f(1.0, 0.0);
+    glVertex2f(m_wide/2, -m_height/2);
+    glEnd();
+    //glFlush();
+	glPopMatrix();
+}

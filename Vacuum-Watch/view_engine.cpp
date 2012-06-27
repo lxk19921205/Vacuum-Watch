@@ -13,7 +13,7 @@ using std::endl;
 GLfloat g_window_width = VW_WINDOW_WIDTH;
 GLfloat g_window_height = VW_WINDOW_HEIGHT;
 
-//int rotate = 0;//旋转参数
+float rotate = 0;//旋转参数
 
 //函数外的static变量表示只在这个.c里用
 static CButton start_button;
@@ -48,7 +48,7 @@ static void RenderSceneMenu()
 	glClear(GL_COLOR_BUFFER_BIT);
 
 	//显示
-	glColor3f(1.0f, 0.0f, 0.0f);
+//	glColor3f(1.0f, 0.0f, 0.0f);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	glOrtho(0, g_window_width, 0, g_window_height, 0, 100);
@@ -60,7 +60,10 @@ static void RenderSceneMenu()
 	about_button.Render();
 	quit_button.Render();
 */
-	background_picture.Render();
+
+	background_picture.Rotate(-rotate);
+
+//	background_picture.Render();
 	start_picture.Render();
 	setting_picture.Render();
 	about_picture.Render();
@@ -225,6 +228,7 @@ static void RenderScene()
 	case VW_STATE_MENU:
 		background_picture.LoadPic("../Resource/picture/space.bmp");
 		background_picture.AdjustPic(g_window_width, g_window_height, 0.0f, 0.0f);
+		background_picture.InitRotate();
 		RenderSceneMenu();
 		return;
 	case VW_STATE_SETTING:
@@ -290,10 +294,9 @@ void TimerFunction(int value)
 	{
 		glutPostRedisplay();
 	}
-
+	rotate += 0.1f;
 	glutTimerFunc(VW_REFRESH_INTERVAL, TimerFunction, value+1);
 }
-
 
 void CViewEngine::Init()
 {
