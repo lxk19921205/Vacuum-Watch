@@ -1,7 +1,7 @@
 #include "button.h"
 
 #include <cstdio>
-#include <GL/glut.h>
+#include <gl/freeglut.h>
 #include <iostream>
 #include <cmath>
 

@@ -1,4 +1,4 @@
-#include <gl/glut.h>
+#include <gl/freeglut.h>
 #include "constants.h"
 #include "input.h"
 #include "factory.h"

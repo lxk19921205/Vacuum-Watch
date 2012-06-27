@@ -14,16 +14,15 @@ public:
 	CViewEngine();
 	virtual ~CViewEngine();
 
-	virtual void Init();
+	virtual void Init(int* pargc, char** argv);
 	virtual void StartDisplaying();
 	
 	virtual void OnLeftClicked(int pos_x, int pos_y);
 
 //	virtual void Redraw();
+	virtual void SetupRC();
 
 private:
-	void SetupRC();
-
 	//在Menu界面有几个button，初始化他们的位置等信息
 	void InitMenuButtons();
 };
