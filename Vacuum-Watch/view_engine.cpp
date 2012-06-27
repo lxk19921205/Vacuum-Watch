@@ -167,35 +167,50 @@ static void RenderSceneOngoing()
 	int total_length = data->GetTotalLength();
 
 
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+//	gluLookAt(1, 0, 0, 0, 0, 0, 0, 1, 0);
 
-//	gluLookAt(1, 1, 1, 0, 0, 0, 0, 1, 0);
-
-
-	glColor3f(1.0f, 1.0f, 1.0f);
-	GLfloat inner_angle = 1;
-	GLfloat outer_angle = 60;
-	GLfloat radius = 200;
-
+	glColor3f(1.0f, 1.0f, 0.0f);
+	GLfloat radius = 100;
 	GLfloat center_x = 300;
 	GLfloat center_y = 300;
-
-	static GLfloat the_angle = 0;
-	the_angle += 1;
-	if (the_angle > 360)
+	glLineWidth(10);
+	glPolygonMode(GL_BACK, GL_LINE);
+	glPolygonMode(GL_FRONT, GL_FILL);
+	glBegin(GL_QUADS);
+	for (int angle=0; angle<360; angle+=30)
 	{
-		the_angle = 0;
+		double radian = angle * VW_PI / 180;
+		double next_radian = (angle + 1) * VW_PI / 180;
+
+		glVertex3f(center_x + radius * sin(radian), center_y + radius * cos(radian), 50);
+		glVertex3f(center_x + radius * sin(next_radian), center_y + radius * cos(next_radian), 50);
+		glVertex3f(center_x + radius * sin(next_radian), center_y + radius * cos(next_radian), -50);
+		glVertex3f(center_x + radius * sin(radian), center_y + radius * cos(radian), -50);
 	}
-	GLfloat angle = the_angle;
-	glBegin(GL_TRIANGLES);
-		for (int i=0;i<=360;i+=outer_angle)
-		{
-			glVertex3f(center_x, center_y, 0.0f);
-			glVertex3f(center_x + radius * sin(angle * VW_PI / 180), center_y + radius * cos(angle * VW_PI / 180), 0.0f);
-			GLfloat a_little_more = angle + inner_angle;
-			glVertex3f(center_x + radius * sin(a_little_more * VW_PI / 180), center_y + radius * cos(a_little_more * VW_PI / 180), 0.0f);
-			angle += outer_angle;
-		}
 	glEnd();
+
+//	glBegin(GL_TRIANGLES);
+// 	for (int angle=0; angle<360; angle+=30)
+// 	{
+// 		double radian = angle * VW_PI / 180;
+// 		GLfloat x = radius * sin(radian);
+// 		GLfloat y = radius * cos(radian);
+// // 		cout << "from (" << center_x+x << ", " << center_y+y << ", " << 50 << endl;
+// // 		cout << "to   (" << center_x+x << ", " << center_y+y << ", " << -50 << endl;
+// 		glVertex3f(center_x + x, center_y + y, 50);
+// 		glVertex3f(center_x + x, center_y + y, -50);
+// 	}
+// 	glEnd();
+
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	//	glFrustum(-100, 100, -100, 100, 50, -50);
+	gluPerspective(2, g_window_width/g_window_height, 50, -50);
+
+
+	
 
 	glutSwapBuffers();
 	return;
@@ -204,28 +219,66 @@ static void RenderSceneOngoing()
 
 
 
-	glPushMatrix();
-	glRotatef(30, 1.0f, 0.0f, 0.0f);
-	glRotatef(30, 0.0f, 1.0f, 0.0f);
 
-	static GLfloat offset_x = 0;
-	static GLfloat offset_y = 0;
 
-	offset_x++;
-	offset_y++;
+//	gluLookAt(1, 1, 1, 0, 0, 0, 0, 1, 0);
 
-	glBegin(GL_LINE_STRIP);
-	GLfloat z = -50.0f;
-	for (GLfloat angle = 0.0f; angle < 2.0f*VW_PI*3.0f; angle += 0.1)
-	{
-		GLfloat x = 50.0f * sin(angle);
-		GLfloat y = 50.0f * cos(angle);
 
-		glVertex3f(x + offset_x, y + offset_y, z);
-		z += 0.5f;
-	}
-	glEnd();
-	glPopMatrix();
+// 	glColor3f(1.0f, 1.0f, 1.0f);
+// 	GLfloat inner_angle = 1;
+// 	GLfloat outer_angle = 60;
+// 	GLfloat radius = 200;
+// 
+// 	GLfloat center_x = 300;
+// 	GLfloat center_y = 300;
+// 
+// 	static GLfloat the_angle = 0;
+// 	the_angle += 1;
+// 	if (the_angle > 360)
+// 	{
+// 		the_angle = 0;
+// 	}
+// 	GLfloat angle = the_angle;
+// 	glBegin(GL_TRIANGLES);
+// 		for (int i=0;i<=360;i+=outer_angle)
+// 		{
+// 			glVertex3f(center_x, center_y, 0.0f);
+// 			glVertex3f(center_x + radius * sin(angle * VW_PI / 180), center_y + radius * cos(angle * VW_PI / 180), 0.0f);
+// 			GLfloat a_little_more = angle + inner_angle;
+// 			glVertex3f(center_x + radius * sin(a_little_more * VW_PI / 180), center_y + radius * cos(a_little_more * VW_PI / 180), 0.0f);
+// 			angle += outer_angle;
+// 		}
+// 	glEnd();
+// 
+// 	glutSwapBuffers();
+// 	return;
+
+
+
+
+
+// 	glPushMatrix();
+// 	glRotatef(30, 1.0f, 0.0f, 0.0f);
+// 	glRotatef(30, 0.0f, 1.0f, 0.0f);
+// 
+// 	static GLfloat offset_x = 0;
+// 	static GLfloat offset_y = 0;
+// 
+// 	offset_x++;
+// 	offset_y++;
+// 
+// 	glBegin(GL_LINE_STRIP);
+// 	GLfloat z = -50.0f;
+// 	for (GLfloat angle = 0.0f; angle < 2.0f*VW_PI*3.0f; angle += 0.1)
+// 	{
+// 		GLfloat x = 50.0f * sin(angle);
+// 		GLfloat y = 50.0f * cos(angle);
+// 
+// 		glVertex3f(x + offset_x, y + offset_y, z);
+// 		z += 0.5f;
+// 	}
+// 	glEnd();
+// 	glPopMatrix();
 
 // 	cout << current_length << endl;
 // 	int width = (int) g_window_width;
@@ -257,7 +310,7 @@ static void RenderSceneOngoing()
 */
 
 
-	glutSwapBuffers();
+//	glutSwapBuffers();
 }
 
 static void RenderScenePaused()
@@ -351,6 +404,7 @@ void CViewEngine::Init()
 	glutCreateWindow(VW_WINDOW_TITLE);
 	glutDisplayFunc(RenderScene);
 	glutReshapeFunc(ChangeSize);
+
 	glutTimerFunc(VW_REFRESH_INTERVAL, TimerFunction, 0);
 
 	this->InitMenuButtons();
