@@ -1,5 +1,6 @@
 #include "load_picture.h"
 
+
 CLoadPic::CLoadPic()
 {
 	this->Init();
@@ -102,20 +103,32 @@ void CLoadPic::InitRotate() {
 
 void CLoadPic::Rotate(float rotate)
 {
+	this->Rotate(rotate, 0);
+}
+
+void CLoadPic::Rotate(float rotate, GLfloat z)
+{
 	glPushMatrix();
+
 	glBindTexture(GL_TEXTURE_2D,m_texName);
 	glTranslatef(m_posx+m_wide/2, m_posy+m_height/2, 0.0f);
 	glRotatef( rotate, 0.0f, 0.0f,1.0f);
-    glBegin(GL_POLYGON);
-    glTexCoord2f(0.0, 0.0);
-    glVertex2f(-m_wide/2, -m_height/2);
-    glTexCoord2f(0.0, 1.0);
-    glVertex2f(-m_wide/2, m_height/2);
-    glTexCoord2f(1.0, 1.0);
-    glVertex2f(m_wide/2, m_height/2);
-    glTexCoord2f(1.0, 0.0);
-    glVertex2f(m_wide/2, -m_height/2);
-    glEnd();
-    //glFlush();
+
+	glBegin(GL_POLYGON);
+//	glTexCoord3f(0.0, 0.0, z);
+	glTexCoord2f(0.0, 0.0);
+	glVertex3f(-m_wide/2, -m_height/2, z);
+// 	glTexCoord3f(0.0, 1.0, z);
+	glTexCoord2f(0.0, 1.0);
+	glVertex3f(-m_wide/2, m_height/2, z);
+// 	glTexCoord3f(1.0, 1.0, z);
+	glTexCoord2f(1.0, 1.0);
+	glVertex3f(m_wide/2, m_height/2, z);
+// 	glTexCoord3f(1.0, 0.0, z);
+	glTexCoord2f(1.0, 0.0);
+	glVertex3f(m_wide/2, -m_height/2, z);
+	glEnd();
+
+	//glFlush();
 	glPopMatrix();
 }

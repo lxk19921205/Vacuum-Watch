@@ -16,7 +16,7 @@ using std::cout;
 using std::endl;
 
 CController::CController()
-	:m_state(VW_STATE_MENU)
+	:m_state(VW_STATE_ONGOING)
 {
 	m_pGameData = new CGameData();
 	m_pViewEngine = new CViewEngine();
@@ -133,7 +133,7 @@ void CController::OnStartButton()
 {
 	//TODO start
 	cout << "start" << endl;
-
+	m_pViewEngine->SetupRC();
 	this->m_state = VW_STATE_ONGOING;
 }
 
@@ -141,7 +141,7 @@ void CController::OnSettingButton()
 {
 	//TODO setting
 	cout << "setting" << endl;
-
+	m_pViewEngine->SetupRC();
 	this->m_state = VW_STATE_SETTING;
 }
 
@@ -149,7 +149,7 @@ void CController::OnAboutButton()
 {
 	//TODO about
 	cout << "about" << endl;
-
+	m_pViewEngine->SetupRC();
 	this->m_state = VW_STATE_ABOUT;
 }
 
