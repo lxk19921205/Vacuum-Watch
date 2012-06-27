@@ -12,7 +12,7 @@ class CAudio : public IAudio
 public:
 	virtual void Release();
 
-	virtual void SetVolume(int percent) ;
+	virtual void SetVolume(DWORD dwVolumn) ;
 	
 	virtual void StartBGM(const LPCWSTR& url);
 	virtual void StopBGM();

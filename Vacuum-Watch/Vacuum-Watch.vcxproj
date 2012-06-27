@@ -39,6 +39,7 @@
     <ClInclude Include="view_engine.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\Resource\audio\bgm.wav" />
     <None Include="..\Resource\audio\dreamcatcher.wav" />
     <None Include="..\Resource\audio\effect1.wav" />
     <None Include="..\Resource\audio\effect2.wav" />

@@ -103,6 +103,9 @@
     <None Include="..\Resource\audio\effect2.wav">
       <Filter>Resource Files\audio</Filter>
     </None>
+    <None Include="..\Resource\audio\bgm.wav">
+      <Filter>Resource Files\audio</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Vacuum-Watch.rc">

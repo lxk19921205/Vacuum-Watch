@@ -82,7 +82,7 @@ protected:
 
 public:
 	//设置播放音乐的音量，是一个百分比，见IOptions里的SetSoundVolume函数
-	virtual void SetVolume(int percent) = 0;
+	virtual void SetVolume(DWORD dwVolumn) = 0;
 
 	//开始播放背景音乐，BGM一般比较长，同时间只能有一个背景音乐在播放，url即为BGM地址
 	virtual void StartBGM(const LPCWSTR& url) = 0;
