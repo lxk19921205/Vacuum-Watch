@@ -135,12 +135,21 @@ static void RenderSceneOngoing()
 //	background_picture.Rotate(-background_rotate, -1000.0f);
 
 
-	glColor3d(1, 1, 1);
 	const GLfloat start_z = -100.0f;
-	glLineWidth(10);
 	glBegin(GL_LINES);
-		for (int angle = 0; angle < 360; angle+=60)
+		for (int angle = 0; angle < 360; angle++)
 		{
+			if (angle % 60 == 0)
+			{
+				glLineWidth(10);
+				glColor3d(1, 1, 1);
+			}
+			else
+			{
+				glLineWidth(1);
+				glColor3d(0.1, 0.1, 0.1);
+			}
+
 			GLdouble sin_value = sin(angle * VW_PI / 180);
 			GLdouble cos_value = cos(angle * VW_PI / 180);
 
