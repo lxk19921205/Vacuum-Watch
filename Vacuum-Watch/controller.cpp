@@ -6,6 +6,9 @@
 #include <string.h>
 #include <gl/freeglut.h>
 #include <math.h>
+#include <time.h>
+#include <stdlib.h>
+
 #include "controller.h"
 #include "constants.h"
 #include "game_data.h"
@@ -25,6 +28,8 @@ CController::CController()
 {
 	m_pGameData = new CGameData();
 	m_pViewEngine = new CViewEngine();
+
+	srand(time(NULL));
 };
 
 CController::~CController()
@@ -58,11 +63,11 @@ void CController::OnMouseMoved( int from_x, int from_y, int to_x, int to_y )
 	case VW_STATE_ONGOING:
 		{
 			//移动X：最左 -2*DEF_SPEED, 最右 2*DEF_SPEED
-			int speed = (int) (((double)to_x / g_window_width - 0.5) * 2 * VW_DATA_DEF_MOVE_SPEED);
+			int speed = (int) (((double)to_x / g_window_width - 0.5) * 2 * VW_DEF_MOVE_SPEED);
 			this->MovePlaneX(speed);
 
 			//移动Y：最上 2*DEF_SPEED，最下 -2*DEF_SPEED
-			speed = (int) (((double)to_y / g_window_height - 0.5) * (-2) * VW_DATA_DEF_MOVE_SPEED);
+			speed = (int) (((double)to_y / g_window_height - 0.5) * (-2) * VW_DEF_MOVE_SPEED);
 			this->MovePlaneY(speed);
 
 			break;
@@ -122,7 +127,15 @@ bool CController::OnTimerClick()
 			if (m_pGameData->Step())
 			{
 				//还可以继续走
-				//判断有没有撞到
+				int current_length = m_pGameData->GetCurrentLength();
+				if (current_length % VW_DEF_WALL_DISTANCE == 0 && current_length != 0)
+				{
+					cout << "CHECK WALL NOW" << endl;
+					//又碰到一个了!
+					this->PopNextWallType();
+					//判断有没有撞到
+				}
+
 				return true;
 			}
 			else
@@ -190,22 +203,22 @@ void CController::OnQuitButton()
 
 void CController::OnLeftPushed()
 {
-	this->MovePlaneX(-VW_DATA_DEF_MOVE_SPEED);
+	this->MovePlaneX(-VW_DEF_MOVE_SPEED);
 }
 
 void CController::OnRightPushed()
 {
-	this->MovePlaneX(VW_DATA_DEF_MOVE_SPEED);
+	this->MovePlaneX(VW_DEF_MOVE_SPEED);
 }
 
 void CController::OnUpPushed()
 {
-	this->MovePlaneY(VW_DATA_DEF_MOVE_SPEED);
+	this->MovePlaneY(VW_DEF_MOVE_SPEED);
 }
 
 void CController::OnDownPushed()
 {
-	this->MovePlaneY(-VW_DATA_DEF_MOVE_SPEED);
+	this->MovePlaneY(-VW_DEF_MOVE_SPEED);
 }
 
 void CController::AdjustSpeed()
@@ -222,7 +235,7 @@ void CController::AdjustSpeed()
 	{
 		m_pGameData->SetStep(4);
 	}
-	else if (m_pGameData->GetCurrentLength() < VW_DATA_DEF_TUNNEL_LENGTH)
+	else if (m_pGameData->GetCurrentLength() < VW_DEF_TUNNEL_LENGTH)
 	{
 		m_pGameData->SetStep(8);
 	}
@@ -275,4 +288,38 @@ bool CController::MovePlaneY( int offset )
 		return false;
 	}
 	return true;
+}
+
+int CController::NextWallType()
+{
+	if (m_NextWallTypes.empty())
+	{
+		//随机生成几个，就3个吧，然后重调一次吧
+		for (int i=0; i<3; i++)
+		{
+			m_NextWallTypes.push_back(rand() % VW_WALL_COUNT);
+		}
+		return this->NextWallType();
+	}
+	else
+	{
+		if (m_pGameData->GetCurrentLength() >= m_pGameData->GetTotalLength())
+		{
+			//如果跑完了，就给个NONE
+			return VW_WALL_NONE;
+		}
+		else
+		{
+			//不然，给个front()
+			return m_NextWallTypes.front();
+		}
+	}
+}
+
+void CController::PopNextWallType()
+{
+	if (!m_NextWallTypes.empty())
+	{
+		m_NextWallTypes.pop_front();
+	}
 }

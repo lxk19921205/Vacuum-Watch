@@ -3,6 +3,9 @@
 
 #include "module_interfaces.h"
 #include <gl/freeglut.h>
+#include <list>
+
+using std::list;
 
 /************************************************************************/
 /* 总控制类，决定下一步动作                                             */
@@ -34,6 +37,7 @@ public:
 	virtual void OnUpPushed();
 	virtual void OnDownPushed();
 
+	virtual int NextWallType();
 
 	//for Singleton
 	static inline CController& Instance()
@@ -64,9 +68,13 @@ protected:
 	bool MovePlaneX(int offset);
 	bool MovePlaneY(int offset);
 
+	//去掉头一个“下一个遮挡板类型”
+	void PopNextWallType();
+
 	IGameData* m_pGameData;
 	IViewEngine* m_pViewEngine;
 	int m_state;	//当前游戏的逻辑状态: VW_STATE_*
+	list<int> m_NextWallTypes;	//接下来的遮挡板的类型
 };
 
 #endif

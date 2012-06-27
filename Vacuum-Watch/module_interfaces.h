@@ -248,6 +248,9 @@ public:
 	virtual void OnUpPushed() = 0;
 	//方向键下
 	virtual void OnDownPushed() = 0;
+
+	//获得下一个遮挡板的类型: VW_WALL_*
+	virtual int NextWallType() = 0;
 };
 
 
