@@ -254,7 +254,7 @@ void CViewEngine::Init(int* pargc, char** argv)
 	this->InitMenuButtons();
 
 	background_picture.LoadPic("../Resource/picture/space.bmp");
-	background_picture.AdjustPic(g_window_width+200, g_window_height+200, -100.0f, -100.0f);
+	background_picture.AdjustPic(g_window_width+200, g_window_height+400, -100.0f, -200.0f);
 }
 
 void CViewEngine::OnLeftClicked( int pos_x, int pos_y )
