@@ -76,7 +76,7 @@ bool CGameData::Step()
 	m_iCurrentLength += m_iTunnelStep;
 	if (m_iCurrentLength < m_iTotalLength)
 	{
-		cout << "It's " << m_iCurrentLength << " now" << endl;
+		cout << m_iCurrentLength << endl;
 		return true;
 	}
 	else

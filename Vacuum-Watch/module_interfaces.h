@@ -82,7 +82,7 @@ protected:
 
 public:
 	//设置播放音乐的音量，是一个百分比，见IOptions里的SetSoundVolume函数
-	virtual void SetVolume(int percent) = 0;
+	virtual void SetVolume(DWORD dwVolumn) = 0;
 
 	//开始播放背景音乐，BGM一般比较长，同时间只能有一个背景音乐在播放，url即为BGM地址
 	virtual void StartBGM(const LPCWSTR& url) = 0;
@@ -176,7 +176,12 @@ public:
 // 	virtual void Redraw() = 0;
 
 	//据超级宝典写的设置，当模式切换后，需要重设一些设置，那时要再调一次
-	virtual void SetupRC() = 0;
+	//每个模式来一个，避免混杂
+	virtual void SetupRCMenu() = 0;
+	virtual void SetupRCOngoing() = 0;
+	virtual void SetupRCSetting() = 0;
+	virtual void SetupRCAbout() = 0;
+	virtual void SetupRCPaused() = 0;
 };
 
 
