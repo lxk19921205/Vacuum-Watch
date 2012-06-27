@@ -1,4 +1,4 @@
-#include <gl/glut.h>
+#include <gl/freeglut.h>
 #include <iostream>
 
 #include "view_engine.h"
@@ -46,6 +46,8 @@ void CViewEngine::StartDisplaying()
 //在显示菜单时，使用这里的RenderScene
 static void RenderSceneMenu()
 {
+	cout << "IN RENDER_SCENE_MENU()" << endl;
+
 	//用当前清除颜色清除窗口
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -60,12 +62,6 @@ static void RenderSceneMenu()
 	glOrtho(0, g_window_width, 0, g_window_height, 0, 100);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
-
-/*	start_button.Render();
-	setting_button.Render();
-	about_button.Render();
-	quit_button.Render();
-*/
 
 	background_picture.Rotate(-rotate);
 
@@ -95,8 +91,6 @@ static void RenderSceneMenu()
 	glPopMatrix();  
 */
 
-	//	glRectf(g_x1, g_y1, g_x1+g_rsize, g_y1+g_rsize);
-
 	//刷新绘图命令并进行交换
 	glutSwapBuffers();
 	return;
@@ -104,6 +98,8 @@ static void RenderSceneMenu()
 
 static void RenderSceneSetting()
 {
+	cout << "IN RENDER_SCENE_SETTING()" << endl;
+
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	glutSwapBuffers();
@@ -111,21 +107,47 @@ static void RenderSceneSetting()
 
 static void RenderSceneAbout()
 {
+	cout << "IN RENDER_SCENE_ABOUT()" << endl;
+
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	glutSwapBuffers();
 	return;
 }
 
+
 static void RenderSceneOngoing()
 {
+	cout << "IN RENDER_SCENE_ONGOING()" << endl;
+
+	glDisable(GL_DEPTH_TEST);
+
 	//用黑色清除窗口
+	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	IGameData* data = CFactory::getController()->GetGameData();
 	int current_length = data->GetCurrentLength();
 	int total_length = data->GetTotalLength();
 
+// 	glMatrixMode(GL_MODELVIEW);
+// 	glPushMatrix();
+// 	glTranslatef(0.0f, 0.0f, -300.0f);
+// 	glPopMatrix();
+
+
+	glOrtho(-100, 500, -100, 500, -100, 500);
+	glRectd(0, 0, 100, 100);
+// 	glOrtho(0.0f, 1.0, 0.0, 1.0, -1.0, 1.0);
+// 	glColor3f(1.0f, 1.0f, 1.0f);
+// 	glBegin(GL_POLYGON);
+// 	glVertex3f(0.25f, 0.25f, 0.0f);
+// 	glVertex3f(0.75f, 0.25f, 0.0f);
+// 	glVertex3f(0.75f, 0.75f, 0.0f);
+// 	glVertex3f(0.25f, 0.75f, 0.0f);
+// 	glEnd();
+
+//	glFlush();
 	glutSwapBuffers();
 	return;
 }
@@ -140,6 +162,7 @@ static void RenderScenePaused()
 
 static void RenderScene()
 {
+	cout << "IN RENDER_SCENE()" << endl;
 	IController* controller = CFactory::getController();
 	switch (controller->GetState())
 	{
@@ -186,7 +209,7 @@ static void ChangeSize(GLsizei width, GLsizei height)
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	GLfloat aspect_ratio = (GLfloat) width / (GLfloat) height;
-	gluPerspective(45.0f, aspect_ratio, 0.1, 400.0);
+	gluPerspective(45.0f, aspect_ratio, 1.0, 425.0);
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
@@ -202,8 +225,9 @@ void TimerFunction(int value)
 	{
 		glutPostRedisplay();
 	}
+
 	rotate += 0.1f;
-	glutTimerFunc(VW_REFRESH_INTERVAL, TimerFunction, value+1);
+	glutTimerFunc(VW_REFRESH_INTERVAL, TimerFunction, 1);
 }
 
 void CViewEngine::SetupRC()
@@ -211,33 +235,35 @@ void CViewEngine::SetupRC()
 	//TODO 所有一次性设定好、不再改的东西都在这里
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
-	glShadeModel(GL_SMOOTH);
-
-	glEnable(GL_DEPTH_TEST);	// Hidden surface removal
-	glClearDepth(1.0);
-	glDepthFunc(GL_LEQUAL);
-
-	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
-
-	glFrontFace(GL_CCW);		// Counter clock-wise polygons face out
-	glEnable(GL_CULL_FACE);		// Do not calculate inside of jet
+// 	glShadeModel(GL_SMOOTH);
+// 
+// 	glEnable(GL_DEPTH_TEST);	// Hidden surface removal
+// 	glClearDepth(1.0);
+// 	glDepthFunc(GL_LEQUAL);
+// 
+// 	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
+// 
+// 	glFrontFace(GL_CCW);		// Counter clock-wise polygons face out
+// 	glEnable(GL_CULL_FACE);		// Do not calculate inside of jet
 }
 
-void CViewEngine::Init()
+void CViewEngine::Init(int* pargc, char** argv)
 {
+	glutInit(pargc, argv);
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA | GLUT_DEPTH);
-	glutInitWindowSize(g_window_width, g_window_height);
+	glutInitWindowSize((int)g_window_width, (int)g_window_height);
+	glutInitWindowPosition(100, 100);
 	glutCreateWindow(VW_WINDOW_TITLE);
-	glutDisplayFunc(RenderScene);
 	glutReshapeFunc(ChangeSize);
-
+	glutDisplayFunc(RenderScene);
+	
 	glutTimerFunc(VW_REFRESH_INTERVAL, TimerFunction, 0);
 
 	this->SetupRC();
 	this->InitMenuButtons();
 
 	background_picture.LoadPic("../Resource/picture/space.bmp");
-	background_picture.AdjustPic(g_window_width, g_window_height, 0.0f, 0.0f);
+	background_picture.AdjustPic(g_window_width, g_window_height, 0, 0);
 }
 
 void CViewEngine::OnLeftClicked( int pos_x, int pos_y )
@@ -282,17 +308,17 @@ void CViewEngine::InitMenuButtons()
 {
 	start_button.InitPos(350.0f, 440.0f);
 	start_picture.LoadPic("../Resource/picture/start.bmp");
-	start_picture.AdjustPic(100.0f, 60.0f, 350.0f, 440.0f);
+	start_picture.AdjustPic(100, 60, 350, 440);
 
 	setting_button.InitPos(350.0f, 340.0f);
 	setting_picture.LoadPic("../Resource/picture/setting.bmp");
-	setting_picture.AdjustPic(100.0f, 60.0f, 350.0f, 340.0f);
+	setting_picture.AdjustPic(100, 60, 350, 340);
 
 	about_button.InitPos(350.0f, 240.0f);
 	about_picture.LoadPic("../Resource/picture/about.bmp");
-	about_picture.AdjustPic(100.0f, 60.0f, 350.0f, 240.0f);
+	about_picture.AdjustPic(100, 60, 350, 240);
 
 	quit_button.InitPos(350.0f, 140.0f);
 	quit_picture.LoadPic("../Resource/picture/quit.bmp");
-	quit_picture.AdjustPic(100.0f, 60.0f, 350.0f, 140.0f);
+	quit_picture.AdjustPic(100, 60, 350, 140);
 }

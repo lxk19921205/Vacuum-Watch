@@ -147,7 +147,7 @@ class IViewEngine
 {
 public:
 	//做界面展示之前的初始化
-	virtual void Init() = 0;
+	virtual void Init(int* pargc, char** argv) = 0;
 
 	//开始展示游戏界面
 	virtual void StartDisplaying() = 0;
@@ -158,6 +158,9 @@ public:
 //为什么注释呢：现在有一个TimerFunc()，周期性调用controller的OnTimerClick()，刷新状态，然后重绘，外头不应该显式的要求重绘
 // 	//准备重绘
 // 	virtual void Redraw() = 0;
+
+	//据超级宝典写的设置，当模式切换后，需要重设一些设置，那时要再调一次
+	virtual void SetupRC() = 0;
 };
 
 
@@ -189,7 +192,7 @@ public:
 	virtual void StartGame() = 0;
 
 	//所有的初始化工作
-	virtual void Init() = 0;
+	virtual void Init(int* pargc, char** argv) = 0;
 
 	//获取所有的游戏数据
 	virtual IGameData* GetGameData() = 0;

@@ -11,7 +11,7 @@ class CController : public IController
 public:
 	virtual void StartGame();
 
-	virtual void Init();
+	virtual void Init(int* pargc, char** argv);
 
 	virtual IGameData* GetGameData();
 

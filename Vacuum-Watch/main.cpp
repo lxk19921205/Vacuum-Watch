@@ -1,4 +1,4 @@
-#include <gl/glut.h>
+#include <gl/freeglut.h>
 
 #include "module_interfaces.h"
 #include "factory.h"
@@ -20,10 +20,8 @@ int main(int argc, char** argv)
 //	DoTest();
 //	return 0;
 
-	glutInit(&argc, argv);
-
 	IController* controller = CFactory::getController();
-	controller->Init();
+	controller->Init(&argc, argv);
 	controller->StartGame();
 
 	return 0;

@@ -65,10 +65,10 @@ void CController::InitKeyboardMouseListening()
 	input.InitListener();
 }
 
-void CController::Init()
+void CController::Init(int* pargc, char** argv)
 {
 	//注意先后顺序，先ViewEngine！
-	m_pViewEngine->Init();
+	m_pViewEngine->Init(pargc, argv);
 	this->InitKeyboardMouseListening();
 }
 

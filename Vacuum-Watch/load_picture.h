@@ -1,7 +1,7 @@
 #ifndef _VW_LOAD_PICTURE_H_
 #define _VW_LOAD_PICTURE_H_
 
-#include <gl/glut.h>
+#include <gl/freeglut.h>
 #include <iostream>
 
 class CLoadPic{
