@@ -99,31 +99,64 @@ static void RenderSceneAbout()
 /************************************************************************/
 static void DrawWall(int type, int radius, int z)
 {
-	glBegin(GL_TRIANGLE_FAN);
-	glColor3f(0.1f, 0.1f, 0.1f);
-	for(int i=0; i<1000; ++i)
-	{
-		glVertex3f(radius*cos(2* VW_PI/1000*i), radius*sin(2*VW_PI/1000*i), z-1000.0f);
-	}
-	glEnd();
-
-	switch(type)
+	switch (type)
 	{
 	case VW_WALL_ONE:
 		{
-			glBegin(GL_TRIANGLE_FAN);
-			radius /= 2;
-			glColor3f(0.0f, 0.0f, 0.0f);
-			for(int i=0; i<1000; ++i)
+			glPushMatrix();
+// 			glBegin(GL_QUAD_STRIP);
+// 			int inner_radius = radius / 3;	//里头可通过的圆半径是大圆的1/3
+// 			for (int angle=0; angle<360; ++angle)
+// 			{
+// 				double sin_value = sin(angle * VW_PI / 180);
+// 				double cos_value = cos(angle * VW_PI / 180);
+// 
+// 				glVertex3d(inner_radius*sin_value, inner_radius*cos_value, z);
+// 				glVertex3d(radius*sin_value, radius*cos_value, z);
+// 			}
+// 			glEnd();
+
+//			glCullFace(GL_CCW);
+			glBegin(GL_QUADS);
+			int inner_radius = radius / 3;	//里头可通过的圆半径是大圆的1/3
+			for (int angle=0; angle<360; ++angle)
 			{
-				glVertex3f(radius*cos(2*VW_PI/1000*i), radius*sin(2*VW_PI/1000*i), z-999.0f);
+				double sin_value = sin(angle * VW_PI / 180);
+				double cos_value = cos(angle * VW_PI / 180);
+				double next_sin_value = sin((angle+1) * VW_PI / 180);
+				double next_cos_value = cos((angle+1) * VW_PI / 180);
+
+				glVertex3d(inner_radius*sin_value, inner_radius*cos_value, z);
+				glVertex3d(radius*sin_value, radius*cos_value, z);
+				glVertex3d(radius*next_sin_value, radius*next_cos_value, z);
+				glVertex3d(inner_radius*next_sin_value, inner_radius*next_cos_value, z);
 			}
 			glEnd();
+
+			glPopMatrix();
+// 			glBegin(GL_TRIANGLE_FAN);
+// 			radius /= 2;
+// 			glColor3f(0.0f, 0.0f, 0.0f);
+// 			for(int i=0; i<1000; ++i)
+// 			{
+// 				glVertex3f(radius*cos(2*VW_PI/1000*i), radius*sin(2*VW_PI/1000*i), z-999.0f);
+// 			}
+// 			glEnd();
 			break;
 		}
 
 	case VW_WALL_TWO:
 		{
+			glPushMatrix();
+
+			glBegin(GL_TRIANGLE_FAN);
+			glColor3f(0.1f, 0.1f, 0.1f);
+			for(int i=0; i<1000; ++i)
+			{
+				glVertex3f(radius*cos(2* VW_PI/1000*i), radius*sin(2*VW_PI/1000*i), z-1000.0f);
+			}
+			glEnd();
+
 			glColor3f(0.0f, 0.0f, 0.0f);
 			glPolygonMode(GL_FRONT,GL_FILL);
 			glBegin(GL_POLYGON);
@@ -132,6 +165,8 @@ static void DrawWall(int type, int radius, int z)
 			glVertex3f(-radius*0.3f,radius*0.4f,z-999.0f);
 			glVertex3f(-radius*0.3f,-radius*0.4f,z-999.0f);
 			glEnd();
+
+			glPopMatrix();
 			break;
 		}
 
@@ -205,12 +240,6 @@ static void RenderSceneOngoing()
 		DrawWall(controller->NextWallType(), tunnel_radius, wall_z);
 	}
 
-// 	//从第二个开始显示
-// 	for (int wall_z=2 * VW_DEF_WALL_DISTANCE; wall_z<total_length; wall_z+=VW_DEF_WALL_DISTANCE)
-// 	{
-// 		DrawWall(VW_WALL_TWO, tunnel_radius, wall_z);
-// 	}
-
 	glutSwapBuffers();
 }
 
@@ -257,8 +286,8 @@ static void ChangeSize(GLsizei width, GLsizei height)
 		height = 1;
 	}
 
-	g_window_width = width;
-	g_window_height = height;
+	g_window_width = (GLfloat) width;
+	g_window_height = (GLfloat) height;
 
 	//将视口设置为窗口的大小
 	glViewport(0, 0, width, height);

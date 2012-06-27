@@ -106,7 +106,7 @@ void CController::OnLeftClicked( int pos_x, int pos_y )
 //返回true表示需要重绘
 bool CController::OnTimerClick()
 {
-	//TODO 该更新数据了，只更新就够了，不用调用重绘，其他地方会调的
+	// 该更新数据了，只更新就够了，不用调用重绘，其他地方会调的
 	switch (m_state)
 	{
 	case VW_STATE_MENU:
@@ -133,7 +133,7 @@ bool CController::OnTimerClick()
 					cout << "CHECK WALL NOW" << endl;
 					//又碰到一个了!
 					this->PopNextWallType();
-					//判断有没有撞到
+					// TODO 判断有没有撞到
 				}
 
 				return true;
@@ -170,7 +170,7 @@ void CController::OnStartButton()
 	this->m_state = VW_STATE_ONGOING;
 
 	ILog* log = CFactory::getLog();
-	log->Info("GAME START");
+	log->Info("ENTER GAME_START");
 }
 
 void CController::OnSettingButton()
@@ -188,13 +188,11 @@ void CController::OnAboutButton()
 	this->m_state = VW_STATE_ABOUT;
 
 	ILog* log = CFactory::getLog();
-	log->Info("READ ABOUT");
+	log->Info("ENTER ABOUT");
 }
 
 void CController::OnQuitButton()
 {
-	cout << "QUIT clicked" << endl;
-
 	ILog* log = CFactory::getLog();
 	log->Info("QUIT GAME");
 
@@ -225,29 +223,28 @@ void CController::AdjustSpeed()
 {
 	if (m_pGameData->GetCurrentLength() < 500)
 	{
-		m_pGameData->SetStep(1);
+		m_pGameData->SetStep(VW_DEF_VELOCITY_ONE);
 	}
 	else if (m_pGameData->GetCurrentLength() < 2000)
 	{
-		m_pGameData->SetStep(2);
+		m_pGameData->SetStep(VW_DEF_VELOCITY_TWO);
 	}
 	else if (m_pGameData->GetCurrentLength() < 4000)
 	{
-		m_pGameData->SetStep(4);
+		m_pGameData->SetStep(VW_DEF_VELOCITY_THREE);
 	}
 	else if (m_pGameData->GetCurrentLength() < VW_DEF_TUNNEL_LENGTH)
 	{
-		m_pGameData->SetStep(8);
+		m_pGameData->SetStep(VW_DEF_VELOCITY_FOUR);
 	}
 	else
 	{
 		m_pGameData->SetStep(0);
 		//TOO LONG should stop
-
 	}
 }
 
-//下边的代码代价太高了！不适合在鼠标移动这么多的情况
+// @deprecated 下边的代码原本用来在鼠标移动的时候找到视图移动的方向，但代价太高了！
 void CController::Unproject( int window_x, int window_y, GLdouble* pworld_x, GLdouble* pworld_y, GLdouble* pworld_z)
 {
 	GLdouble model_view[16];
@@ -297,7 +294,9 @@ int CController::NextWallType()
 		//随机生成几个，就3个吧，然后重调一次吧
 		for (int i=0; i<3; i++)
 		{
-			m_NextWallTypes.push_back(rand() % VW_WALL_COUNT);
+//			m_NextWallTypes.push_back(rand() % VW_WALL_COUNT);
+//			m_NextWallTypes.push_back(VW_WALL_ONE);	//为了测试，全部生成第一种类型
+			m_NextWallTypes.push_back(VW_WALL_TWO);	//为了测试，全部生成第一种类型
 		}
 		return this->NextWallType();
 	}
