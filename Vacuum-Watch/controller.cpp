@@ -97,6 +97,26 @@ bool CController::OnTimerClick()
 		}
 	case VW_STATE_ONGOING:
 		{
+			if (m_pGameData->GetCurrentLength() < 500)
+			{
+				m_pGameData->SetStep(1);
+			}
+			else if (m_pGameData->GetCurrentLength() < 2000)
+			{
+				m_pGameData->SetStep(2);
+			}
+			else if (m_pGameData->GetCurrentLength() < 4000)
+			{
+				m_pGameData->SetStep(4);
+			}
+			else if (m_pGameData->GetCurrentLength() < 10000)
+			{
+				m_pGameData->SetStep(8);
+			}
+			else
+			{
+				//TOO LONG should stop
+			}
 			if (m_pGameData->Step())
 			{
 				//还可以继续走
@@ -131,25 +151,19 @@ int CController::GetState()
 
 void CController::OnStartButton()
 {
-	//TODO start
-	cout << "start" << endl;
-
+	m_pViewEngine->SetupRCOngoing();
 	this->m_state = VW_STATE_ONGOING;
 }
 
 void CController::OnSettingButton()
 {
-	//TODO setting
-	cout << "setting" << endl;
-
+	m_pViewEngine->SetupRCSetting();
 	this->m_state = VW_STATE_SETTING;
 }
 
 void CController::OnAboutButton()
 {
-	//TODO about
-	cout << "about" << endl;
-
+	m_pViewEngine->SetupRCAbout();
 	this->m_state = VW_STATE_ABOUT;
 }
 
@@ -157,4 +171,48 @@ void CController::OnQuitButton()
 {
 	cout << "QUIT clicked" << endl;
 	exit(0);
+}
+
+void CController::OnLeftPushed()
+{
+	GLfloat current_x = m_pGameData->GetPositionX();
+	m_pGameData->SetPositionX(current_x-VW_DATA_DEF_MOVE_SPEED);
+	if (!m_pGameData->IsPlaneInside())
+	{
+		// cannot move left anymore
+		m_pGameData->SetPositionX(current_x);
+	}
+}
+
+void CController::OnRightPushed()
+{
+	GLfloat current_x = m_pGameData->GetPositionX();
+	m_pGameData->SetPositionX(current_x+VW_DATA_DEF_MOVE_SPEED);
+	if (!m_pGameData->IsPlaneInside())
+	{
+		// cannot move right anymore
+		m_pGameData->SetPositionX(current_x);
+	}
+}
+
+void CController::OnUpPushed()
+{
+	GLfloat current_y = m_pGameData->GetPositionY();
+	m_pGameData->SetPositionY(current_y+VW_DATA_DEF_MOVE_SPEED);
+	if (!m_pGameData->IsPlaneInside())
+	{
+		// cannot move up anymore
+		m_pGameData->SetPositionY(current_y);
+	}
+}
+
+void CController::OnDownPushed()
+{
+	GLfloat current_y = m_pGameData->GetPositionY();
+	m_pGameData->SetPositionY(current_y-VW_DATA_DEF_MOVE_SPEED);
+	if (!m_pGameData->IsPlaneInside())
+	{
+		// cannot move down anymore
+		m_pGameData->SetPositionY(current_y);
+	}
 }

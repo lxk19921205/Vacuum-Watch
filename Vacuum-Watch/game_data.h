@@ -37,6 +37,8 @@ public:
 	virtual void ResetScore();
 
 	virtual bool Step();
+	virtual int GetStep();
+	virtual void SetStep(int step);
 
 	virtual int GetTunnelRadius();
 
@@ -45,6 +47,13 @@ public:
 
 	virtual int GetTotalLength();
 	virtual void SetTotalLength(int length);
+
+	virtual int GetPositionX();
+	virtual void SetPositionX(int x);
+	virtual int GetPositionY();
+	virtual void SetPositionY(int y);
+
+	virtual bool IsPlaneInside();
 
 private:
 	int m_iCurrentStage;	//当前关数

@@ -11,18 +11,28 @@
 class CViewEngine : public IViewEngine
 {
 public:
-	CViewEngine();
-	virtual ~CViewEngine();
+	CViewEngine()
+	{
+	}
+	virtual ~CViewEngine()
+	{
+	}
 
 	virtual void Init(int* pargc, char** argv);
 	virtual void StartDisplaying();
 	
 	virtual void OnLeftClicked(int pos_x, int pos_y);
 
-//	virtual void Redraw();
-	virtual void SetupRC();
+	virtual void SetupRCMenu();
+	virtual void SetupRCOngoing();
+	virtual void SetupRCSetting();
+	virtual void SetupRCAbout();
+	virtual void SetupRCPaused();
 
 private:
+	//通用的SetupRC在此
+	void SetupRC();
+
 	//在Menu界面有几个button，初始化他们的位置等信息
 	void InitMenuButtons();
 };
