@@ -97,6 +97,26 @@ bool CController::OnTimerClick()
 		}
 	case VW_STATE_ONGOING:
 		{
+			if (m_pGameData->GetCurrentLength() < 500)
+			{
+				m_pGameData->SetStep(1);
+			}
+			else if (m_pGameData->GetCurrentLength() < 2000)
+			{
+				m_pGameData->SetStep(2);
+			}
+			else if (m_pGameData->GetCurrentLength() < 4000)
+			{
+				m_pGameData->SetStep(4);
+			}
+			else if (m_pGameData->GetCurrentLength() < 10000)
+			{
+				m_pGameData->SetStep(8);
+			}
+			else
+			{
+				//TOO LONG should stop
+			}
 			if (m_pGameData->Step())
 			{
 				//还可以继续走

@@ -37,6 +37,8 @@ public:
 	virtual void ResetScore();
 
 	virtual bool Step();
+	virtual int GetStep();
+	virtual void SetStep(int step);
 
 	virtual int GetTunnelRadius();
 

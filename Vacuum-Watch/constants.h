@@ -27,12 +27,12 @@
 /* 游戏数据 Game Data 初始默认值、相关数值                                */
 /************************************************************************/
 //////////////////////////////////////////////////////////////////////////
-#define VW_DATA_DEF_STAGE (1)	//默认初始关卡
-#define VW_DATA_MAX_STAGE (5)	//默认最大关卡，]而不是)
-#define VW_DATA_DEF_SCORE (0)	//默认初始分数
-#define VW_DATA_DEF_TUNNEL_RADIUS (25)	//默认隧道半径
-#define VW_DATA_DEF_TUNNEL_LENGTH (1000)	//默认隧道长度
-#define VW_DATA_DEF_TUNNEL_STEP (1)	//默认在隧道中每次走多少
+#define VW_DATA_DEF_STAGE (1)				//默认初始关卡
+#define VW_DATA_MAX_STAGE (5)				//默认最大关卡，]而不是)
+#define VW_DATA_DEF_SCORE (0)				//默认初始分数
+#define VW_DATA_DEF_TUNNEL_RADIUS (100)		//默认隧道半径
+#define VW_DATA_DEF_TUNNEL_LENGTH (10000)	//默认隧道长度
+#define VW_DATA_DEF_TUNNEL_STEP (1)			//默认在隧道中每次走多少
 
 
 //////////////////////////////////////////////////////////////////////////
