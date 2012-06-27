@@ -13,7 +13,7 @@ using std::endl;
 GLfloat g_window_width = VW_WINDOW_WIDTH;
 GLfloat g_window_height = VW_WINDOW_HEIGHT;
 
-float rotate = 0;//旋转参数
+static float rotate = 0;//旋转参数
 
 //函数外的static变量表示只在这个.c里用
 static CButton start_button;
@@ -27,6 +27,7 @@ static CLoadPic about_picture;
 static CLoadPic quit_picture;
 static CLoadPic background_picture;
 
+
 CViewEngine::CViewEngine()
 {
 }
@@ -34,6 +35,7 @@ CViewEngine::CViewEngine()
 CViewEngine::~CViewEngine()
 {
 }
+
 
 void CViewEngine::StartDisplaying()
 {
@@ -45,7 +47,11 @@ void CViewEngine::StartDisplaying()
 static void RenderSceneMenu()
 {
 	//用当前清除颜色清除窗口
-	glClear(GL_COLOR_BUFFER_BIT);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	//要这2行，否则按钮出不来
+	glDisable(GL_DEPTH_TEST);
+	glDisable(GL_CULL_FACE);
 
 	//显示
 //	glColor3f(1.0f, 0.0f, 0.0f);
@@ -93,131 +99,43 @@ static void RenderSceneMenu()
 
 	//刷新绘图命令并进行交换
 	glutSwapBuffers();
+	return;
 }
 
 static void RenderSceneSetting()
 {
-	glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
-	glClear(GL_COLOR_BUFFER_BIT);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	glutSwapBuffers();
 }
 
 static void RenderSceneAbout()
 {
-	glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
-	glClear(GL_COLOR_BUFFER_BIT);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	glutSwapBuffers();
+	return;
 }
 
 static void RenderSceneOngoing()
 {
 	//用黑色清除窗口
-	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-	glClear(GL_COLOR_BUFFER_BIT);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	IGameData* data = CFactory::getController()->GetGameData();
 	int current_length = data->GetCurrentLength();
 	int total_length = data->GetTotalLength();
 
-
-
-
-	GLfloat inner_angle = 1;
-	GLfloat outer_angle = 60;
-	GLfloat radius = 200;
-
-	GLfloat center_x = 300;
-	GLfloat center_y = 300;
-
-	static GLfloat the_angle = 0;
-	the_angle += 1;
-	if (the_angle > 360)
-	{
-		the_angle = 0;
-	}
-	GLfloat angle = the_angle;
-	glBegin(GL_TRIANGLES);
-		for (int i=0;i<=360;i+=outer_angle)
-		{
-			glVertex3f(center_x, center_y, 0.0f);
-			glVertex3f(center_x + radius * sin(angle * VW_PI / 180), center_y + radius * cos(angle * VW_PI / 180), 0.0f);
-			GLfloat a_little_more = angle + inner_angle;
-			glVertex3f(center_x + radius * sin(a_little_more * VW_PI / 180), center_y + radius * cos(a_little_more * VW_PI / 180), 0.0f);
-			angle += outer_angle;
-		}
-	glEnd();
-
 	glutSwapBuffers();
 	return;
-
-
-
-
-
-	glPushMatrix();
-	glRotatef(30, 1.0f, 0.0f, 0.0f);
-	glRotatef(30, 0.0f, 1.0f, 0.0f);
-
-	static GLfloat offset_x = 0;
-	static GLfloat offset_y = 0;
-
-	offset_x++;
-	offset_y++;
-
-	glBegin(GL_LINE_STRIP);
-	GLfloat z = -50.0f;
-	for (GLfloat angle = 0.0f; angle < 2.0f*VW_PI*3.0f; angle += 0.1)
-	{
-		GLfloat x = 50.0f * sin(angle);
-		GLfloat y = 50.0f * cos(angle);
-
-		glVertex3f(x + offset_x, y + offset_y, z);
-		z += 0.5f;
-	}
-	glEnd();
-	glPopMatrix();
-
-// 	cout << current_length << endl;
-// 	int width = (int) g_window_width;
-// 	float pos = current_length % width;
-// 	glBegin(GL_LINE);
-// 	glVertex2f(pos, 100);
-// 	glVertex2f(100, pos);
-// 	glEnd();
-// 
-// 	glRectf(pos, 0.0f, 100.0f, 100.0f);
-
-
-// 
-// 
-// 	glColor3f(1.0f, 1.0f, 1.0f);
-// 	glRectf(0.0f, 0.0f, 100.0f, 100.0f);
-
-
-
-/*	glTranslatef(0.0f, 0.0f, 10.0f);  
-
-	glPushMatrix(); 
-	glRotatef(g_x1,0.0f,0.0f,1.0f); // 绕z轴旋转
-	GLUquadric *pObj; 
-	pObj = gluNewQuadric(); 
-	gluCylinder(pObj,10.0f,90.0f,10.0f,100,100);//创建空心圆柱
-	gluDeleteQuadric(pObj); 
-	glPopMatrix();  
-*/
-
-
-	glutSwapBuffers();
 }
 
 static void RenderScenePaused()
 {
-	glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
-	glClear(GL_COLOR_BUFFER_BIT);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	glutSwapBuffers();
+	return;
 }
 
 static void RenderScene()
@@ -226,8 +144,6 @@ static void RenderScene()
 	switch (controller->GetState())
 	{
 	case VW_STATE_MENU:
-		background_picture.LoadPic("../Resource/picture/space.bmp");
-		background_picture.AdjustPic(g_window_width+200, g_window_height+400, -100.0f, -200.0f);
 		background_picture.InitRotate();
 		RenderSceneMenu();
 		return;
@@ -252,6 +168,8 @@ static void RenderScene()
 //当窗口改变大小时由GLUT函数库调用
 static void ChangeSize(GLsizei width, GLsizei height)
 {
+	cout << "IN CHANGE_SIZE()" << endl;
+
 	//防止被0除
 	if (height == 0)
 	{
@@ -267,21 +185,11 @@ static void ChangeSize(GLsizei width, GLsizei height)
 	//重置坐标系统
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-
-	//建立裁剪区域（left, right, bottom, top, front, back）
 	GLfloat aspect_ratio = (GLfloat) width / (GLfloat) height;
-	if (width <= height)
-	{
-		glOrtho(-100.0, 100.0, -100.0/aspect_ratio, 100.0/aspect_ratio, 1.0, -1.0);
-	}
-	else
-	{
-		glOrtho(-100.0*aspect_ratio, 100.0*aspect_ratio, -100.0, 100.0, 1.0, -1.0);
-	}
+	gluPerspective(45.0f, aspect_ratio, 0.1, 400.0);
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
-
 }
 
 //每VW_REFRESH_INTERVAL毫秒的时间执行一次，用来刷新，Controller只要改状态标识就好了，刷新界面的调令从这里走
@@ -298,16 +206,38 @@ void TimerFunction(int value)
 	glutTimerFunc(VW_REFRESH_INTERVAL, TimerFunction, value+1);
 }
 
+void CViewEngine::SetupRC()
+{
+	//TODO 所有一次性设定好、不再改的东西都在这里
+	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+
+	glShadeModel(GL_SMOOTH);
+
+	glEnable(GL_DEPTH_TEST);	// Hidden surface removal
+	glClearDepth(1.0);
+	glDepthFunc(GL_LEQUAL);
+
+	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
+
+	glFrontFace(GL_CCW);		// Counter clock-wise polygons face out
+	glEnable(GL_CULL_FACE);		// Do not calculate inside of jet
+}
+
 void CViewEngine::Init()
 {
-	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA);
+	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA | GLUT_DEPTH);
 	glutInitWindowSize(g_window_width, g_window_height);
 	glutCreateWindow(VW_WINDOW_TITLE);
 	glutDisplayFunc(RenderScene);
 	glutReshapeFunc(ChangeSize);
+
 	glutTimerFunc(VW_REFRESH_INTERVAL, TimerFunction, 0);
 
+	this->SetupRC();
 	this->InitMenuButtons();
+
+	background_picture.LoadPic("../Resource/picture/space.bmp");
+	background_picture.AdjustPic(g_window_width, g_window_height, 0.0f, 0.0f);
 }
 
 void CViewEngine::OnLeftClicked( int pos_x, int pos_y )
@@ -348,27 +278,21 @@ void CViewEngine::OnLeftClicked( int pos_x, int pos_y )
 	}
 }
 
-//为什么注释呢：见module_interfaces.h
-// void CViewEngine::Redraw()
-// {
-// 	glutPostRedisplay();
-// }
-
 void CViewEngine::InitMenuButtons()
 {
-	//TODO 此函数已经在Init()里调用了
-
 	start_button.InitPos(350.0f, 440.0f);
 	start_picture.LoadPic("../Resource/picture/start.bmp");
 	start_picture.AdjustPic(100.0f, 60.0f, 350.0f, 440.0f);
+
 	setting_button.InitPos(350.0f, 340.0f);
 	setting_picture.LoadPic("../Resource/picture/setting.bmp");
 	setting_picture.AdjustPic(100.0f, 60.0f, 350.0f, 340.0f);
+
 	about_button.InitPos(350.0f, 240.0f);
 	about_picture.LoadPic("../Resource/picture/about.bmp");
 	about_picture.AdjustPic(100.0f, 60.0f, 350.0f, 240.0f);
+
 	quit_button.InitPos(350.0f, 140.0f);
 	quit_picture.LoadPic("../Resource/picture/quit.bmp");
 	quit_picture.AdjustPic(100.0f, 60.0f, 350.0f, 140.0f);
-
 }

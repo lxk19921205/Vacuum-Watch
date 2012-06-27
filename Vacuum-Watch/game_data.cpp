@@ -1,6 +1,9 @@
 #include "game_data.h"
 #include "constants.h"
 
+#include <iostream>
+using std::cout;
+using std::endl;
 
 
 CGameData::CGameData()
@@ -73,6 +76,7 @@ bool CGameData::Step()
 	m_iCurrentLength += m_iTunnelStep;
 	if (m_iCurrentLength < m_iTotalLength)
 	{
+		cout << "It's " << m_iCurrentLength << " now" << endl;
 		return true;
 	}
 	else

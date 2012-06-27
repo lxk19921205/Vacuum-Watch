@@ -22,6 +22,7 @@ public:
 //	virtual void Redraw();
 
 private:
+	void SetupRC();
 
 	//在Menu界面有几个button，初始化他们的位置等信息
 	void InitMenuButtons();
