@@ -122,6 +122,10 @@ public:
 
 	//飞机向前走一步，走完了返回false（不能再向前了），否则返回true
 	virtual bool Step() = 0;
+	//获取每一步的距离
+	virtual int GetStep() = 0;
+	//设置每一步的距离
+	virtual void SetStep(int step) = 0;
 
 	//获取隧道的半径
 	virtual int GetTunnelRadius() = 0;

@@ -13,7 +13,8 @@ using std::endl;
 GLfloat g_window_width = VW_WINDOW_WIDTH;
 GLfloat g_window_height = VW_WINDOW_HEIGHT;
 
-static float background_rotate = 0;	//背景图片旋转参数
+static float background_rotate = 0;	//背景图片旋转参数，弧度
+static int tunnel_rotate = 0;		//隧道转动的角度
 
 static GLfloat xRot = 0.0f;
 static GLfloat yRot = 0.0f;
@@ -106,14 +107,13 @@ static void RenderSceneAbout()
 	return;
 }
 
-static int look_at_pos = 100;
-static int rotate_angle = 0;
 
 static void RenderSceneOngoing()
 {
 	IGameData* data = CFactory::getController()->GetGameData();
 	int current_length = data->GetCurrentLength();
 	int total_length = data->GetTotalLength();
+	int tunnel_radius = data->GetTunnelRadius();
 
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_CULL_FACE);
@@ -121,21 +121,39 @@ static void RenderSceneOngoing()
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+	//转动
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
-	gluLookAt(0, 0, look_at_pos, 0, 0, look_at_pos-5, 0, 1, 0);
-	look_at_pos--;
-	cout << "LOOK AT" << look_at_pos << endl;
-
-	glMatrixMode(GL_MODELVIEW);
-	glRotated(rotate_angle, 0, 0, 1);
-	rotate_angle += 1;
-	if (rotate_angle >= 360)
+	gluLookAt(0, 0, -current_length, 0, 0, -current_length-100, 0, 1, 0);	//减100还是减1不重要，只需要方向
+	glRotated(tunnel_rotate, 0, 0, 1);
+	tunnel_rotate += 1;
+	if (tunnel_rotate >= 360)
 	{
-		rotate_angle = 0;
+		tunnel_rotate = 0;
 	}
 
+	//想设置背景图片为那张太空，暂无
 //	background_picture.Rotate(-background_rotate, -1000.0f);
+
+
+	glColor3d(1, 1, 1);
+	const GLfloat start_z = -100.0f;
+	glLineWidth(10);
+	glBegin(GL_LINES);
+		for (int angle = 0; angle < 360; angle+=60)
+		{
+			GLdouble sin_value = sin(angle * VW_PI / 180);
+			GLdouble cos_value = cos(angle * VW_PI / 180);
+
+			glNormal3d(sin_value, cos_value, 0);
+			glVertex3d(tunnel_radius * sin_value, tunnel_radius * cos_value, start_z);
+			glVertex3d(tunnel_radius * sin_value, tunnel_radius * cos_value, start_z - total_length);
+		}
+	glEnd();
+
+	glutSwapBuffers();
+	return;
+
 
 	float fZ,bZ;
 	fZ = 100.0f;
@@ -336,7 +354,7 @@ static void ChangeSize(GLsizei width, GLsizei height)
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	GLfloat aspect_ratio = (GLfloat) width / (GLfloat) height;
-	gluPerspective(45, aspect_ratio, 1, 400);
+	gluPerspective(45, aspect_ratio, 1, 1000);
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
@@ -354,10 +372,14 @@ void TimerFunction(int value)
 	}
 
 	background_rotate += 0.1f;
+	if (background_rotate >= 2 * VW_PI)
+	{
+		background_rotate = 0;
+	}
 	glutTimerFunc(VW_REFRESH_INTERVAL, TimerFunction, 1);
 }
 
-// Respond to arrow keys
+// 处理某几个特别按键的，时间紧迫，就乱乱地放在这里了
 void SpecialKeys(int key, int x, int y)
 {
 	if(key == GLUT_KEY_UP)

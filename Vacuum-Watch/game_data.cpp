@@ -86,6 +86,17 @@ bool CGameData::Step()
 	}
 }
 
+int CGameData::GetStep()
+{
+	return this->m_iTunnelStep;
+}
+
+void CGameData::SetStep(int step)
+{
+	m_iTunnelStep = step;
+}
+
+
 int CGameData::GetCurrentLength()
 {
 	return this->m_iCurrentLength;
