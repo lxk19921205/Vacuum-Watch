@@ -48,6 +48,13 @@ public:
 	virtual int GetTotalLength();
 	virtual void SetTotalLength(int length);
 
+	virtual int GetPositionX();
+	virtual void SetPositionX(int x);
+	virtual int GetPositionY();
+	virtual void SetPositionY(int y);
+
+	virtual bool IsPlaneInside();
+
 private:
 	int m_iCurrentStage;	//当前关数
 	long m_lCurrentScore;	//当前分数

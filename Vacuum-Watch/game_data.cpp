@@ -121,3 +121,28 @@ int CGameData::GetTunnelRadius()
 {
 	return this->m_iTunnelRadius;
 }
+
+int CGameData::GetPositionX()
+{
+	return this->m_PlanePosition.x;
+}
+
+void CGameData::SetPositionX( int x )
+{
+	this->m_PlanePosition.x = x;
+}
+
+int CGameData::GetPositionY()
+{
+	return this->m_PlanePosition.y;
+}
+
+void CGameData::SetPositionY( int y )
+{
+	this->m_PlanePosition.y = y;
+}
+
+bool CGameData::IsPlaneInside()
+{
+	return (m_PlanePosition.x * m_PlanePosition.x + m_PlanePosition.y * m_PlanePosition.y) < m_iTunnelRadius * m_iTunnelRadius;
+}

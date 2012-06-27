@@ -28,6 +28,12 @@ public:
 	virtual void OnAboutButton();
 	virtual void OnQuitButton();
 
+	virtual void OnLeftPushed();
+	virtual void OnRightPushed();
+	virtual void OnUpPushed();
+	virtual void OnDownPushed();
+
+
 	//for Singleton
 	static inline CController& Instance()
 	{
