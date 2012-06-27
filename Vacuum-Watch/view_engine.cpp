@@ -75,15 +75,6 @@ static void RenderSceneMenu()
 	about_picture.Render();
 	quit_picture.Render();
 
-/*	glPushMatrix();
-	glRotatef(rotate, 0.0f, 0.0f,1.0f);
-	glPushMatrix();
-
-//	glRasterPos2i(0, 0);
-	LoadPic("space.bmp");
-	glDrawPixels( wide, height, GL_BGR_EXT, GL_UNSIGNED_BYTE, pixelDate );
-*/
-
 /*	glTranslatef(0.0f, 0.0f, 10.0f);  
 
 	glPushMatrix(); 
@@ -237,7 +228,7 @@ void CViewEngine::Init()
 	this->InitMenuButtons();
 
 	background_picture.LoadPic("../Resource/picture/space.bmp");
-	background_picture.AdjustPic(g_window_width, g_window_height, 0.0f, 0.0f);
+	background_picture.AdjustPic(g_window_width+200, g_window_height+200, -100.0f, -100.0f);
 }
 
 void CViewEngine::OnLeftClicked( int pos_x, int pos_y )
