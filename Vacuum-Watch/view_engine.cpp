@@ -95,6 +95,43 @@ static void RenderSceneAbout()
 	return;
 }
 
+void DrawWall(int type, int radius, int z)
+{
+	int i;
+	GLfloat Pi=3.14159f;
+
+	glBegin(GL_TRIANGLE_FAN);
+	glColor3f(0.1f, 0.1f, 0.1f);
+	for(i=0; i<1000; ++i)
+		glVertex3f(radius*cos(2*Pi/1000*i), radius*sin(2*Pi/1000*i), z-1000.0f);
+	glEnd();
+
+	switch(type)
+	{
+	case 1:
+		glBegin(GL_TRIANGLE_FAN);
+		radius = radius/2;
+		glColor3f(0.0f, 0.0f, 0.0f);
+		for(i=0; i<1000; ++i)
+			glVertex3f(radius*cos(2*Pi/1000*i), radius*sin(2*Pi/1000*i), z-999.0f);
+		glEnd();
+		break;
+
+	case 2:
+		glColor3f(0.0f, 0.0f, 0.0f);
+		glPolygonMode(GL_FRONT,GL_FILL);
+		glBegin(GL_POLYGON);
+		glVertex3f(radius*0.3f,-radius*0.4f,z-999.0f);
+		glVertex3f(radius*0.3f,radius*0.4f,z-999.0f);
+		glVertex3f(-radius*0.3f,radius*0.4f,z-999.0f);
+		glVertex3f(-radius*0.3f,-radius*0.4f,z-999.0f);
+		glEnd();
+		break;
+	default:
+		break;
+	}
+}
+
 
 static void RenderSceneOngoing()
 {
@@ -150,14 +187,15 @@ static void RenderSceneOngoing()
 		}
 	glEnd();
 
-	glBegin(GL_POLYGON);
+	//glBegin(GL_POLYGON);
 		for (int i=VW_DATA_DEF_WALL_DISTANCE; i<total_length; i+=VW_DATA_DEF_WALL_DISTANCE)
 		{
 			//TODO 画遮挡板
+			DrawWall(2,tunnel_radius,i);
 			//已知此位置的z，和隧道的radius
 			//DrawWall(int type)	type是VW_WALL_XXX
 		}
-	glEnd();
+	//glEnd();
 
 	glutSwapBuffers();
 	return;
