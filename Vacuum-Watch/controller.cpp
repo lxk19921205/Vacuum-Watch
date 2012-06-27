@@ -16,7 +16,7 @@ using std::cout;
 using std::endl;
 
 CController::CController()
-	:m_state(VW_STATE_MENU)
+	:m_state(VW_STATE_ONGOING)
 {
 	m_pGameData = new CGameData();
 	m_pViewEngine = new CViewEngine();
@@ -155,7 +155,6 @@ void CController::OnStartButton()
 	cout << "start" << endl;
 	m_pViewEngine->SetupRC();
 	this->m_state = VW_STATE_ONGOING;
-	//m_pViewEngine->StartDisplaying();
 }
 
 void CController::OnSettingButton()
