@@ -17,7 +17,6 @@ static float background_rotate = 0;	//背景图片旋转参数，弧度
 static int tunnel_rotate = 0;		//隧道转动的角度
 
 
-
 //函数外的static变量表示只在这个.c里用
 static CButton start_button;
 static CButton setting_button;
@@ -101,7 +100,6 @@ static void RenderSceneAbout()
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	glutSwapBuffers();
-	return;
 }
 
 
@@ -165,11 +163,11 @@ static void RenderSceneOngoing()
 			//TODO 画遮挡板
 			//已知此位置的z，和隧道的radius
 			//DrawWall(int type)	type是VW_WALL_XXX
+			GLfloat wall_z = i;
 		}
 	glEnd();
 
 	glutSwapBuffers();
-	return;
 }
 
 static void RenderScenePaused()
@@ -177,7 +175,6 @@ static void RenderScenePaused()
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	glutSwapBuffers();
-	return;
 }
 
 static void RenderScene()
@@ -186,7 +183,6 @@ static void RenderScene()
 	switch (controller->GetState())
 	{
 	case VW_STATE_MENU:
-		background_picture.InitRotate();
 		RenderSceneMenu();
 		return;
 	case VW_STATE_SETTING:
@@ -227,7 +223,7 @@ static void ChangeSize(GLsizei width, GLsizei height)
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	GLfloat aspect_ratio = (GLfloat) width / (GLfloat) height;
-	gluPerspective(45, aspect_ratio, 1, 1000);
+	gluPerspective(30, aspect_ratio, 1, 1000);
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
@@ -245,10 +241,11 @@ void TimerFunction(int value)
 	}
 
 	background_rotate += 0.1f;
-	if (background_rotate >= 2 * VW_PI)
-	{
-		background_rotate = 0;
-	}
+	//下边必须注释掉，不然图片只能转一个很小的角度
+// 	if (background_rotate >= 2 * VW_PI)
+// 	{
+// 		background_rotate = 0;
+// 	}
 	glutTimerFunc(VW_REFRESH_INTERVAL, TimerFunction, 1);
 }
 
@@ -285,36 +282,6 @@ void CViewEngine::SetupRC()
 
 	glEnable(GL_NORMALIZE);
 	glShadeModel(GL_FLAT);
-
-
-
-	// Light values and coordinates
-	GLfloat  whiteLight[] = { 0.45f, 0.45f, 0.45f, 1.0f };
-	GLfloat  sourceLight[] = { 0.25f, 0.25f, 0.25f, 1.0f };
-	GLfloat	 lightPos[] = { -50.f, 25.0f, 250.0f, 0.0f };
-
-	glEnable(GL_DEPTH_TEST);	// Hidden surface removal
-	glFrontFace(GL_CCW);		// Counter clock-wise polygons face out
-	glEnable(GL_CULL_FACE);		// Do not calculate inside of jet
-
-	// Enable lighting
-	glEnable(GL_LIGHTING);
-
-	// Setup and enable light 0
-	glLightModelfv(GL_LIGHT_MODEL_AMBIENT,whiteLight);
-	glLightfv(GL_LIGHT0,GL_AMBIENT,sourceLight);
-	glLightfv(GL_LIGHT0,GL_DIFFUSE,sourceLight);
-	glLightfv(GL_LIGHT0,GL_POSITION,lightPos);
-	glEnable(GL_LIGHT0);
-
-	// Enable color tracking
-	glEnable(GL_COLOR_MATERIAL);
-
-	// Set Material properties to follow glColor values
-	glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE);
-
-	// Black blue background
-	glClearColor(0.0f, 0.0f, 0.0f, 1.0f );
 }
 
 void CViewEngine::Init(int* pargc, char** argv)
@@ -324,18 +291,15 @@ void CViewEngine::Init(int* pargc, char** argv)
 	glutInitWindowSize(VW_WINDOW_WIDTH, VW_WINDOW_HEIGHT);
 	glutInitWindowPosition(100, 100);
 	glutCreateWindow(VW_WINDOW_TITLE);
+
 	glutReshapeFunc(ChangeSize);
 	glutDisplayFunc(RenderScene);
-	
 	glutSpecialFunc(SpecialKeys);
 
 	glutTimerFunc(VW_REFRESH_INTERVAL, TimerFunction, 0);
 
-	this->SetupRC();
+	this->SetupRCMenu();
 	this->InitMenuButtons();
-
-	background_picture.LoadPic("../Resource/picture/space.bmp");
-	background_picture.AdjustPic(g_window_width, g_window_height, 0, 0);
 }
 
 void CViewEngine::OnLeftClicked( int pos_x, int pos_y )
@@ -393,4 +357,66 @@ void CViewEngine::InitMenuButtons()
 	quit_button.InitPos(350.0f, 140.0f);
 	quit_picture.LoadPic("../Resource/picture/quit.bmp");
 	quit_picture.AdjustPic(100, 60, 350, 140);
+}
+
+void CViewEngine::SetupRCMenu()
+{
+	this->SetupRC();
+
+	//加载背景图片
+	background_picture.LoadPic("../Resource/picture/space.bmp");
+	background_picture.AdjustPic(g_window_width, g_window_height, 0, 0);
+	background_picture.InitRotate();
+}
+
+void CViewEngine::SetupRCOngoing()
+{
+	ChangeSize(g_window_width, g_window_height);
+
+	this->SetupRC();
+
+	glDisable(GL_TEXTURE_2D);
+
+	// Light values and coordinates
+	GLfloat  whiteLight[] = { 0.45f, 0.45f, 0.45f, 1.0f };
+	GLfloat  sourceLight[] = { 0.25f, 0.25f, 0.25f, 1.0f };
+	GLfloat	 lightPos[] = { -50.f, 25.0f, 250.0f, 0.0f };
+
+	glEnable(GL_DEPTH_TEST);	// Hidden surface removal
+	glFrontFace(GL_CCW);		// Counter clock-wise polygons face out
+	glEnable(GL_CULL_FACE);		// Do not calculate inside of jet
+
+	// Enable lighting
+	glEnable(GL_LIGHTING);
+
+	// Setup and enable light 0
+	glLightModelfv(GL_LIGHT_MODEL_AMBIENT,whiteLight);
+	glLightfv(GL_LIGHT0,GL_AMBIENT,sourceLight);
+	glLightfv(GL_LIGHT0,GL_DIFFUSE,sourceLight);
+	glLightfv(GL_LIGHT0,GL_POSITION,lightPos);
+	glEnable(GL_LIGHT0);
+
+	// Enable color tracking
+	glEnable(GL_COLOR_MATERIAL);
+
+	// Set Material properties to follow glColor values
+	glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE);
+
+	// Black blue background
+	glClearColor(0.0f, 0.0f, 0.0f, 1.0f );
+}
+
+void CViewEngine::SetupRCSetting()
+{
+	this->SetupRC();
+}
+
+void CViewEngine::SetupRCAbout()
+{
+	this->SetupRC();
+}
+
+void CViewEngine::SetupRCPaused()
+{
+	this->SetupRC();
 }

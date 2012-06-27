@@ -176,7 +176,12 @@ public:
 // 	virtual void Redraw() = 0;
 
 	//据超级宝典写的设置，当模式切换后，需要重设一些设置，那时要再调一次
-	virtual void SetupRC() = 0;
+	//每个模式来一个，避免混杂
+	virtual void SetupRCMenu() = 0;
+	virtual void SetupRCOngoing() = 0;
+	virtual void SetupRCSetting() = 0;
+	virtual void SetupRCAbout() = 0;
+	virtual void SetupRCPaused() = 0;
 };
 
 
