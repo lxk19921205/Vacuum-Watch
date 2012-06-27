@@ -178,3 +178,47 @@ void CController::OnQuitButton()
 	cout << "QUIT clicked" << endl;
 	exit(0);
 }
+
+void CController::OnLeftPushed()
+{
+	GLfloat current_x = m_pGameData->GetPositionX();
+	m_pGameData->SetPositionX(current_x-VW_DATA_DEF_MOVE_SPEED);
+	if (!m_pGameData->IsPlaneInside())
+	{
+		// cannot move left anymore
+		m_pGameData->SetPositionX(current_x);
+	}
+}
+
+void CController::OnRightPushed()
+{
+	GLfloat current_x = m_pGameData->GetPositionX();
+	m_pGameData->SetPositionX(current_x+VW_DATA_DEF_MOVE_SPEED);
+	if (!m_pGameData->IsPlaneInside())
+	{
+		// cannot move right anymore
+		m_pGameData->SetPositionX(current_x);
+	}
+}
+
+void CController::OnUpPushed()
+{
+	GLfloat current_y = m_pGameData->GetPositionY();
+	m_pGameData->SetPositionY(current_y+VW_DATA_DEF_MOVE_SPEED);
+	if (!m_pGameData->IsPlaneInside())
+	{
+		// cannot move up anymore
+		m_pGameData->SetPositionY(current_y);
+	}
+}
+
+void CController::OnDownPushed()
+{
+	GLfloat current_y = m_pGameData->GetPositionY();
+	m_pGameData->SetPositionY(current_y-VW_DATA_DEF_MOVE_SPEED);
+	if (!m_pGameData->IsPlaneInside())
+	{
+		// cannot move down anymore
+		m_pGameData->SetPositionY(current_y);
+	}
+}

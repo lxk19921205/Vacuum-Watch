@@ -139,6 +139,18 @@ public:
 	virtual int GetTotalLength() = 0;
 	//设置一共有多远
 	virtual void SetTotalLength(int length) = 0;
+
+	//获取当前小飞机的位置-x
+	virtual int GetPositionX() = 0;
+	//设置当前小飞机的位置 x
+	virtual void SetPositionX(int x) = 0;
+	//获取当前小飞机的位置-y
+	virtual int GetPositionY() = 0;
+	//设置当前小飞机的位置 y
+	virtual void SetPositionY(int y) = 0;
+
+	//当前小飞机的位置在半径为radius的圆里吗？
+	virtual bool IsPlaneInside() = 0;
 };
 
 
@@ -222,6 +234,15 @@ public:
 	virtual void OnAboutButton() = 0;
 	//退出的按钮被按下
 	virtual void OnQuitButton() = 0;
+
+	//方向键左
+	virtual void OnLeftPushed() = 0;
+	//方向键右
+	virtual void OnRightPushed() = 0;
+	//方向键上
+	virtual void OnUpPushed() = 0;
+	//方向键下
+	virtual void OnDownPushed() = 0;
 };
 
 

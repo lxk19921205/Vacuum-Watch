@@ -16,9 +16,6 @@ GLfloat g_window_height = VW_WINDOW_HEIGHT;
 static float background_rotate = 0;	//背景图片旋转参数，弧度
 static int tunnel_rotate = 0;		//隧道转动的角度
 
-static GLfloat xRot = 0.0f;
-static GLfloat yRot = 0.0f;
-
 
 
 //函数外的static变量表示只在这个.c里用
@@ -114,6 +111,8 @@ static void RenderSceneOngoing()
 	int current_length = data->GetCurrentLength();
 	int total_length = data->GetTotalLength();
 	int tunnel_radius = data->GetTunnelRadius();
+	GLfloat plane_x = data->GetPositionX();
+	GLfloat plane_y = data->GetPositionY();
 
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_CULL_FACE);
@@ -124,7 +123,7 @@ static void RenderSceneOngoing()
 	//转动
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
-	gluLookAt(0, 0, -current_length, 0, 0, -current_length-100, 0, 1, 0);	//减100还是减1不重要，只需要方向
+	gluLookAt(plane_x, plane_y, -current_length, plane_x, plane_y, -current_length-100, 0, 1, 0);	//减100还是减1不重要，只需要方向
 	glRotated(tunnel_rotate, 0, 0, 1);
 	tunnel_rotate += 1;
 	if (tunnel_rotate >= 360)
@@ -162,8 +161,8 @@ static void RenderSceneOngoing()
 	// Save the matrix state and do the rotations
 	glPushMatrix();
 	glTranslatef(0.0f, 0.0f, -300.0f);
-	glRotatef(xRot, 1.0f, 0.0f, 0.0f);
-	glRotatef(yRot, 0.0f, 1.0f, 0.0f);
+//	glRotatef(xRot, 1.0f, 0.0f, 0.0f);
+//	glRotatef(yRot, 0.0f, 1.0f, 0.0f);
 
 	// Set material color, Red
 	glColor3f(1.0f, 0.0f, 0.0f);
@@ -382,23 +381,26 @@ void TimerFunction(int value)
 // 处理某几个特别按键的，时间紧迫，就乱乱地放在这里了
 void SpecialKeys(int key, int x, int y)
 {
-	if(key == GLUT_KEY_UP)
-		xRot-= 5.0f;
+	IController* controller = CFactory::getController();
 
-	if(key == GLUT_KEY_DOWN)
-		xRot += 5.0f;
+	switch (key)
+	{
+	case GLUT_KEY_UP:
+		controller->OnUpPushed();
+		break;
+	case GLUT_KEY_DOWN:
+		controller->OnDownPushed();
+		break;
+	case GLUT_KEY_LEFT:
+		controller->OnLeftPushed();
+		break;
+	case GLUT_KEY_RIGHT:
+		controller->OnRightPushed();
+		break;
 
-	if(key == GLUT_KEY_LEFT)
-		yRot -= 5.0f;
-
-	if(key == GLUT_KEY_RIGHT)
-		yRot += 5.0f;
-
-	xRot = (GLfloat)((const int)xRot % 360);
-	yRot = (GLfloat)((const int)yRot % 360);
-
-	// Refresh the Window
-	glutPostRedisplay();
+	default:
+		break;
+	}
 }
 
 

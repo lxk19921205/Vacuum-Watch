@@ -33,6 +33,7 @@
 #define VW_DATA_DEF_TUNNEL_RADIUS (100)		//默认隧道半径
 #define VW_DATA_DEF_TUNNEL_LENGTH (10000)	//默认隧道长度
 #define VW_DATA_DEF_TUNNEL_STEP (1)			//默认在隧道中每次走多少
+#define VW_DATA_DEF_MOVE_SPEED (5)			//默认的飞机通过上下左右方向键进行位置变换的速度
 
 
 //////////////////////////////////////////////////////////////////////////
