@@ -16,6 +16,7 @@
     <ClCompile Include="controller.cpp" />
     <ClCompile Include="game_data.cpp" />
     <ClCompile Include="input.cpp" />
+    <ClCompile Include="load_picture.cpp" />
     <ClCompile Include="option.cpp" />
     <ClCompile Include="factory.cpp" />
     <ClCompile Include="log.cpp" />
@@ -30,6 +31,7 @@
     <ClInclude Include="controller.h" />
     <ClInclude Include="game_data.h" />
     <ClInclude Include="input.h" />
+    <ClInclude Include="load_picture.h" />
     <ClInclude Include="option.h" />
     <ClInclude Include="factory.h" />
     <ClInclude Include="log.h" />

@@ -5,6 +5,7 @@
 #include "constants.h"
 #include "button.h"
 #include "factory.h"
+#include "load_picture.h"
 
 using std::cout;
 using std::endl;
@@ -20,10 +21,11 @@ static CButton setting_button;
 static CButton about_button;
 static CButton quit_button;
 
-static GLint wide, height;//要读的bmp文件的像素的宽度和高度
-static GLubyte * pixelDate = NULL;
-static GLint pixelLength;
-
+static CLoadPic start_picture;
+static CLoadPic setting_picture;
+static CLoadPic about_picture;
+static CLoadPic quit_picture;
+static CLoadPic background_picture;
 
 CViewEngine::CViewEngine()
 {
@@ -39,64 +41,13 @@ void CViewEngine::StartDisplaying()
 	//TODO
 }
 
-bool LoadPic(const char* load, GLint new_wide, GLint new_height)
-{
-	//打开文件并读取像素
-	FILE * readf;
-	readf = fopen(load, "rb" );
-	if ( readf == NULL )
-	{
-		printf( "打开文件失败\n \a" );
-		system( "PAUSE" );
-		exit( 0 );
-	}
-	fseek( readf, 0x0012, SEEK_SET );
-	fread( &wide, sizeof( wide ), 1, readf );
-	fread( &height, sizeof( height ), 1, readf );
-
-	//计算像素数据大小(+填补)
-	pixelLength = wide * 3;
-	while((pixelLength % 4) != 0 )
-	{
-		//pixelLength = pixelLength + 4 - ( pixelLength % 4 );
-		pixelLength++;
-	}
-	pixelLength = pixelLength * height;
-	pixelDate = ( GLubyte * )malloc( pixelLength );
-	if ( pixelDate == NULL )
-	{
-		printf( "\a为像素申请内存空间失败" );
-	}
-	fseek( readf, 54, SEEK_SET );
-	fread( pixelDate, pixelLength, 1, readf );
-	//转换图片大小
-	pixelLength = new_wide * 3;
-	while((pixelLength % 4) != 0 )
-	{
-		//pixelLength = pixelLength + 4 - ( pixelLength % 4 );
-		pixelLength++;
-	}
-	pixelLength = pixelLength * new_height;
-	GLubyte *new_pixelDate = ( GLubyte * )malloc( pixelLength );
-	if ( pixelDate == NULL )
-	{
-		printf( "\a为像素申请内存空间失败" );
-	}
-	gluScaleImage(GL_RGB, wide, height, GL_UNSIGNED_BYTE, pixelDate, new_wide, new_height, GL_UNSIGNED_BYTE, new_pixelDate);
-	free(pixelDate);
-	pixelDate = new_pixelDate;
-	wide = new_wide;
-    height = new_height;
-	fclose( readf );
-}
-
 //在显示菜单时，使用这里的RenderScene
 static void RenderSceneMenu()
 {
 	//用当前清除颜色清除窗口
 	glClear(GL_COLOR_BUFFER_BIT);
 
-	//显示按钮
+	//显示
 	glColor3f(1.0f, 0.0f, 0.0f);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
@@ -104,10 +55,16 @@ static void RenderSceneMenu()
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 
-	start_button.Render();
+/*	start_button.Render();
 	setting_button.Render();
 	about_button.Render();
 	quit_button.Render();
+*/
+	background_picture.Render();
+	start_picture.Render();
+	setting_picture.Render();
+	about_picture.Render();
+	quit_picture.Render();
 
 /*	glPushMatrix();
 	glRotatef(rotate, 0.0f, 0.0f,1.0f);
@@ -117,11 +74,6 @@ static void RenderSceneMenu()
 	LoadPic("space.bmp");
 	glDrawPixels( wide, height, GL_BGR_EXT, GL_UNSIGNED_BYTE, pixelDate );
 */
-
-	//导入图片，并调整图片、位置大小
-	LoadPic("../Resource/picture/start.bmp",100,60);
-	glRasterPos2i(40, 40);
-	glDrawPixels( wide, height, GL_BGR_EXT, GL_UNSIGNED_BYTE, pixelDate );
 
 /*	glTranslatef(0.0f, 0.0f, 10.0f);  
 
@@ -327,6 +279,8 @@ static void RenderScene()
 	switch (controller->GetState())
 	{
 	case VW_STATE_MENU:
+		background_picture.LoadPic("../Resource/picture/space.bmp");
+		background_picture.AdjustPic(g_window_width, g_window_height, 0.0f, 0.0f);
 		RenderSceneMenu();
 		return;
 	case VW_STATE_SETTING:
@@ -408,7 +362,6 @@ void CViewEngine::Init()
 	glutTimerFunc(VW_REFRESH_INTERVAL, TimerFunction, 0);
 
 	this->InitMenuButtons();
-	free(pixelDate);
 }
 
 void CViewEngine::OnLeftClicked( int pos_x, int pos_y )
@@ -460,8 +413,16 @@ void CViewEngine::InitMenuButtons()
 	//TODO 此函数已经在Init()里调用了
 
 	start_button.InitPos(40.0f, 40.0f);
+	start_picture.LoadPic("../Resource/picture/start.bmp");
+	start_picture.AdjustPic(100.0f, 60.0f, 40.0f, 40.0f);
 	setting_button.InitPos(40.0f, 120.0f);
+	setting_picture.LoadPic("../Resource/picture/setting.bmp");
+	setting_picture.AdjustPic(100.0f, 60.0f, 40.0f, 120.0f);
 	about_button.InitPos(40.0f, 200.0f);
+	about_picture.LoadPic("../Resource/picture/about.bmp");
+	about_picture.AdjustPic(100.0f, 60.0f, 40.0f, 200.0f);
 	quit_button.InitPos(40.0f, 280.0f);
+	quit_picture.LoadPic("../Resource/picture/quit.bmp");
+	quit_picture.AdjustPic(100.0f, 60.0f, 40.0f, 280.0f);
 
 }
