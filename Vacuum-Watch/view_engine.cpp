@@ -227,7 +227,7 @@ static void RenderScene()
 	{
 	case VW_STATE_MENU:
 		background_picture.LoadPic("../Resource/picture/space.bmp");
-		background_picture.AdjustPic(g_window_width, g_window_height, 0.0f, 0.0f);
+		background_picture.AdjustPic(g_window_width+200, g_window_height+400, -100.0f, -200.0f);
 		background_picture.InitRotate();
 		RenderSceneMenu();
 		return;
