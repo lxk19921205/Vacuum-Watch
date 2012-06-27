@@ -12,7 +12,7 @@ using std::endl;
 GLfloat g_window_width = VW_WINDOW_WIDTH;
 GLfloat g_window_height = VW_WINDOW_HEIGHT;
 
-int rotate = 0;//旋转参数
+//int rotate = 0;//旋转参数
 
 //函数外的static变量表示只在这个.c里用
 static CButton start_button;
@@ -39,7 +39,7 @@ void CViewEngine::StartDisplaying()
 	//TODO
 }
 
-bool LoadPic(const char* load)
+bool LoadPic(const char* load, GLint new_wide, GLint new_height)
 {
 	//打开文件并读取像素
 	FILE * readf;
@@ -69,6 +69,24 @@ bool LoadPic(const char* load)
 	}
 	fseek( readf, 54, SEEK_SET );
 	fread( pixelDate, pixelLength, 1, readf );
+	//转换图片大小
+	pixelLength = new_wide * 3;
+	while((pixelLength % 4) != 0 )
+	{
+		//pixelLength = pixelLength + 4 - ( pixelLength % 4 );
+		pixelLength++;
+	}
+	pixelLength = pixelLength * new_height;
+	GLubyte *new_pixelDate = ( GLubyte * )malloc( pixelLength );
+	if ( pixelDate == NULL )
+	{
+		printf( "\a为像素申请内存空间失败" );
+	}
+	gluScaleImage(GL_RGB, wide, height, GL_UNSIGNED_BYTE, pixelDate, new_wide, new_height, GL_UNSIGNED_BYTE, new_pixelDate);
+	free(pixelDate);
+	pixelDate = new_pixelDate;
+	wide = new_wide;
+    height = new_height;
 	fclose( readf );
 }
 
@@ -101,9 +119,8 @@ static void RenderSceneMenu()
 */
 
 	//导入图片，并调整图片、位置大小
-	LoadPic("start.bmp");
+	LoadPic("../Resource/picture/start.bmp",100,60);
 	glRasterPos2i(40, 40);
-	glPixelZoom(1.38f, 1.35f);//试数试出来的，不会算，用100/wide得到的大小不对
 	glDrawPixels( wide, height, GL_BGR_EXT, GL_UNSIGNED_BYTE, pixelDate );
 
 /*	glTranslatef(0.0f, 0.0f, 10.0f);  
