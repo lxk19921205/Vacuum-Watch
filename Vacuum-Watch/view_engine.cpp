@@ -355,17 +355,17 @@ void CViewEngine::InitMenuButtons()
 {
 	//TODO 此函数已经在Init()里调用了
 
-	start_button.InitPos(40.0f, 40.0f);
+	start_button.InitPos(350.0f, 440.0f);
 	start_picture.LoadPic("../Resource/picture/start.bmp");
-	start_picture.AdjustPic(100.0f, 60.0f, 40.0f, 40.0f);
-	setting_button.InitPos(40.0f, 120.0f);
+	start_picture.AdjustPic(100.0f, 60.0f, 350.0f, 440.0f);
+	setting_button.InitPos(350.0f, 340.0f);
 	setting_picture.LoadPic("../Resource/picture/setting.bmp");
-	setting_picture.AdjustPic(100.0f, 60.0f, 40.0f, 120.0f);
-	about_button.InitPos(40.0f, 200.0f);
+	setting_picture.AdjustPic(100.0f, 60.0f, 350.0f, 340.0f);
+	about_button.InitPos(350.0f, 240.0f);
 	about_picture.LoadPic("../Resource/picture/about.bmp");
-	about_picture.AdjustPic(100.0f, 60.0f, 40.0f, 200.0f);
-	quit_button.InitPos(40.0f, 280.0f);
+	about_picture.AdjustPic(100.0f, 60.0f, 350.0f, 240.0f);
+	quit_button.InitPos(350.0f, 140.0f);
 	quit_picture.LoadPic("../Resource/picture/quit.bmp");
-	quit_picture.AdjustPic(100.0f, 60.0f, 40.0f, 280.0f);
+	quit_picture.AdjustPic(100.0f, 60.0f, 350.0f, 140.0f);
 
 }
