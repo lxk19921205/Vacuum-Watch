@@ -2,7 +2,7 @@
 #define _VW_GAME_DATA_H_
 
 #include "module_interfaces.h"
-#include <gl/GL.h>
+#include <gl/freeglut.h>
 
 struct Position
 {

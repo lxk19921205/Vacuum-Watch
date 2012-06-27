@@ -2,6 +2,7 @@
 #define _VW_LOAD_PICTURE_H_
 
 #include <gl/freeglut.h>
+#include <gl/GL.h>
 #include <iostream>
 
 class CLoadPic{
@@ -24,6 +25,7 @@ public:
 	void Render();
 	void InitRotate();
 	void Rotate(float rotate);//图片按照自身中心旋转，rotate为旋转快慢
+	void Rotate(float rotate, GLfloat z);	//增加一个z轴的变量，表示深度
 };
 
 #endif
