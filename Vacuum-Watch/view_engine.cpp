@@ -13,8 +13,6 @@ using std::endl;
 GLfloat g_window_width = VW_WINDOW_WIDTH;
 GLfloat g_window_height = VW_WINDOW_HEIGHT;
 
-//int rotate = 0;//旋转参数
-
 //函数外的static变量表示只在这个.c里用
 static CButton start_button;
 static CButton setting_button;
@@ -27,6 +25,7 @@ static CLoadPic about_picture;
 static CLoadPic quit_picture;
 static CLoadPic background_picture;
 
+
 CViewEngine::CViewEngine()
 {
 }
@@ -34,6 +33,7 @@ CViewEngine::CViewEngine()
 CViewEngine::~CViewEngine()
 {
 }
+
 
 void CViewEngine::StartDisplaying()
 {
@@ -45,7 +45,10 @@ void CViewEngine::StartDisplaying()
 static void RenderSceneMenu()
 {
 	//用当前清除颜色清除窗口
-	glClear(GL_COLOR_BUFFER_BIT);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	//要这行，否则按钮出不来
+	glDisable(GL_DEPTH_TEST);
 
 	//显示
 	glColor3f(1.0f, 0.0f, 0.0f);
@@ -61,6 +64,7 @@ static void RenderSceneMenu()
 	quit_button.Render();
 */
 	background_picture.Render();
+
 	start_picture.Render();
 	setting_picture.Render();
 	about_picture.Render();
@@ -90,187 +94,66 @@ static void RenderSceneMenu()
 
 	//刷新绘图命令并进行交换
 	glutSwapBuffers();
+	return;
 }
 
 static void RenderSceneSetting()
 {
-	glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
-	glClear(GL_COLOR_BUFFER_BIT);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	glutSwapBuffers();
 }
 
 static void RenderSceneAbout()
 {
-	glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
-	glClear(GL_COLOR_BUFFER_BIT);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	glutSwapBuffers();
+	return;
 }
 
 static void RenderSceneOngoing()
 {
 	//用黑色清除窗口
-	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-	glClear(GL_COLOR_BUFFER_BIT);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	IGameData* data = CFactory::getController()->GetGameData();
 	int current_length = data->GetCurrentLength();
 	int total_length = data->GetTotalLength();
 
 
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
-//	gluLookAt(1, 0, 0, 0, 0, 0, 0, 1, 0);
-
-	glColor3f(1.0f, 1.0f, 0.0f);
-	GLfloat radius = 100;
-	GLfloat center_x = 300;
-	GLfloat center_y = 300;
-	glLineWidth(10);
-	glPolygonMode(GL_BACK, GL_LINE);
-	glPolygonMode(GL_FRONT, GL_FILL);
-	glBegin(GL_QUADS);
-	for (int angle=0; angle<360; angle+=30)
-	{
-		double radian = angle * VW_PI / 180;
-		double next_radian = (angle + 1) * VW_PI / 180;
-
-		glVertex3f(center_x + radius * sin(radian), center_y + radius * cos(radian), 50);
-		glVertex3f(center_x + radius * sin(next_radian), center_y + radius * cos(next_radian), 50);
-		glVertex3f(center_x + radius * sin(next_radian), center_y + radius * cos(next_radian), -50);
-		glVertex3f(center_x + radius * sin(radian), center_y + radius * cos(radian), -50);
-	}
-	glEnd();
-
-//	glBegin(GL_TRIANGLES);
-// 	for (int angle=0; angle<360; angle+=30)
-// 	{
-// 		double radian = angle * VW_PI / 180;
-// 		GLfloat x = radius * sin(radian);
-// 		GLfloat y = radius * cos(radian);
-// // 		cout << "from (" << center_x+x << ", " << center_y+y << ", " << 50 << endl;
-// // 		cout << "to   (" << center_x+x << ", " << center_y+y << ", " << -50 << endl;
-// 		glVertex3f(center_x + x, center_y + y, 50);
-// 		glVertex3f(center_x + x, center_y + y, -50);
-// 	}
-// 	glEnd();
-
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	//	glFrustum(-100, 100, -100, 100, 50, -50);
-	gluPerspective(2, g_window_width/g_window_height, 50, -50);
+//	gluLookAt(0, 0, 100, 0, 0, 0, 0, 1, 0);
+	gluPerspective(30.0, g_window_width/g_window_height, 1, 500.0);
+
+	glPushMatrix();
+
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
 
 
-	
+	glColor3f(1.0f, 1.0f, 0.0f);
+	glBegin(GL_QUADS);
+	glVertex3f(400.0f, 300.0f, 0.0f);
+	glVertex3f(500.0f, 300.0f, 0.0f);
+	glVertex3f(500.0f, 400.0f, 0.0f);
+	glVertex3f(400.0f, 400.0f, 0.0f);
+	glEnd();
 
+	glPopMatrix();
+
+	glFlush();
 	glutSwapBuffers();
 	return;
-
-
-
-
-
-
-
-//	gluLookAt(1, 1, 1, 0, 0, 0, 0, 1, 0);
-
-
-// 	glColor3f(1.0f, 1.0f, 1.0f);
-// 	GLfloat inner_angle = 1;
-// 	GLfloat outer_angle = 60;
-// 	GLfloat radius = 200;
-// 
-// 	GLfloat center_x = 300;
-// 	GLfloat center_y = 300;
-// 
-// 	static GLfloat the_angle = 0;
-// 	the_angle += 1;
-// 	if (the_angle > 360)
-// 	{
-// 		the_angle = 0;
-// 	}
-// 	GLfloat angle = the_angle;
-// 	glBegin(GL_TRIANGLES);
-// 		for (int i=0;i<=360;i+=outer_angle)
-// 		{
-// 			glVertex3f(center_x, center_y, 0.0f);
-// 			glVertex3f(center_x + radius * sin(angle * VW_PI / 180), center_y + radius * cos(angle * VW_PI / 180), 0.0f);
-// 			GLfloat a_little_more = angle + inner_angle;
-// 			glVertex3f(center_x + radius * sin(a_little_more * VW_PI / 180), center_y + radius * cos(a_little_more * VW_PI / 180), 0.0f);
-// 			angle += outer_angle;
-// 		}
-// 	glEnd();
-// 
-// 	glutSwapBuffers();
-// 	return;
-
-
-
-
-
-// 	glPushMatrix();
-// 	glRotatef(30, 1.0f, 0.0f, 0.0f);
-// 	glRotatef(30, 0.0f, 1.0f, 0.0f);
-// 
-// 	static GLfloat offset_x = 0;
-// 	static GLfloat offset_y = 0;
-// 
-// 	offset_x++;
-// 	offset_y++;
-// 
-// 	glBegin(GL_LINE_STRIP);
-// 	GLfloat z = -50.0f;
-// 	for (GLfloat angle = 0.0f; angle < 2.0f*VW_PI*3.0f; angle += 0.1)
-// 	{
-// 		GLfloat x = 50.0f * sin(angle);
-// 		GLfloat y = 50.0f * cos(angle);
-// 
-// 		glVertex3f(x + offset_x, y + offset_y, z);
-// 		z += 0.5f;
-// 	}
-// 	glEnd();
-// 	glPopMatrix();
-
-// 	cout << current_length << endl;
-// 	int width = (int) g_window_width;
-// 	float pos = current_length % width;
-// 	glBegin(GL_LINE);
-// 	glVertex2f(pos, 100);
-// 	glVertex2f(100, pos);
-// 	glEnd();
-// 
-// 	glRectf(pos, 0.0f, 100.0f, 100.0f);
-
-
-// 
-// 
-// 	glColor3f(1.0f, 1.0f, 1.0f);
-// 	glRectf(0.0f, 0.0f, 100.0f, 100.0f);
-
-
-
-/*	glTranslatef(0.0f, 0.0f, 10.0f);  
-
-	glPushMatrix(); 
-	glRotatef(g_x1,0.0f,0.0f,1.0f); // 绕z轴旋转
-	GLUquadric *pObj; 
-	pObj = gluNewQuadric(); 
-	gluCylinder(pObj,10.0f,90.0f,10.0f,100,100);//创建空心圆柱
-	gluDeleteQuadric(pObj); 
-	glPopMatrix();  
-*/
-
-
-//	glutSwapBuffers();
 }
 
 static void RenderScenePaused()
 {
-	glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
-	glClear(GL_COLOR_BUFFER_BIT);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	glutSwapBuffers();
+	return;
 }
 
 static void RenderScene()
@@ -279,8 +162,6 @@ static void RenderScene()
 	switch (controller->GetState())
 	{
 	case VW_STATE_MENU:
-		background_picture.LoadPic("../Resource/picture/space.bmp");
-		background_picture.AdjustPic(g_window_width, g_window_height, 0.0f, 0.0f);
 		RenderSceneMenu();
 		return;
 	case VW_STATE_SETTING:
@@ -304,6 +185,8 @@ static void RenderScene()
 //当窗口改变大小时由GLUT函数库调用
 static void ChangeSize(GLsizei width, GLsizei height)
 {
+	cout << "IN CHANGE_SIZE()" << endl;
+
 	//防止被0除
 	if (height == 0)
 	{
@@ -319,21 +202,11 @@ static void ChangeSize(GLsizei width, GLsizei height)
 	//重置坐标系统
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-
-	//建立裁剪区域（left, right, bottom, top, front, back）
 	GLfloat aspect_ratio = (GLfloat) width / (GLfloat) height;
-	if (width <= height)
-	{
-		glOrtho(-100.0, 100.0, -100.0/aspect_ratio, 100.0/aspect_ratio, 1.0, -1.0);
-	}
-	else
-	{
-		glOrtho(-100.0*aspect_ratio, 100.0*aspect_ratio, -100.0, 100.0, 1.0, -1.0);
-	}
+	gluPerspective(60.0f, aspect_ratio, 1.0, 400.0);
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
-
 }
 
 //每VW_REFRESH_INTERVAL毫秒的时间执行一次，用来刷新，Controller只要改状态标识就好了，刷新界面的调令从这里走
@@ -350,10 +223,20 @@ void TimerFunction(int value)
 	glutTimerFunc(VW_REFRESH_INTERVAL, TimerFunction, value+1);
 }
 
+void CViewEngine::SetupRC()
+{
+	//TODO 所有一次性设定好、不再改的东西都在这里
+	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+	glClearDepth(1.0);
+
+	glEnable(GL_DEPTH_TEST);	// Hidden surface removal
+	glFrontFace(GL_CCW);		// Counter clock-wise polygons face out
+	glEnable(GL_CULL_FACE);		// Do not calculate inside of jet
+}
 
 void CViewEngine::Init()
 {
-	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA);
+	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA | GLUT_DEPTH);
 	glutInitWindowSize(g_window_width, g_window_height);
 	glutCreateWindow(VW_WINDOW_TITLE);
 	glutDisplayFunc(RenderScene);
@@ -361,7 +244,12 @@ void CViewEngine::Init()
 
 	glutTimerFunc(VW_REFRESH_INTERVAL, TimerFunction, 0);
 
+	this->SetupRC();
 	this->InitMenuButtons();
+
+	//背景图片
+	background_picture.LoadPic("../Resource/picture/space.bmp");
+	background_picture.AdjustPic(g_window_width, g_window_height, 0.0f, 0.0f);
 }
 
 void CViewEngine::OnLeftClicked( int pos_x, int pos_y )
@@ -402,27 +290,21 @@ void CViewEngine::OnLeftClicked( int pos_x, int pos_y )
 	}
 }
 
-//为什么注释呢：见module_interfaces.h
-// void CViewEngine::Redraw()
-// {
-// 	glutPostRedisplay();
-// }
-
 void CViewEngine::InitMenuButtons()
 {
-	//TODO 此函数已经在Init()里调用了
-
 	start_button.InitPos(40.0f, 40.0f);
 	start_picture.LoadPic("../Resource/picture/start.bmp");
 	start_picture.AdjustPic(100.0f, 60.0f, 40.0f, 40.0f);
+
 	setting_button.InitPos(40.0f, 120.0f);
 	setting_picture.LoadPic("../Resource/picture/setting.bmp");
 	setting_picture.AdjustPic(100.0f, 60.0f, 40.0f, 120.0f);
+
 	about_button.InitPos(40.0f, 200.0f);
 	about_picture.LoadPic("../Resource/picture/about.bmp");
 	about_picture.AdjustPic(100.0f, 60.0f, 40.0f, 200.0f);
+
 	quit_button.InitPos(40.0f, 280.0f);
 	quit_picture.LoadPic("../Resource/picture/quit.bmp");
 	quit_picture.AdjustPic(100.0f, 60.0f, 40.0f, 280.0f);
-
 }
