@@ -120,11 +120,11 @@ void CTesting::TestAudio()
 
 	cout << "to START_BGM" << endl;
 	this->WaitUntil('n');
-	audio->StartBGM(L"..\\Resource\\audio\\dreamcatcher.wav");
+//	audio->StartBGM(L"..\\Resource\\audio\\dreamcatcher.wav");
 
 	cout << "to SET_VOLUMN 100" << endl;
 	this->WaitUntil('n');
-	audio->SetVolume(100);
+	audio->SetVolume(0xFFFF);
 
 	cout << "to SET_VOLUMN 0" << endl;
 	this->WaitUntil('n');
