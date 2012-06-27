@@ -2,6 +2,22 @@
 #define _VW_GAME_DATA_H_
 
 #include "module_interfaces.h"
+#include <gl/GL.h>
+
+struct Position
+{
+	GLfloat x;
+	GLfloat y;
+	GLfloat z;
+
+	Position()
+		:x(0),
+		y(0),
+		z(0)
+	{
+	}
+};
+
 
 /************************************************************************/
 /* 管理各种游戏数据 by Andriy                                           */
@@ -38,6 +54,9 @@ private:
 	int m_iTotalLength;		//隧道的总长度
 	int m_iTunnelStep;		//在隧道中每次走多远
 	int m_iCurrentLength;	//在隧道中当前已经经历了多少距离
+
+	Position m_PlanePosition;	//小飞机当前的位置
 };
+
 
 #endif

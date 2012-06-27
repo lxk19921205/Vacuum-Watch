@@ -85,22 +85,21 @@ bool CController::OnTimerClick()
 	{
 	case VW_STATE_MENU:
 		{
-			break;
+			return true;
 		}
 	case VW_STATE_SETTING:
 		{
-			break;
+			return true;
 		}
 	case VW_STATE_ABOUT:
 		{
-			break;
+			return true;
 		}
 	case VW_STATE_ONGOING:
 		{
 			if (m_pGameData->Step())
 			{
 				//还可以继续走
-
 				//判断有没有撞到
 				return true;
 			}
@@ -112,14 +111,12 @@ bool CController::OnTimerClick()
 		}
 	case VW_STATE_PAUSED:
 		{
-			break;
+			return false;
 		}
 
 	default:
-		return true;
+		return false;
 	}
-
-	return true;
 }
 
 IGameData* CController::GetGameData()

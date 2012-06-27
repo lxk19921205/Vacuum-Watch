@@ -13,6 +13,8 @@ using std::endl;
 GLfloat g_window_width = VW_WINDOW_WIDTH;
 GLfloat g_window_height = VW_WINDOW_HEIGHT;
 
+static float rotate = 0;//旋转参数
+
 //函数外的static变量表示只在这个.c里用
 static CButton start_button;
 static CButton setting_button;
@@ -47,11 +49,12 @@ static void RenderSceneMenu()
 	//用当前清除颜色清除窗口
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	//要这行，否则按钮出不来
+	//要这2行，否则按钮出不来
 	glDisable(GL_DEPTH_TEST);
+	glDisable(GL_CULL_FACE);
 
 	//显示
-	glColor3f(1.0f, 0.0f, 0.0f);
+//	glColor3f(1.0f, 0.0f, 0.0f);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	glOrtho(0, g_window_width, 0, g_window_height, 0, 100);
@@ -63,8 +66,10 @@ static void RenderSceneMenu()
 	about_button.Render();
 	quit_button.Render();
 */
-	background_picture.Render();
 
+	background_picture.Rotate(-rotate);
+
+//	background_picture.Render();
 	start_picture.Render();
 	setting_picture.Render();
 	about_picture.Render();
@@ -121,29 +126,6 @@ static void RenderSceneOngoing()
 	int current_length = data->GetCurrentLength();
 	int total_length = data->GetTotalLength();
 
-
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-//	gluLookAt(0, 0, 100, 0, 0, 0, 0, 1, 0);
-	gluPerspective(30.0, g_window_width/g_window_height, 1, 500.0);
-
-	glPushMatrix();
-
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
-
-
-	glColor3f(1.0f, 1.0f, 0.0f);
-	glBegin(GL_QUADS);
-	glVertex3f(400.0f, 300.0f, 0.0f);
-	glVertex3f(500.0f, 300.0f, 0.0f);
-	glVertex3f(500.0f, 400.0f, 0.0f);
-	glVertex3f(400.0f, 400.0f, 0.0f);
-	glEnd();
-
-	glPopMatrix();
-
-	glFlush();
 	glutSwapBuffers();
 	return;
 }
@@ -162,6 +144,7 @@ static void RenderScene()
 	switch (controller->GetState())
 	{
 	case VW_STATE_MENU:
+		background_picture.InitRotate();
 		RenderSceneMenu();
 		return;
 	case VW_STATE_SETTING:
@@ -203,7 +186,7 @@ static void ChangeSize(GLsizei width, GLsizei height)
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	GLfloat aspect_ratio = (GLfloat) width / (GLfloat) height;
-	gluPerspective(60.0f, aspect_ratio, 1.0, 400.0);
+	gluPerspective(45.0f, aspect_ratio, 0.1, 400.0);
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
@@ -219,7 +202,7 @@ void TimerFunction(int value)
 	{
 		glutPostRedisplay();
 	}
-
+	rotate += 0.1f;
 	glutTimerFunc(VW_REFRESH_INTERVAL, TimerFunction, value+1);
 }
 
@@ -227,9 +210,15 @@ void CViewEngine::SetupRC()
 {
 	//TODO 所有一次性设定好、不再改的东西都在这里
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-	glClearDepth(1.0);
+
+	glShadeModel(GL_SMOOTH);
 
 	glEnable(GL_DEPTH_TEST);	// Hidden surface removal
+	glClearDepth(1.0);
+	glDepthFunc(GL_LEQUAL);
+
+	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
+
 	glFrontFace(GL_CCW);		// Counter clock-wise polygons face out
 	glEnable(GL_CULL_FACE);		// Do not calculate inside of jet
 }
@@ -247,7 +236,6 @@ void CViewEngine::Init()
 	this->SetupRC();
 	this->InitMenuButtons();
 
-	//背景图片
 	background_picture.LoadPic("../Resource/picture/space.bmp");
 	background_picture.AdjustPic(g_window_width, g_window_height, 0.0f, 0.0f);
 }
@@ -292,19 +280,19 @@ void CViewEngine::OnLeftClicked( int pos_x, int pos_y )
 
 void CViewEngine::InitMenuButtons()
 {
-	start_button.InitPos(40.0f, 40.0f);
+	start_button.InitPos(350.0f, 440.0f);
 	start_picture.LoadPic("../Resource/picture/start.bmp");
-	start_picture.AdjustPic(100.0f, 60.0f, 40.0f, 40.0f);
+	start_picture.AdjustPic(100.0f, 60.0f, 350.0f, 440.0f);
 
-	setting_button.InitPos(40.0f, 120.0f);
+	setting_button.InitPos(350.0f, 340.0f);
 	setting_picture.LoadPic("../Resource/picture/setting.bmp");
-	setting_picture.AdjustPic(100.0f, 60.0f, 40.0f, 120.0f);
+	setting_picture.AdjustPic(100.0f, 60.0f, 350.0f, 340.0f);
 
-	about_button.InitPos(40.0f, 200.0f);
+	about_button.InitPos(350.0f, 240.0f);
 	about_picture.LoadPic("../Resource/picture/about.bmp");
-	about_picture.AdjustPic(100.0f, 60.0f, 40.0f, 200.0f);
+	about_picture.AdjustPic(100.0f, 60.0f, 350.0f, 240.0f);
 
-	quit_button.InitPos(40.0f, 280.0f);
+	quit_button.InitPos(350.0f, 140.0f);
 	quit_picture.LoadPic("../Resource/picture/quit.bmp");
-	quit_picture.AdjustPic(100.0f, 60.0f, 40.0f, 280.0f);
+	quit_picture.AdjustPic(100.0f, 60.0f, 350.0f, 140.0f);
 }

@@ -11,6 +11,7 @@ private:
 	GLubyte * m_pixelDate;//指向图片信息
 	GLint m_pixelLength;//分配的图片空间
 	GLint m_posx, m_posy;//图片显示的位置
+	GLuint m_texName;//保存纹理绑定
 
 	void Init();
 
@@ -21,6 +22,8 @@ public:
 	bool LoadPic(const char* load);
 	bool AdjustPic(GLint new_wide, GLint new_height, GLint new_posx, GLint new_posy);
 	void Render();
+	void InitRotate();
+	void Rotate(float rotate);//图片按照自身中心旋转，rotate为旋转快慢
 };
 
 #endif

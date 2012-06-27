@@ -22,16 +22,16 @@ void CButton::Init()
 	m_fPosY = 40;
 	m_fWidth = 100;
 	m_fHeight = 60;
-//	base = glGenLists(96);
-	cout<<"button pos: " << m_fPosX << ", " << m_fPosY <<endl;
+	//base = glGenLists(96);
+	//cout<<"button pos: " << m_fPosX << ", " << m_fPosY <<endl;
 }
 
 void CButton::InitPos(float x, float y)
 {
 	m_fPosX = x;
 	m_fPosY = y;
-//	base = glGenLists(96);
-	cout<<"button pos: " << m_fPosX << ", " << m_fPosY <<endl;
+	//base = glGenLists(96);
+	//cout<<"button pos: " << m_fPosX << ", " << m_fPosY <<endl;
 }
 
 
