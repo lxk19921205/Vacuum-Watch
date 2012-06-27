@@ -159,152 +159,17 @@ static void RenderSceneOngoing()
 		}
 	glEnd();
 
+	glBegin(GL_POLYGON);
+		for (int i=VW_DATA_DEF_WALL_DISTANCE; i<total_length; i+=VW_DATA_DEF_WALL_DISTANCE)
+		{
+			//TODO 画遮挡板
+			//已知此位置的z，和隧道的radius
+			//DrawWall(int type)	type是VW_WALL_XXX
+		}
+	glEnd();
+
 	glutSwapBuffers();
 	return;
-
-
-	float fZ,bZ;
-	fZ = 100.0f;
-	bZ = -100.0f;
-
-	// Save the matrix state and do the rotations
-	glPushMatrix();
-	glTranslatef(0.0f, 0.0f, -300.0f);
-//	glRotatef(xRot, 1.0f, 0.0f, 0.0f);
-//	glRotatef(yRot, 0.0f, 1.0f, 0.0f);
-
-	// Set material color, Red
-	glColor3f(1.0f, 0.0f, 0.0f);
-
-	// Front Face ///////////////////////////////////
-	glBegin(GL_QUADS);
-	// Pointing straight out Z
-	glNormal3f(0.0f, 0.0f, 1.0f);	
-
-	// Left Panel
-	glVertex3f(-50.0f, 50.0f, fZ);
-	glVertex3f(-50.0f, -50.0f, fZ);
-	glVertex3f(-35.0f, -50.0f, fZ);
-	glVertex3f(-35.0f,50.0f,fZ);
-
-	// Right Panel
-	glVertex3f(50.0f, 50.0f, fZ);
-	glVertex3f(35.0f, 50.0f, fZ);
-	glVertex3f(35.0f, -50.0f, fZ);
-	glVertex3f(50.0f,-50.0f,fZ);
-
-	// Top Panel
-	glVertex3f(-35.0f, 50.0f, fZ);
-	glVertex3f(-35.0f, 35.0f, fZ);
-	glVertex3f(35.0f, 35.0f, fZ);
-	glVertex3f(35.0f, 50.0f,fZ);
-
-	// Bottom Panel
-	glVertex3f(-35.0f, -35.0f, fZ);
-	glVertex3f(-35.0f, -50.0f, fZ);
-	glVertex3f(35.0f, -50.0f, fZ);
-	glVertex3f(35.0f, -35.0f,fZ);
-
-	// Top length section ////////////////////////////
-	// Normal points up Y axis
-	glNormal3f(0.0f, 1.0f, 0.0f);
-	glVertex3f(-50.0f, 50.0f, fZ);
-	glVertex3f(50.0f, 50.0f, fZ);
-	glVertex3f(50.0f, 50.0f, bZ);
-	glVertex3f(-50.0f,50.0f,bZ);
-
-	// Bottom section
-	glNormal3f(0.0f, -1.0f, 0.0f);
-	glVertex3f(-50.0f, -50.0f, fZ);
-	glVertex3f(-50.0f, -50.0f, bZ);
-	glVertex3f(50.0f, -50.0f, bZ);
-	glVertex3f(50.0f, -50.0f, fZ);
-
-	// Left section
-	glNormal3f(1.0f, 0.0f, 0.0f);
-	glVertex3f(50.0f, 50.0f, fZ);
-	glVertex3f(50.0f, -50.0f, fZ);
-	glVertex3f(50.0f, -50.0f, bZ);
-	glVertex3f(50.0f, 50.0f, bZ);
-
-	// Right Section
-	glNormal3f(-1.0f, 0.0f, 0.0f);
-	glVertex3f(-50.0f, 50.0f, fZ);
-	glVertex3f(-50.0f, 50.0f, bZ);
-	glVertex3f(-50.0f, -50.0f, bZ);
-	glVertex3f(-50.0f, -50.0f, fZ);
-	glEnd();
-
-	glFrontFace(GL_CW);		// clock-wise polygons face out
-
-	glBegin(GL_QUADS);
-	// Back section
-	// Pointing straight out Z
-	glNormal3f(0.0f, 0.0f, -1.0f);	
-
-	// Left Panel
-	glVertex3f(-50.0f, 50.0f, bZ);
-	glVertex3f(-50.0f, -50.0f, bZ);
-	glVertex3f(-35.0f, -50.0f, bZ);
-	glVertex3f(-35.0f,50.0f,bZ);
-
-	// Right Panel
-	glVertex3f(50.0f, 50.0f, bZ);
-	glVertex3f(35.0f, 50.0f, bZ);
-	glVertex3f(35.0f, -50.0f, bZ);
-	glVertex3f(50.0f,-50.0f,bZ);
-
-	// Top Panel
-	glVertex3f(-35.0f, 50.0f, bZ);
-	glVertex3f(-35.0f, 35.0f, bZ);
-	glVertex3f(35.0f, 35.0f, bZ);
-	glVertex3f(35.0f, 50.0f,bZ);
-
-	// Bottom Panel
-	glVertex3f(-35.0f, -35.0f, bZ);
-	glVertex3f(-35.0f, -50.0f, bZ);
-	glVertex3f(35.0f, -50.0f, bZ);
-	glVertex3f(35.0f, -35.0f,bZ);
-
-	// Insides /////////////////////////////
-	glColor3f(0.75f, 0.75f, 0.75f);
-
-	// Normal points up Y axis
-	glNormal3f(0.0f, 1.0f, 0.0f);
-	glVertex3f(-35.0f, 35.0f, fZ);
-	glVertex3f(35.0f, 35.0f, fZ);
-	glVertex3f(35.0f, 35.0f, bZ);
-	glVertex3f(-35.0f,35.0f,bZ);
-
-	// Bottom section
-	glNormal3f(0.0f, 1.0f, 0.0f);
-	glVertex3f(-35.0f, -35.0f, fZ);
-	glVertex3f(-35.0f, -35.0f, bZ);
-	glVertex3f(35.0f, -35.0f, bZ);
-	glVertex3f(35.0f, -35.0f, fZ);
-
-	// Left section
-	glNormal3f(1.0f, 0.0f, 0.0f);
-	glVertex3f(-35.0f, 35.0f, fZ);
-	glVertex3f(-35.0f, 35.0f, bZ);
-	glVertex3f(-35.0f, -35.0f, bZ);
-	glVertex3f(-35.0f, -35.0f, fZ);
-
-	// Right Section
-	glNormal3f(-1.0f, 0.0f, 0.0f);
-	glVertex3f(35.0f, 35.0f, fZ);
-	glVertex3f(35.0f, -35.0f, fZ);
-	glVertex3f(35.0f, -35.0f, bZ);
-	glVertex3f(35.0f, 35.0f, bZ);
-	glEnd();
-
-	glFrontFace(GL_CCW);		// Counter clock-wise polygons face out
-
-	// Restore the matrix state
-	glPopMatrix();
-
-	// Buffer swap
-	glutSwapBuffers();
 }
 
 static void RenderScenePaused()
