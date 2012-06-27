@@ -76,7 +76,6 @@ bool CGameData::Step()
 	m_iCurrentLength += m_iTunnelStep;
 	if (m_iCurrentLength < m_iTotalLength)
 	{
-		cout << m_iCurrentLength << endl;
 		return true;
 	}
 	else
