@@ -57,57 +57,13 @@ void CController::OnMouseMoved( int from_x, int from_y, int to_x, int to_y )
 
 	case VW_STATE_ONGOING:
 		{
-			//移动X
-			if (to_x < 1.0/5.0 * g_window_width)
-			{
-				//在屏幕的左边1/5处，两倍速向左
-				this->MovePlaneX(-2 * VW_DATA_DEF_MOVE_SPEED);
-			}
-			if (to_x < 2.0/5.0 * g_window_width)
-			{
-				//在屏幕的左边中间处，一倍速向左
-				this->MovePlaneX(-VW_DATA_DEF_MOVE_SPEED);
-			}
-			else if (to_x < 3.0/5.0 * g_window_width)
-			{
-				//在屏幕的中间，不用动
-			}
-			else if (to_x < 4.0/5.0 * g_window_width)
-			{
-				//在屏幕的右边中间处，一倍速向右
-				this->MovePlaneX(VW_DATA_DEF_MOVE_SPEED);
-			}
-			else
-			{
-				//在屏幕的右边1/5处，两倍速向右
-				this->MovePlaneX(2 * VW_DATA_DEF_MOVE_SPEED);
-			}
+			//移动X：最左 -2*DEF_SPEED, 最右 2*DEF_SPEED
+			int speed = (int) (((double)to_x / g_window_width - 0.5) * 2 * VW_DATA_DEF_MOVE_SPEED);
+			this->MovePlaneX(speed);
 
-			//移动Y
-			if (to_y < 1.0/5.0 * g_window_height)
-			{
-				//在屏幕的上边1/5处，两倍速向上
-				this->MovePlaneY(2 * VW_DATA_DEF_MOVE_SPEED);
-			}
-			else if (to_y < 2.0/5.0 * g_window_height)
-			{
-				//在屏幕的上边中间处，一倍速向上
-				this->MovePlaneY(VW_DATA_DEF_MOVE_SPEED);
-			}
-			else if (to_y < 3.0/5.0 * g_window_height)
-			{
-				//在屏幕的中间，不用动
-			}
-			else if (to_y < 4.0/5.0 * g_window_height)
-			{
-				//在屏幕的下边中间处，一倍速向下
-				this->MovePlaneY(-VW_DATA_DEF_MOVE_SPEED);
-			}
-			else
-			{
-				//在屏幕的下边1/5处，两倍速向下
-				this->MovePlaneY(-2 * VW_DATA_DEF_MOVE_SPEED);
-			}
+			//移动Y：最上 2*DEF_SPEED，最下 -2*DEF_SPEED
+			speed = (int) (((double)to_y / g_window_height - 0.5) * (-2) * VW_DATA_DEF_MOVE_SPEED);
+			this->MovePlaneY(speed);
 
 			break;
 		}
