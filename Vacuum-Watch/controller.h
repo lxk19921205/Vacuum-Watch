@@ -37,7 +37,8 @@ public:
 	virtual void OnUpPushed();
 	virtual void OnDownPushed();
 
-	virtual int NextWallType();
+	virtual int NextWallType(int next_which);
+	virtual void NextWallColor(int next_which, unsigned char* pred, unsigned char* pgreen, unsigned char* pblue);
 
 	//for Singleton
 	static inline CController& Instance()
@@ -71,12 +72,18 @@ protected:
 	//去掉头一个“下一个遮挡板类型”
 	void PopNextWallType();
 
+	//存储下一个遮挡板的颜色
+	void PushNextColor(unsigned char red, unsigned char green, unsigned char blue);
+	//去掉头一个“下一个遮挡板颜色”
+	void PopNextColor();
+
 	bool Collision(int wall_state, int plane_x, int plane_y, int radius);
 
 	IGameData* m_pGameData;
 	IViewEngine* m_pViewEngine;
 	int m_state;	//当前游戏的逻辑状态: VW_STATE_*
 	list<int> m_NextWallTypes;	//接下来的遮挡板的类型
+	list<unsigned char> m_NextColors;	//接下来的挡板的颜色，连续3个分别代表r,g,b
 };
 
 #endif

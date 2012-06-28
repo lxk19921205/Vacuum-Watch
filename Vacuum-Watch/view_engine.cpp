@@ -94,9 +94,9 @@ static void RenderSceneAbout()
 }
 
 //画第一种遮挡板
-static void DrawWallOne(int radius, int z)
+static void DrawWallOne(int radius, int z, unsigned char red, unsigned green, unsigned blue)
 {
-	glColor3d(1, 1, 0);
+	glColor3ub(red, green, blue);
 	glBegin(GL_QUAD_STRIP);
 	int inner_radius = radius / 3;	//里头可通过的圆半径是大圆的1/3
 	for (int angle=0; angle<=360; ++angle)
@@ -114,13 +114,13 @@ static void DrawWallOne(int radius, int z)
 /* 用来画隧道中的遮挡板                                                  */
 /* @type: 遮挡板的类型，见constants.h  @radius: 隧道的半径  @z: 板所在的z值*/
 /************************************************************************/
-static void DrawWall(int type, int radius, int z)
+static void DrawWall(int type, int radius, int z, unsigned char red, unsigned char green, unsigned char blue)
 {
 	switch (type)
 	{
 	case VW_WALL_ONE:
 		{
-			DrawWallOne(radius, z);
+			DrawWallOne(radius, z, red, green, blue);
 			break;
 		}
 
@@ -182,8 +182,6 @@ static void DrawWall(int type, int radius, int z)
 	}
 }
 
-
-
 static void RenderSceneOngoing()
 {
 	IGameData* data = CFactory::getController()->GetGameData();
@@ -244,8 +242,13 @@ static void RenderSceneOngoing()
 	// 从当前将要遇到的遮挡板开始算起，最多画3个
 	for (int wall_z=(past_walls+1)*VW_DEF_WALL_DISTANCE, count=0; wall_z<total_length && count<3; wall_z+=VW_DEF_WALL_DISTANCE, count++)
 	{
+		unsigned char red, green, blue;
+		IController* controller = CFactory::getController();
+		int wall_type = controller->NextWallType(count);
+		controller->NextWallColor(count, &red, &green, &blue);
+
 		// 画遮挡板
-		DrawWall(controller->NextWallType(), tunnel_radius, -wall_z);
+		DrawWall(wall_type, tunnel_radius, -wall_z, red, green, blue);
 	}
 
 	glutSwapBuffers();
@@ -355,6 +358,14 @@ void SpecialKeys(int key, int x, int y)
 	}
 }
 
+
+CViewEngine::CViewEngine()
+{
+}
+
+CViewEngine::~CViewEngine()
+{
+}
 
 void CViewEngine::SetupRC()
 {

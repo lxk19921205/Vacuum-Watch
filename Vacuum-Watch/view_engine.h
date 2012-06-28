@@ -11,12 +11,8 @@
 class CViewEngine : public IViewEngine
 {
 public:
-	CViewEngine()
-	{
-	}
-	virtual ~CViewEngine()
-	{
-	}
+	CViewEngine();
+	virtual ~CViewEngine();
 
 	virtual void Init(int* pargc, char** argv);
 	virtual void StartDisplaying();

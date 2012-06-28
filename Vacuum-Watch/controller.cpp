@@ -127,8 +127,9 @@ bool CController::OnTimerClick()
 			if (m_pGameData->Step())
 			{
 				//还可以继续走
+				static int last_length = 0;
 				int current_length = m_pGameData->GetCurrentLength();
-				if (current_length % VW_DEF_WALL_DISTANCE == 0 && current_length != 0)
+				if (last_length / VW_DEF_WALL_DISTANCE != current_length / VW_DEF_WALL_DISTANCE && last_length != 0)
 				{
 					cout << "CHECK WALL NOW" << endl;
 					//又碰到一个了!
@@ -139,8 +140,9 @@ bool CController::OnTimerClick()
 						cout << "CLASHED!!!" << endl;
 					}
 					this->PopNextWallType();
+					this->PopNextColor();
 				}
-
+				last_length = current_length;
 				return true;
 			}
 			else
@@ -292,9 +294,10 @@ bool CController::MovePlaneY( int offset )
 	return true;
 }
 
-int CController::NextWallType()
+//next_which从0开始算
+int CController::NextWallType(int next_which)
 {
-	if (m_NextWallTypes.empty())
+	if (m_NextWallTypes.size() < next_which+1)
 	{
 		//随机生成几个，就3个吧，然后重调一次吧
 		for (int i=0; i<3; i++)
@@ -304,7 +307,7 @@ int CController::NextWallType()
 			//m_NextWallTypes.push_back(VW_WALL_TWO);	//为了测试，全部生成第二种类型
 			//m_NextWallTypes.push_back(VW_WALL_THREE);	//为了测试，全部生成第三种类型
 		}
-		return this->NextWallType();
+		return this->NextWallType(next_which);
 	}
 	else
 	{
@@ -315,8 +318,15 @@ int CController::NextWallType()
 		}
 		else
 		{
-			//不然，给个front()
-			return m_NextWallTypes.front();
+			//距begin的偏移量
+			int offset = 0;
+			list<int>::iterator it = m_NextWallTypes.begin();
+			while (offset != next_which)
+			{
+				++it;
+				++offset;
+			}
+			return *it;
 		}
 	}
 }
@@ -374,4 +384,53 @@ bool CController::Collision(int wall_state, int mousex, int mousey, int radius)
 		return false;
 		break;
 	}
+}
+
+void CController::NextWallColor( int next_which, unsigned char* pred, unsigned char* pgreen, unsigned char* pblue )
+{
+	if (m_NextColors.size() < 3*(next_which+1))
+	{
+		//随机生成几个，就3个吧，然后重调一次吧
+		for (int i=0; i<3; i++)
+		{
+			unsigned char red = rand() % 255;
+			unsigned char green = rand() % 255;
+			unsigned char blue = rand() % 255;
+
+			this->PushNextColor(red, green, blue);
+		}
+		return this->NextWallColor(next_which, pred, pgreen, pblue);
+	}
+	else
+	{
+		int offset = 0;
+		list<unsigned char>::iterator it = m_NextColors.begin();
+		while (offset != next_which)
+		{
+			++it;
+			++it;
+			++it;
+			++offset;
+		}
+		
+		*pred = *it;
+		++it;
+		*pgreen = *it;
+		++it;
+		*pblue = *it;
+	}
+}
+
+void CController::PushNextColor( unsigned char red, unsigned char green, unsigned char blue )
+{
+	m_NextColors.push_back(red);
+	m_NextColors.push_back(green);
+	m_NextColors.push_back(blue);
+}
+
+void CController::PopNextColor()
+{
+	m_NextColors.pop_front();
+	m_NextColors.pop_front();
+	m_NextColors.pop_front();
 }
