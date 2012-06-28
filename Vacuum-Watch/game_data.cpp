@@ -7,11 +7,11 @@ using std::endl;
 
 
 CGameData::CGameData()
-	:m_iCurrentStage(VW_DATA_DEF_STAGE),
-	m_lCurrentScore(VW_DATA_DEF_SCORE),
-	m_iTunnelRadius(VW_DATA_DEF_TUNNEL_RADIUS),
-	m_iTotalLength(VW_DATA_DEF_TUNNEL_LENGTH),
-	m_iTunnelStep(VW_DATA_DEF_TUNNEL_STEP),
+	:m_iCurrentStage(VW_DEF_STAGE),
+	m_lCurrentScore(VW_DEF_SCORE),
+	m_iTunnelRadius(VW_DEF_TUNNEL_RADIUS),
+	m_iTotalLength(VW_DEF_TUNNEL_LENGTH),
+	m_iTunnelStep(VW_DEF_TUNNEL_STEP),
 	m_iCurrentLength(0)
 {
 }
@@ -34,15 +34,15 @@ int CGameData::GetCurrentStage()
 void CGameData::NextStage()
 {
 	++this->m_iCurrentStage;
-	if (this->m_iCurrentStage > VW_DATA_MAX_STAGE)
+	if (this->m_iCurrentStage > VW_MAX_STAGE)
 	{
-		this->m_iCurrentStage = VW_DATA_MAX_STAGE;
+		this->m_iCurrentStage = VW_MAX_STAGE;
 	}
 }
 
 void CGameData::ResetStage()
 {
-	this->m_iCurrentStage = VW_DATA_DEF_STAGE;
+	this->m_iCurrentStage = VW_DEF_STAGE;
 }
 //////////////////////////////////////////////////////////////////////////
 
@@ -63,7 +63,7 @@ void CGameData::AddScore( long score )
 
 void CGameData::ResetScore()
 {
-	this->m_lCurrentScore = VW_DATA_DEF_SCORE;
+	this->m_lCurrentScore = VW_DEF_SCORE;
 }
 //////////////////////////////////////////////////////////////////////////
 
@@ -76,7 +76,6 @@ bool CGameData::Step()
 	m_iCurrentLength += m_iTunnelStep;
 	if (m_iCurrentLength < m_iTotalLength)
 	{
-		cout << m_iCurrentLength << endl;
 		return true;
 	}
 	else

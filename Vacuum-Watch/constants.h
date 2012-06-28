@@ -27,23 +27,28 @@
 /* 游戏数据 Game Data 初始默认值、相关数值                                */
 /************************************************************************/
 //////////////////////////////////////////////////////////////////////////
-#define VW_DATA_DEF_STAGE (1)				//默认初始关卡
-#define VW_DATA_MAX_STAGE (5)				//默认最大关卡，]而不是)
-#define VW_DATA_DEF_SCORE (0)				//默认初始分数
-#define VW_DATA_DEF_TUNNEL_RADIUS (100)		//默认隧道半径
-#define VW_DATA_DEF_TUNNEL_LENGTH (10000)	//默认隧道长度
-#define VW_DATA_DEF_TUNNEL_STEP (1)			//默认在隧道中每次走多少
-#define VW_DATA_DEF_MOVE_SPEED (5)			//默认的飞机通过上下左右方向键进行位置变换的速度
-#define VW_DATA_DEF_WALL_DISTANCE (200)		//默认每这么长的距离就有一个遮挡板
-
+#define VW_DEF_STAGE (1)				//默认初始关卡
+#define VW_MAX_STAGE (5)				//默认最大关卡，]而不是)
+#define VW_DEF_SCORE (0)				//默认初始分数
+#define VW_DEF_TUNNEL_RADIUS (50)		//默认隧道半径
+#define VW_DEF_TUNNEL_LENGTH (10000)	//默认隧道长度
+#define VW_DEF_TUNNEL_STEP (1)			//默认在隧道中每次走多少
+#define VW_DEF_MOVE_SPEED (5)			//默认的飞机通过上下左右方向键进行位置变换的速度
+#define VW_DEF_WALL_DISTANCE (200)		//默认每这么长的距离就有一个遮挡板
+#define VW_DEF_VELOCITY_ONE (5)			//默认第1级别的地图速度
+#define VW_DEF_VELOCITY_TWO (10)		//默认第2级别的地图速度
+#define VW_DEF_VELOCITY_THREE (15)		//默认第3级别的地图速度
+#define VW_DEF_VELOCITY_FOUR (20)		//默认第4级别的地图速度
 
 //////////////////////////////////////////////////////////////////////////
 /************************************************************************/
 /* 隧道中的遮挡板wall的类型                                              */
 /************************************************************************/
 //////////////////////////////////////////////////////////////////////////
-#define VW_WALL_NONE (0)	//没有遮挡板
-#define VW_WALL_ONE (1)		//类型1：
+#define VW_WALL_NONE (-1)	//没有板子了
+#define VW_WALL_ONE (0)		//类型1：中间镂空一个圆
+#define VW_WALL_TWO (1)		//类型2：中间镂空一个正方形
+#define VW_WALL_COUNT (2)	//一共有几种类型
 
 
 //////////////////////////////////////////////////////////////////////////

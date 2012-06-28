@@ -93,18 +93,64 @@ static void RenderSceneAbout()
 	glutSwapBuffers();
 }
 
-void DrawWall(int type, int radius, int z)
+/************************************************************************/
+/* 用来画隧道中的遮挡板                                                  */
+/* @type: 遮挡板的类型，见constants.h  @radius: 隧道的半径  @z: 板所在的z值*/
+/************************************************************************/
+static void DrawWall(int type, int radius, int z)
 {
-	int i;
-	GLfloat Pi=3.14159f;
+	switch (type)
+	{
+	case VW_WALL_ONE:
+		{
+			glPushMatrix();
+// 			glBegin(GL_QUAD_STRIP);
+// 			int inner_radius = radius / 3;	//里头可通过的圆半径是大圆的1/3
+// 			for (int angle=0; angle<360; ++angle)
+// 			{
+// 				double sin_value = sin(angle * VW_PI / 180);
+// 				double cos_value = cos(angle * VW_PI / 180);
+// 
+// 				glVertex3d(inner_radius*sin_value, inner_radius*cos_value, z);
+// 				glVertex3d(radius*sin_value, radius*cos_value, z);
+// 			}
+// 			glEnd();
 
-	glBegin(GL_TRIANGLE_FAN);
-	glColor3f(0.1f, 0.1f, 0.1f);
-	for(i=0; i<1000; ++i)
-		glVertex3f(radius*cos(2*Pi/1000*i), radius*sin(2*Pi/1000*i), z-1000.0f);
-	glEnd();
+//			glCullFace(GL_CCW);
+			glBegin(GL_QUADS);
+			int inner_radius = radius / 3;	//里头可通过的圆半径是大圆的1/3
+			for (int angle=0; angle<360; ++angle)
+			{
+				double sin_value = sin(angle * VW_PI / 180);
+				double cos_value = cos(angle * VW_PI / 180);
+				double next_sin_value = sin((angle+1) * VW_PI / 180);
+				double next_cos_value = cos((angle+1) * VW_PI / 180);
 
-	switch(type)
+				glVertex3d(inner_radius*sin_value, inner_radius*cos_value, z);
+				glVertex3d(radius*sin_value, radius*cos_value, z);
+				glVertex3d(radius*next_sin_value, radius*next_cos_value, z);
+				glVertex3d(inner_radius*next_sin_value, inner_radius*next_cos_value, z);
+			}
+			glEnd();
+
+			glPopMatrix();
+// 			glBegin(GL_TRIANGLE_FAN);
+// 			radius /= 2;
+// 			glColor3f(0.0f, 0.0f, 0.0f);
+// 			for(int i=0; i<1000; ++i)
+// 			{
+// 				glVertex3f(radius*cos(2*VW_PI/1000*i), radius*sin(2*VW_PI/1000*i), z-999.0f);
+// 			}
+// 			glEnd();
+			break;
+		}
+
+	case VW_WALL_TWO:
+		{
+			glPushMatrix();
+
+
+/*	switch(type)
 	{
 	case 1:
 		glBegin(GL_TRIANGLE_FAN);
@@ -154,7 +200,27 @@ void DrawWall(int type, int radius, int z)
 			glVertex3f(radius*cos(2*Pi/1000*i), radius*sin(2*Pi/1000*i), z-999.0f);
 		glEnd();
 		glPopMatrix();
-		break;
+		break;*/
+			glBegin(GL_TRIANGLE_FAN);
+			glColor3f(0.1f, 0.1f, 0.1f);
+			for(int i=0; i<1000; ++i)
+			{
+				glVertex3f(radius*cos(2* VW_PI/1000*i), radius*sin(2*VW_PI/1000*i), z-1000.0f);
+			}
+			glEnd();
+
+			glColor3f(0.0f, 0.0f, 0.0f);
+			glPolygonMode(GL_FRONT,GL_FILL);
+			glBegin(GL_POLYGON);
+			glVertex3f(radius*0.3f,-radius*0.4f,z-999.0f);
+			glVertex3f(radius*0.3f,radius*0.4f,z-999.0f);
+			glVertex3f(-radius*0.3f,radius*0.4f,z-999.0f);
+			glVertex3f(-radius*0.3f,-radius*0.4f,z-999.0f);
+			glEnd();
+
+			glPopMatrix();
+			break;
+		}
 	default:
 		break;
 	}
@@ -164,11 +230,6 @@ void DrawWall(int type, int radius, int z)
 static void RenderSceneOngoing()
 {
 	IGameData* data = CFactory::getController()->GetGameData();
-	int current_length = data->GetCurrentLength();
-	int total_length = data->GetTotalLength();
-	int tunnel_radius = data->GetTunnelRadius();
-	GLfloat plane_x = data->GetPositionX();
-	GLfloat plane_y = data->GetPositionY();
 
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_CULL_FACE);
@@ -177,6 +238,9 @@ static void RenderSceneOngoing()
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	//转动
+	int current_length = data->GetCurrentLength();
+	GLfloat plane_x = data->GetPositionX();
+	GLfloat plane_y = data->GetPositionY();
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 	gluLookAt(plane_x, plane_y, -current_length, plane_x, plane_y, -current_length-100, 0, 1, 0);	//减100还是减1不重要，只需要方向
@@ -192,6 +256,8 @@ static void RenderSceneOngoing()
 
 
 	const GLfloat start_z = -100.0f;
+	int total_length = data->GetTotalLength();
+	int tunnel_radius = data->GetTunnelRadius();
 	glBegin(GL_LINES);
 		for (int angle = 0; angle < 360; angle++)
 		{
@@ -215,6 +281,7 @@ static void RenderSceneOngoing()
 		}
 	glEnd();
 
+<<<<<<< HEAD
 	//glBegin(GL_POLYGON);
 		for (int i=VW_DATA_DEF_WALL_DISTANCE; i<total_length; i+=VW_DATA_DEF_WALL_DISTANCE)
 		{
@@ -225,6 +292,17 @@ static void RenderSceneOngoing()
 			DrawWall(1,tunnel_radius,wall_z);
 		}
 	//glEnd();
+=======
+	//已经经过了几个遮挡板
+	int past_walls = (current_length-1) / VW_DEF_WALL_DISTANCE;
+	IController* controller = CFactory::getController();
+	// 从当前将要遇到的遮挡板开始算起，最多画3个
+	for (int wall_z=(past_walls+1)*VW_DEF_WALL_DISTANCE, count=0; wall_z<total_length && count<3; wall_z+=VW_DEF_WALL_DISTANCE, count++)
+	{
+		// 画遮挡板
+		DrawWall(controller->NextWallType(), tunnel_radius, wall_z);
+	}
+>>>>>>> 24b50841ab47cf15fb99894f795d2545d01ec289
 
 	glutSwapBuffers();
 }
@@ -272,8 +350,8 @@ static void ChangeSize(GLsizei width, GLsizei height)
 		height = 1;
 	}
 
-	g_window_width = width;
-	g_window_height = height;
+	g_window_width = (GLfloat) width;
+	g_window_height = (GLfloat) height;
 
 	//将视口设置为窗口的大小
 	glViewport(0, 0, width, height);
