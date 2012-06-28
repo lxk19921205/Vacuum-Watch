@@ -8,6 +8,7 @@
 #include <math.h>
 #include <time.h>
 #include <stdlib.h>
+#include <Windows.h>
 
 #include "controller.h"
 #include "constants.h"
@@ -137,7 +138,15 @@ bool CController::OnTimerClick()
 					if (this->Collision(wall_type, m_pGameData->GetPositionX(), m_pGameData->GetPositionY(), m_pGameData->GetTunnelRadius()))
 					{
 						//撞到了
-						cout << "CLASHED!!!" << endl;
+						this->Fail();
+
+						try
+						{
+							MessageBoxA(NULL, "You lose.", "You lose.", MB_OK);
+						}
+						catch (...)
+						{
+						}
 					}
 					this->PopNextWallType();
 					this->PopNextColor();
@@ -175,6 +184,9 @@ void CController::OnStartButton()
 {
 	m_pViewEngine->SetupRCOngoing();
 	this->m_state = VW_STATE_ONGOING;
+
+	IAudio* audio = CFactory::getAudio();
+	audio->StopAllEffect();
 
 	ILog* log = CFactory::getLog();
 	log->Info("ENTER GAME_START");
@@ -300,12 +312,12 @@ int CController::NextWallType(int next_which)
 	if (m_NextWallTypes.size() < next_which+1)
 	{
 		//随机生成几个，就3个吧，然后重调一次吧
-		for (int i=0; i<3; i++)
+		for (int i=0; i<1; i++)
 		{
 //			m_NextWallTypes.push_back(rand() % VW_WALL_COUNT);
 			m_NextWallTypes.push_back(VW_WALL_ONE);	//为了测试，全部生成第一种类型
-			//m_NextWallTypes.push_back(VW_WALL_TWO);	//为了测试，全部生成第二种类型
-			//m_NextWallTypes.push_back(VW_WALL_THREE);	//为了测试，全部生成第三种类型
+			m_NextWallTypes.push_back(VW_WALL_TWO);	//为了测试，全部生成第二种类型
+			m_NextWallTypes.push_back(VW_WALL_THREE);	//为了测试，全部生成第三种类型
 		}
 		return this->NextWallType(next_which);
 	}
@@ -433,4 +445,20 @@ void CController::PopNextColor()
 	m_NextColors.pop_front();
 	m_NextColors.pop_front();
 	m_NextColors.pop_front();
+}
+
+void CController::Fail()
+{
+// 	this->m_pGameData->ResetCurrentLength();
+// 	this->m_pGameData->ResetScore();
+// 	this->m_pGameData->ResetStage();
+
+	this->m_state = VW_STATE_MENU;
+	m_pViewEngine->SetupRCMenu();
+
+	IAudio* audio = CFactory::getAudio();
+	audio->PlayEffect(L"..\\Resource\\audio\\effect1.wav");
+
+	ILog* log = CFactory::getLog();
+	log->Info("ENTER GAME_START");
 }

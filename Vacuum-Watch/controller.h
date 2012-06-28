@@ -40,6 +40,8 @@ public:
 	virtual int NextWallType(int next_which);
 	virtual void NextWallColor(int next_which, unsigned char* pred, unsigned char* pgreen, unsigned char* pblue);
 
+	virtual void Fail();
+
 	//for Singleton
 	static inline CController& Instance()
 	{

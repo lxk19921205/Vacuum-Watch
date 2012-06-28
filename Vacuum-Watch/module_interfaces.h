@@ -253,6 +253,9 @@ public:
 	virtual int NextWallType(int next_which) = 0;
 	//获得下一个遮挡板的颜色，获取成功返回true，next_which代表下几个
 	virtual void NextWallColor(int next_which, unsigned char* pred, unsigned char* pgreen, unsigned char* pblue) = 0;
+
+	//输了，结束
+	virtual void Fail() = 0;
 };
 
 
