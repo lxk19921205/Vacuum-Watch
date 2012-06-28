@@ -71,6 +71,8 @@ protected:
 	//去掉头一个“下一个遮挡板类型”
 	void PopNextWallType();
 
+	bool Collision(int wall_state, int plane_x, int plane_y, int radius);
+
 	IGameData* m_pGameData;
 	IViewEngine* m_pViewEngine;
 	int m_state;	//当前游戏的逻辑状态: VW_STATE_*

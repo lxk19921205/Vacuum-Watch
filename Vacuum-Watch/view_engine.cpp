@@ -183,6 +183,7 @@ static void DrawWall(int type, int radius, int z)
 }
 
 
+
 static void RenderSceneOngoing()
 {
 	IGameData* data = CFactory::getController()->GetGameData();

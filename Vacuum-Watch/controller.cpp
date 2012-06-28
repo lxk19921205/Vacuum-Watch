@@ -132,8 +132,13 @@ bool CController::OnTimerClick()
 				{
 					cout << "CHECK WALL NOW" << endl;
 					//又碰到一个了!
+					int wall_type = m_NextWallTypes.front();
+					if (this->Collision(wall_type, m_pGameData->GetPositionX(), m_pGameData->GetPositionY(), m_pGameData->GetTunnelRadius()))
+					{
+						//撞到了
+						cout << "CLASHED!!!" << endl;
+					}
 					this->PopNextWallType();
-					// TODO 判断有没有撞到
 				}
 
 				return true;
@@ -321,5 +326,52 @@ void CController::PopNextWallType()
 	if (!m_NextWallTypes.empty())
 	{
 		m_NextWallTypes.pop_front();
+	}
+}
+
+//判断碰撞，若碰撞则返回true，否则返回false
+bool CController::Collision(int wall_state, int mousex, int mousey, int radius)
+{
+	switch (wall_state)
+	{
+	case VW_WALL_ONE:
+		{
+			if((mousex*mousex+mousey*mousey)<((radius/3)*(radius/3)))
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+			break;
+		}
+	case VW_WALL_TWO:
+		{
+			if(mousex<radius*0.3f&&mousex>(-radius*0.3f)&&mousey<radius*0.4f&&mousey>(-radius*0.4f))
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+			break;
+		}
+	case VW_WALL_THREE:
+		{
+			if((mousex<radius*0.5f&&mousex>radius*0.2f&&mousey<radius*0.4f&&mousey>(-radius*0.4f))||(mousex>(-radius*0.5f)&&mousex<(-radius*0.2f)&&mousey<radius*0.4f&&mousey>(-radius*0.4f)))
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+			break;
+		}
+	default:
+		return false;
+		break;
 	}
 }

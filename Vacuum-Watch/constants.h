@@ -35,10 +35,10 @@
 #define VW_DEF_TUNNEL_STEP (1)			//默认在隧道中每次走多少
 #define VW_DEF_MOVE_SPEED (5)			//默认的飞机通过上下左右方向键进行位置变换的速度
 #define VW_DEF_WALL_DISTANCE (200)		//默认每这么长的距离就有一个遮挡板
-#define VW_DEF_VELOCITY_ONE (5)			//默认第1级别的地图速度
-#define VW_DEF_VELOCITY_TWO (10)		//默认第2级别的地图速度
-#define VW_DEF_VELOCITY_THREE (15)		//默认第3级别的地图速度
-#define VW_DEF_VELOCITY_FOUR (20)		//默认第4级别的地图速度
+#define VW_DEF_VELOCITY_ONE (3)			//默认第1级别的地图速度
+#define VW_DEF_VELOCITY_TWO (5)			//默认第2级别的地图速度
+#define VW_DEF_VELOCITY_THREE (7)		//默认第3级别的地图速度
+#define VW_DEF_VELOCITY_FOUR (10)		//默认第4级别的地图速度
 
 //////////////////////////////////////////////////////////////////////////
 /************************************************************************/
