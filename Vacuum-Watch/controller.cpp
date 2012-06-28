@@ -295,8 +295,9 @@ int CController::NextWallType()
 		for (int i=0; i<3; i++)
 		{
 //			m_NextWallTypes.push_back(rand() % VW_WALL_COUNT);
-//			m_NextWallTypes.push_back(VW_WALL_ONE);	//为了测试，全部生成第一种类型
-			m_NextWallTypes.push_back(VW_WALL_TWO);	//为了测试，全部生成第一种类型
+			//m_NextWallTypes.push_back(VW_WALL_ONE);	//为了测试，全部生成第一种类型
+			//m_NextWallTypes.push_back(VW_WALL_TWO);	//为了测试，全部生成第二种类型
+			m_NextWallTypes.push_back(VW_WALL_THREE);	//为了测试，全部生成第三种类型
 		}
 		return this->NextWallType();
 	}

@@ -148,74 +148,51 @@ static void DrawWall(int type, int radius, int z)
 	case VW_WALL_TWO:
 		{
 			glPushMatrix();
-
-
-/*	switch(type)
-	{
-	case 1:
-		glBegin(GL_TRIANGLE_FAN);
-		radius = radius/5;
-		glColor3f(0.0f, 0.0f, 0.0f);
-		for(i=0; i<1000; ++i)
-			glVertex3f(radius*cos(2*Pi/1000*i), radius*sin(2*Pi/1000*i), z-999.0f);
-		glEnd();
-		break;
-	case 2:
-		glColor3f(0.0f, 0.0f, 0.0f);
-		glPolygonMode(GL_FRONT,GL_FILL);
-		glBegin(GL_POLYGON);
-		glVertex3f(radius*0.3f,-radius*0.4f,z-999.0f);
-		glVertex3f(radius*0.3f,radius*0.4f,z-999.0f);
-		glVertex3f(-radius*0.3f,radius*0.4f,z-999.0f);
-		glVertex3f(-radius*0.3f,-radius*0.4f,z-999.0f);
-		glEnd();
-		break;
-	case 3://坏的、不好使
-		radius = radius/10;
-
-		glPushMatrix();
-		glLoadIdentity();         
-		glTranslatef(-radius*10.0f*1.732f/4.0f, -radius*10.0f/4.0f, 0.0f);
-		glBegin(GL_TRIANGLE_FAN);
-		glColor3f(0.0f, 0.0f, 0.0f);
-		for(i=0; i<1000; ++i)
-			glVertex3f(radius*cos(2*Pi/1000*i), radius*sin(2*Pi/1000*i), z-999.0f);
-		glEnd();
-		glPopMatrix();
-		glPushMatrix();
-		glLoadIdentity();
-		glTranslatef(radius*10.0f*1.732f/4.0f, -radius*10.0f/4.0f, 0.0f);
-		glBegin(GL_TRIANGLE_FAN);
-		glColor3f(0.0f, 0.0f, 0.0f);
-		for(i=0; i<1000; ++i)
-			glVertex3f(radius*cos(2*Pi/1000*i), radius*sin(2*Pi/1000*i), z-999.0f);
-		glEnd();
-		glPopMatrix();
-		glPushMatrix();
-		glLoadIdentity();
-		glTranslatef(0.0f, radius*10*1.5f, 0.0f);
-		glBegin(GL_TRIANGLE_FAN);
-		glColor3f(0.0f, 0.0f, 0.0f);
-		for(i=0; i<1000; ++i)
-			glVertex3f(radius*cos(2*Pi/1000*i), radius*sin(2*Pi/1000*i), z-999.0f);
-		glEnd();
-		glPopMatrix();
-		break;*/
 			glBegin(GL_TRIANGLE_FAN);
 			glColor3f(0.1f, 0.1f, 0.1f);
 			for(int i=0; i<1000; ++i)
 			{
-				glVertex3f(radius*cos(2* VW_PI/1000*i), radius*sin(2*VW_PI/1000*i), z-1000.0f);
+				glVertex3f(radius*cos(2* VW_PI/1000*i), radius*sin(2*VW_PI/1000*i), z-800.0f);
 			}
 			glEnd();
 
 			glColor3f(0.0f, 0.0f, 0.0f);
 			glPolygonMode(GL_FRONT,GL_FILL);
 			glBegin(GL_POLYGON);
-			glVertex3f(radius*0.3f,-radius*0.4f,z-999.0f);
-			glVertex3f(radius*0.3f,radius*0.4f,z-999.0f);
-			glVertex3f(-radius*0.3f,radius*0.4f,z-999.0f);
-			glVertex3f(-radius*0.3f,-radius*0.4f,z-999.0f);
+			glVertex3f(radius*0.3f,-radius*0.4f,z-799.0f);
+			glVertex3f(radius*0.3f,radius*0.4f,z-799.0f);
+			glVertex3f(-radius*0.3f,radius*0.4f,z-799.0f);
+			glVertex3f(-radius*0.3f,-radius*0.4f,z-799.0f);
+			glEnd();
+
+			glPopMatrix();
+			break;
+		}
+	case VW_WALL_THREE:
+		{
+			glPushMatrix();
+			glBegin(GL_TRIANGLE_FAN);
+			glColor3f(0.1f, 0.1f, 0.1f);
+			for(int i=0; i<1000; ++i)
+			{
+				glVertex3f(radius*cos(2* VW_PI/1000*i), radius*sin(2*VW_PI/1000*i), z-800.0f);
+			}
+			glEnd();
+
+			glColor3f(0.0f, 0.0f, 0.0f);
+			glPolygonMode(GL_FRONT,GL_FILL);
+			glBegin(GL_POLYGON);
+			glVertex3f(-radius*0.2f,-radius*0.4f,z-799.0f);
+			glVertex3f(-radius*0.2f,radius*0.4f,z-799.0f);
+			glVertex3f(-radius*0.5f,radius*0.4f,z-799.0f);
+			glVertex3f(-radius*0.5f,-radius*0.4f,z-799.0f);
+			glEnd();
+
+			glBegin(GL_POLYGON);
+			glVertex3f(radius*0.5f,-radius*0.4f,z-799.0f);
+			glVertex3f(radius*0.5f,radius*0.4f,z-799.0f);
+			glVertex3f(radius*0.2f,radius*0.4f,z-799.0f);
+			glVertex3f(radius*0.2f,-radius*0.4f,z-799.0f);
 			glEnd();
 
 			glPopMatrix();
@@ -281,18 +258,6 @@ static void RenderSceneOngoing()
 		}
 	glEnd();
 
-<<<<<<< HEAD
-	//glBegin(GL_POLYGON);
-		for (int i=VW_DATA_DEF_WALL_DISTANCE; i<total_length; i+=VW_DATA_DEF_WALL_DISTANCE)
-		{
-			//TODO 画遮挡板
-			//已知此位置的z，和隧道的radius
-			//DrawWall(int type)	type是VW_WALL_XXX
-			GLfloat wall_z = i;
-			DrawWall(1,tunnel_radius,wall_z);
-		}
-	//glEnd();
-=======
 	//已经经过了几个遮挡板
 	int past_walls = (current_length-1) / VW_DEF_WALL_DISTANCE;
 	IController* controller = CFactory::getController();
@@ -302,7 +267,6 @@ static void RenderSceneOngoing()
 		// 画遮挡板
 		DrawWall(controller->NextWallType(), tunnel_radius, wall_z);
 	}
->>>>>>> 24b50841ab47cf15fb99894f795d2545d01ec289
 
 	glutSwapBuffers();
 }

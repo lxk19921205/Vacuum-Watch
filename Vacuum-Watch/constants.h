@@ -48,7 +48,8 @@
 #define VW_WALL_NONE (-1)	//没有板子了
 #define VW_WALL_ONE (0)		//类型1：中间镂空一个圆
 #define VW_WALL_TWO (1)		//类型2：中间镂空一个正方形
-#define VW_WALL_COUNT (2)	//一共有几种类型
+#define VW_WALL_THREE (2)	//类型3：两侧两个矩形
+#define VW_WALL_COUNT (3)	//一共有几种类型
 
 
 //////////////////////////////////////////////////////////////////////////
