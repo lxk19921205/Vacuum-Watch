@@ -108,13 +108,12 @@ void DrawWall(int type, int radius, int z)
 	{
 	case 1:
 		glBegin(GL_TRIANGLE_FAN);
-		radius = radius/2;
+		radius = radius/5;
 		glColor3f(0.0f, 0.0f, 0.0f);
 		for(i=0; i<1000; ++i)
 			glVertex3f(radius*cos(2*Pi/1000*i), radius*sin(2*Pi/1000*i), z-999.0f);
 		glEnd();
 		break;
-
 	case 2:
 		glColor3f(0.0f, 0.0f, 0.0f);
 		glPolygonMode(GL_FRONT,GL_FILL);
@@ -124,6 +123,37 @@ void DrawWall(int type, int radius, int z)
 		glVertex3f(-radius*0.3f,radius*0.4f,z-999.0f);
 		glVertex3f(-radius*0.3f,-radius*0.4f,z-999.0f);
 		glEnd();
+		break;
+	case 3://坏的、不好使
+		radius = radius/10;
+
+		glPushMatrix();
+		glLoadIdentity();         
+		glTranslatef(-radius*10.0f*1.732f/4.0f, -radius*10.0f/4.0f, 0.0f);
+		glBegin(GL_TRIANGLE_FAN);
+		glColor3f(0.0f, 0.0f, 0.0f);
+		for(i=0; i<1000; ++i)
+			glVertex3f(radius*cos(2*Pi/1000*i), radius*sin(2*Pi/1000*i), z-999.0f);
+		glEnd();
+		glPopMatrix();
+		glPushMatrix();
+		glLoadIdentity();
+		glTranslatef(radius*10.0f*1.732f/4.0f, -radius*10.0f/4.0f, 0.0f);
+		glBegin(GL_TRIANGLE_FAN);
+		glColor3f(0.0f, 0.0f, 0.0f);
+		for(i=0; i<1000; ++i)
+			glVertex3f(radius*cos(2*Pi/1000*i), radius*sin(2*Pi/1000*i), z-999.0f);
+		glEnd();
+		glPopMatrix();
+		glPushMatrix();
+		glLoadIdentity();
+		glTranslatef(0.0f, radius*10*1.5f, 0.0f);
+		glBegin(GL_TRIANGLE_FAN);
+		glColor3f(0.0f, 0.0f, 0.0f);
+		for(i=0; i<1000; ++i)
+			glVertex3f(radius*cos(2*Pi/1000*i), radius*sin(2*Pi/1000*i), z-999.0f);
+		glEnd();
+		glPopMatrix();
 		break;
 	default:
 		break;
@@ -189,10 +219,10 @@ static void RenderSceneOngoing()
 		for (int i=VW_DATA_DEF_WALL_DISTANCE; i<total_length; i+=VW_DATA_DEF_WALL_DISTANCE)
 		{
 			//TODO 画遮挡板
-			DrawWall(2,tunnel_radius,i);
 			//已知此位置的z，和隧道的radius
 			//DrawWall(int type)	type是VW_WALL_XXX
 			GLfloat wall_z = i;
+			DrawWall(1,tunnel_radius,wall_z);
 		}
 	//glEnd();
 
