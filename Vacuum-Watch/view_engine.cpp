@@ -126,10 +126,10 @@ static void DrawWall(int type, int radius, int z)
 				double next_sin_value = sin((angle+1) * VW_PI / 180);
 				double next_cos_value = cos((angle+1) * VW_PI / 180);
 
-				glVertex3d(inner_radius*sin_value, inner_radius*cos_value, z);
-				glVertex3d(radius*sin_value, radius*cos_value, z);
-				glVertex3d(radius*next_sin_value, radius*next_cos_value, z);
-				glVertex3d(inner_radius*next_sin_value, inner_radius*next_cos_value, z);
+				glVertex3d(inner_radius*cos_value, inner_radius*sin_value, z-799.0f);
+				glVertex3d(radius*cos_value, radius*sin_value, z-800.0f);
+				glVertex3d(radius*next_cos_value, radius*next_sin_value, z-800.0f);
+				glVertex3d(inner_radius*next_cos_value, inner_radius*next_sin_value, z-799.0f);
 			}
 			glEnd();
 
@@ -203,6 +203,52 @@ static void DrawWall(int type, int radius, int z)
 	}
 }
 
+//≈–∂œ≈ˆ◊≤£¨»Ù≈ˆ◊≤‘Ú∑µªÿtrue£¨∑Ò‘Ú∑µªÿfalse
+static bool Collision(int wall_state, int mousex, int mousey, int radius)
+{
+	switch (wall_state)
+	{
+	case VW_WALL_ONE:
+		{
+			if((mousex*mousex+mousey*mousey)<((radius/3)*(radius/3)))
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+			break;
+		}
+	case VW_WALL_TWO:
+		{
+			if(mousex<radius*0.3f&&mousex>(-radius*0.3f)&&mousey<radius*0.4f&&mousey>(-radius*0.4f))
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+			break;
+		}
+	case VW_WALL_THREE:
+		{
+			if((mousex<radius*0.5f&&mousex>radius*0.2f&&mousey<radius*0.4f&&mousey>(-radius*0.4f))||(mousex>(-radius*0.5f)&&mousex<(-radius*0.2f)&&mousey<radius*0.4f&&mousey>(-radius*0.4f)))
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+			break;
+		}
+	default:
+		return false;
+		break;
+	}
+}
 
 static void RenderSceneOngoing()
 {
